@@ -10,6 +10,8 @@
 
 ## TEN framework
 
+* [Goal](ten_framework/goal.md)
+* [Version system](ten_framework/version_system.md)
 * [Testing](ten_framework/testing.md)
 
 ## TEN Service
