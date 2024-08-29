@@ -51,15 +51,11 @@ You will need to uncheck "Use Rosetta for x86\_64/amd64 emulation on Apple Silic
 
 **1. Prepare config files**
 
-In the root of the project, create these files from the examples. They will be used to store information for Docker Compose later.
+In the root of the project, use `cd` command to create \`.env\` file from example . It will be used to store information for \`docker compose\` later.
 
 {% code title=">_ Terminal" %}
 ```sh
-# Create .env from the example
 cp ./.env.example ./.env
-
-# Create property.json from the example
-cp ./agents/property.json.example ./agents/property.json
 ```
 {% endcode %}
 
@@ -93,7 +89,6 @@ In the same directory, run the `docker` command to compose containers:
 
 {% code title=">_ Terminal" %}
 ```bash
-# Execute docker compose up to start the services
 docker compose up
 ```
 {% endcode %}
