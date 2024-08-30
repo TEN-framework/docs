@@ -11,8 +11,18 @@
 ## TEN framework
 
 * [Goal](ten_framework/goal.md)
+* [Concept overview](ten_framework/concept_overview.md)
+* [Preparation](ten_framework/preparation.md)
 * [Version system](ten_framework/version_system.md)
+* [Software packages](ten_framework/software_package.md)
+* [Building](ten_framework/building.md)
 * [Testing](ten_framework/testing.md)
+* [Profiling](ten_framework/profiling.md)
+* [Dependencies](ten_framework/dependencies.md)
+
+### API
+
+* [Required](ten_framework/api/required.md)
 
 ## TEN Service
 
