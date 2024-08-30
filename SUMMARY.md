@@ -20,6 +20,10 @@
 * [Profiling](ten_framework/profiling.md)
 * [Dependencies](ten_framework/dependencies.md)
 
+### Extension
+
+* [Life cycle](ten_framework/extension/life_cycle.md)
+
 ### API
 
 * [Required](ten_framework/api/required.md)
