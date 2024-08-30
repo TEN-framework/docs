@@ -9,13 +9,13 @@ TEN framework Type System 包含 基本类型 和 复合类型. 其中, 基本�
 | Type | Description | C++ Type | Go Type | Python Type |
 |------|-------------|----------|---------|-------------|
 | int8 | A 8-bit signed integer. | int8_t | int8 | int  |
-| int16 | A 16-bit signed integer. | int16_t | int16 | int  |
-| int32 | A 32-bit signed integer. | int32_t | int32 | int  |
-| int64 | A 64-bit signed integer. | int64_t | int64 | int  |
-| uint8 | A 8-bit unsigned integer. | uint8_t | uint8 | int  |
-| uint16 | A 16-bit unsigned integer. | uint16_t | uint16 | int  |
-| uint32 | A 32-bit unsigned integer. | uint32_t | uint32 | int  |
-| uint64 | A 64-bit unsigned integer. | uint64_t | uint64 | int  |
+| int16 | A 16-bit signed integer. | int16_t | int16 |   |
+| int32 | A 32-bit signed integer. | int32_t | int32 |   |
+| int64 | A 64-bit signed integer. | int64_t | int64 |   |
+| uint8 | A 8-bit unsigned integer. | uint8_t | uint8 |   |
+| uint16 | A 16-bit unsigned integer. | uint16_t | uint16 |   |
+| uint32 | A 32-bit unsigned integer. | uint32_t | uint32 |   |
+| uint64 | A 64-bit unsigned integer. | uint64_t | uint64 |   |
 | float32 | A single precision (32-bit) IEEE 754 floating-point number. | float | float32 |
 | float64 | A double-precision (64-bit) IEEE 754 floating-point number. | double | float64 |
 | string | An Unicode character sequence. | std::string / char\* | string |
