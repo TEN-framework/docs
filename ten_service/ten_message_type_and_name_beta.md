@@ -168,10 +168,10 @@ PCM Frame:
 
 Within the TEN runtime, each message is recorded with two fields:
 
-1.  Message type
+1. Message type
 
     Enum.
-2.  Message name
+2. Message name
 
     String.
 
@@ -201,12 +201,13 @@ can be optimized to:
 
 Since the TEN platform modifies the type field of the message, users can also see and use this optimization. This is not a bad thing as users can leverage it to speed up message analysis. Therefore, users can use two methods to determine the message:
 
-1.  Using the message name
+1. Using the message name
 
     ```c++
     if (message_name == "ten::timer")
     ```
-2.  Using the message type
+
+2. Using the message type
 
     ```c++
     if (message_type == MSG_TYPE_TIMER)
@@ -241,12 +242,12 @@ When it is not possible to determine the message type or message name in the con
 
 For example:
 
-*   Message from JSON
+* Message from JSON
 
     When the message type or message name is unknown, it is necessary to specify the message type and message name in the JSON.
-*   Command from JSON
+* Command from JSON
 
     When it is known that the message is a command but the command name is unknown, it is necessary to specify the message name in the JSON.
-*   Connect command from JSON
+* Connect command from JSON
 
-    When it is known that the message is a connect command, the message name can only be ten::connect. Therefore, there is no need to specify the message type or message name in the JSON.
+    When it is known that the message is a start_graph command, the message name can only be ten::connect. Therefore, there is no need to specify the message type or message name in the JSON.

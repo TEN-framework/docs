@@ -26,26 +26,26 @@ To set up your Mac development environment, you need the following:
 
 Follow these instructions to prepare the environment:
 
-``` shell
+```shell
 brew install llvm googletest doxygen ninja clang-format
 brew install include-what-you-use
 ```
 
 Since the version of `cmake` installed via `brew` might be outdated, if so, you need to install `cmake` from the official website and set up a symbolic link.
 
-``` shell
+```shell
 ln -s /Applications/CMake.app/Contents/bin/cmake /usr/local/bin/cmake
 ```
 
 If `cmake` cannot find `clang-tidy`, you can resolve the issue with the following command:
 
-``` shell
+```shell
 ln -sf /usr/local/opt/llvm/bin/clang-tidy /usr/local/bin/clang-tidy
 ```
 
 To build various language bindings for the TEN framework, you can install the required languages using the following command:
 
-``` shell
+```shell
 brew install python golang
 ```
 
@@ -75,7 +75,7 @@ We provide pre-written Docker files that allow you to create a container with al
 
 Navigate to `tools/docker_for_building/ubuntu/18.04` and run the following commands to create and enter the build environment.
 
-``` shell
+```shell
 docker-compose up -d
 docker-compose run ten-building-ubuntu-1804
 ```
@@ -84,6 +84,6 @@ docker-compose run ten-building-ubuntu-1804
 
 Follow the same steps as for Ubuntu 18.04, but use the following command to enter the Ubuntu 21.10 build container.
 
-``` shell
+```shell
 docker-compose run ten-building-ubuntu-2110
 ```

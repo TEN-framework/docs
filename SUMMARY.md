@@ -14,11 +14,20 @@
 * [Concept overview](ten_framework/concept_overview.md)
 * [Preparation](ten_framework/preparation.md)
 * [Version system](ten_framework/version_system.md)
+* [Type system](ten_framework/type_system.md)
+* [Metadata system](ten_framework/metadata_system.md)
+* [Schema system](ten_framework/schema_system.md)
+* [Graph](ten_framework/graph.md)
 * [Software packages](ten_framework/software_package.md)
 * [Building](ten_framework/building.md)
 * [Testing](ten_framework/testing.md)
 * [Profiling](ten_framework/profiling.md)
 * [Dependencies](ten_framework/dependencies.md)
+* [Cloud store](ten_framework/cloud_store.md)
+
+### Binding
+
+* [Go](ten_framework/binding/go.md)
 
 ### Extension
 

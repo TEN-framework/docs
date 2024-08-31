@@ -20,7 +20,7 @@ The source directory for unit tests is `test/ten_runtime/unit`. If you need to a
 
 For C++ projects, after successful compilation, you can navigate to the output directory (e.g., `out/linux/x64/test/standalone/`, depending on the target OS and CPU) and execute the following command:
 
-``` shell
+```shell
 ./ten_runtime_unit_test
 ```
 
@@ -30,7 +30,7 @@ The source directory for smoke tests is `test/ten_runtime/smoke`. If you need to
 
 Navigate to the output directory (e.g., `out/linux/x64/test/standalone`, depending on the target OS and CPU) and execute the following command:
 
-``` shell
+```shell
 ./ten_runtime_smoke_test
 ```
 
@@ -40,19 +40,19 @@ You can perform multiple rounds of testing using the following commands.
 
 To run only unit tests:
 
-``` shell
+```shell
 failed=0; for i in {1..100}; do if [ ${failed} != 0 ]; then echo "error occurred:" ${failed}; break; fi; ./ten_runtime_unit_test; failed=$?; done;
 ```
 
 To run only smoke tests:
 
-``` shell
+```shell
 failed=0; for i in {1..100}; do if [ ${failed} != 0 ]; then echo "error occurred:" ${failed}; break; fi; ./ten_runtime_smoke_test; failed=$?; done;
 ```
 
 To run both unit tests and smoke tests:
 
-``` shell
+```shell
 failed=0; for i in {1..100}; do if [ ${failed} != 0 ]; then echo "error occurred:" ${failed}; break; fi; ./ten_runtime_unit_test; failed=$?; if [ ${failed} != 0 ]; then echo "error occurred:" ${failed}; break; fi; ./ten_runtime_smoke_test; failed=$?; done;
 ```
 
@@ -75,7 +75,7 @@ test/ten_runtime/integration/
 
 To execute the integration tests, use the following command:
 
-``` shell
+```shell
 cd path/to/out/
 pytest test/ten_runtime/integration/
 ```

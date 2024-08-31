@@ -34,7 +34,7 @@ To build a TEN framework C++ app, run the following commands in the root directo
 - debug
 - release
 
-``` shell
+```shell
 ten_gn gen <os> <arch> <build_type>
 ten_gn build <os> <arch> <build_type>
 ```
@@ -53,6 +53,6 @@ The method to build TEN framework C++ addons is the same as for building TEN fra
 
 To build a TEN Golang project, run the following command in the root directory of the TEN Golang project:
 
-``` shell
+```shell
 go run ten_packages/system/ten_runtime_go/tools/build/main.go
 ```

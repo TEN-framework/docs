@@ -113,9 +113,9 @@ C++ command API
 | ------------------------- | ------------------------------ |
 | cmd\_connect\_t::create() | `Link <cmd_connect_t::create>` |
 
-C++ connect command API
+C++ start_graph command API
 
-> Create a new connect command.
+> Create a new start_graph command.
 
 #### Status Command
 

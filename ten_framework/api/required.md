@@ -12,7 +12,7 @@ For message schemas, the `required` field can only appear in three specific plac
 
 Examples of these three scenarios are shown below.
 
-``` json
+```json
 {
   "api": {
     "cmd_in": [
