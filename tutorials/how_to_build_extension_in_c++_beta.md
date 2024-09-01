@@ -264,7 +264,7 @@ config("build_config") {
   # 3. The `.rte/app/include` is used in extension standalone building.
   include_dirs = [
   "include",
-  "//include",
+  "//core/include",
   "//include/nlohmann_json",
   ".rte/app/include",
   ".rte/app/include/nlohmann_json",
