@@ -65,7 +65,7 @@ If you need to develop the TEN framework on Microsoft Windows, you can manually 
 
 ## ten_gn
 
-The TEN framework uses `ten_gn` as its build system. `ten_gn` is a build system based on Google GN. The source code for `ten_gn` is located in the `src/ten_gn` directory of the TEN framework repository. Add the `ten_gn` directory path to the system `PATH` in your development environment.
+The TEN framework uses `ten_gn` as its build system. `ten_gn` is a build system based on Google GN. The source code for `ten_gn` is located in the `core/ten_gn` directory of the TEN framework repository. Add the `ten_gn` directory path to the system `PATH` in your development environment.
 
 ## Using Docker Containers
 
