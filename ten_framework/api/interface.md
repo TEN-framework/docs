@@ -24,6 +24,7 @@ In addition to these, the framework also supports composite API mechanisms:
 
 The basic syntax for defining an interface includes a mandatory `name` field. This `name` serves the same purpose as the `name` field in `cmd_in` and `cmd_out`, representing the name of the interface. It is significant only within the extension’s context and must be unique within that scope.
 
+{% code title=".json" %}
 ```json
 {
   "api": {
@@ -40,11 +41,14 @@ The basic syntax for defining an interface includes a mandatory `name` field. Th
   }
 }
 ```
+  {% endcode %}
+
 
 ## Using Interfaces in Graphs
 
 The `name` of an interface is primarily used in graphs to specify routing. In the example below, `src_extension` uses the `foo` interface provided by `dest_extension`. The `src_extension` recognizes the `foo` interface from its `interface_out` definition, while `dest_extension` recognizes the `foo` interface from its `interface_in` definition.
 
+{% code title=".json" %}
 ```json
 {
   "predefined_graphs": [{
@@ -83,9 +87,12 @@ The `name` of an interface is primarily used in graphs to specify routing. In th
   }]
 }
 ```
+{% endcode %}
+
 
 ## Meaning of `interface_in` and `interface_out`
 
+{% code title=".json" %}
 1. **`interface_in`**
 
    Indicates that the extension supports the specified interface's functionality.
@@ -102,11 +109,14 @@ The `name` of an interface is primarily used in graphs to specify routing. In th
      }
    }
    ```
+{% endcode %}
+
 
 2. **`interface_out`**
 
    Indicates that the extension requires another extension to provide the specified interface's functionality.
 
+{% code title=".json" %}
    ```json
    {
      "api": {
@@ -119,6 +129,8 @@ The `name` of an interface is primarily used in graphs to specify routing. In th
      }
    }
    ```
+{% endcode %}
+
 
 ## Interface and Message Declaration
 
@@ -137,8 +149,10 @@ For example, if an interface defines three commands and one data message, an ext
 
 In the current design, an extension cannot declare support for two interfaces with the same message name under a single API item. For example, if both `foo` and `bar` interfaces define a command named `xxx`, the following combinations are either allowed or not allowed:
 
-- **Not Allowed**
+{% tab %}
+{% tab title="Not Allowed" %}
 
+{% code title=".json" %}
   ```json
   {
     "api": {
@@ -172,9 +186,13 @@ In the current design, an extension cannot declare support for two interfaces wi
     }
   }
   ```
+{% endcode %}
+{% endtab %}
 
-- **Allowed**
 
+{% tab title="Allowed" %}
+
+{% code title=".json" %}
   ```json
   {
     "api": {
@@ -193,11 +211,14 @@ In the current design, an extension cannot declare support for two interfaces wi
     }
   }
   ```
+{% endcode %}
+{% endtab %}
 
 ## Interface Definition Content
 
 The definition of an `interface` is similar to the `api` field in a manifest. Below is an example of an `interface` definition:
 
+{% code title=".json" %}
 ```json
 {
   "cmd": [
@@ -240,6 +261,8 @@ The definition of an `interface` is similar to the `api` field in a manifest. Be
   "audio_frame": []
 }
 ```
+  {% endcode %}
+
 
 The TEN framework processes this interface by integrating its definitions into the extension’s manifest under the `api` field. For instance, commands defined in `interface_in` are integrated into `cmd_in`, and those in `interface_out` are integrated into `cmd_out`.
 
@@ -247,47 +270,55 @@ The TEN framework processes this interface by integrating its definitions into t
 
 There are two ways to specify the content of an interface:
 
-1. **Directly Embed the Content**
+{% tabs %}
+{% tab title="Directly Embed the Content" %}
 
-   Directly embed the interface definition in the manifest. Example:
+Directly embed the interface definition in the manifest. Example:
+{% code title=".json" %}
+```json
+{
+  "api": {
+    "interface_in": [
+      {
+        "name": "foo",
+        "cmd": [],
+        "data": [],
+        "video_frame": [],
+        "audio_frame": []
+      }
+    ]
+  }
+}
+```
+{% endcode %}
+{% endtab %}
 
-   ```json
-   {
-     "api": {
-       "interface_in": [
-         {
-           "name": "foo",
-           "cmd": [],
-           "data": [],
-           "video_frame": [],
-           "audio_frame": []
-         }
-       ]
-     }
-   }
-   ```
+{% tab title="Reference the Content" %}
 
-2. **Reference the Content**
+Use a reference to specify the interface definition, similar to the `$ref` syntax in JSON schema.
 
-   Use a reference to specify the interface definition, similar to the `$ref` syntax in JSON schema.
+{% code title=".json" %}
+```json
+{
+  "api": {
+    "interface_in": [
+      {
+        "name": "foo",
+        "$ref": "http://www.github.com/darth_vader/fight.json"
+      }
+    ]
+  }
+}
+```
+{% endcode %}
+{% endtab %}
 
-   ```json
-   {
-     "api": {
-       "interface_in": [
-         {
-           "name": "foo",
-           "$ref": "http://www.github.com/darth_vader/fight.json"
-         }
-       ]
-     }
-   }
-   ```
 
 ## Determining Interface Compatibility
 
 Since an interface is essentially syntactic sugar, whether two interfaces can be connected depends on the compatibility of the underlying messages. When the source extension specifies an output interface `foo`, and the destination extension specifies an input interface `bar`, the TEN runtime checks whether the `foo` interface of the source can connect to the `bar` interface of the destination.
 
+{% code title=".json" %}
 ```json
 {
   "api": {
@@ -296,7 +327,10 @@ Since an interface is essentially syntactic sugar, whether two interfaces can be
   }
 }
 ```
+  {% endcode %}
 
+
+{% code title=".json" %}
 ```json
 {
   "api": {
@@ -305,7 +339,10 @@ Since an interface is essentially syntactic sugar, whether two interfaces can be
   }
 }
 ```
+  {% endcode %}
 
+
+{% code title=".json" %}
 ```json
 {
   "extension_group": {
@@ -335,5 +372,7 @@ Since an interface is essentially syntactic sugar, whether two interfaces can be
   ]
 }
 ```
+  {% endcode %}
+
 
 The TEN framework will look for the definition of `foo` in the `interface_out` section of the source extension's manifest. It then checks each message defined in this interface against the destination extension’s manifest, both in its message definitions and in any interfaces it declares in `interface_in`. If any message cannot be matched according to the TEN framework’s schema-checking rules, the graph configuration will be considered invalid.

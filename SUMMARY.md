@@ -47,16 +47,6 @@
 * [Overview](ten_framework/ten_manager/overview.md)
 * [Dev-Server](ten_framework/ten_manager/dev_server_cn.md)
 
-## TEN Service
-
-* [🚧 TEN architecture(beta)](ten_service/ten_architecture_beta.md)
-* [🚧 TEN schema(beta)](ten_service/ten_schema_beta.md)
-* [TEN API(beta)](ten_service/ten_api_beta.md)
-* [🚧 TEN Message type and name(beta)](ten_service/ten_message_type_and_name_beta.md)
-* [🚧 Astra AI agent architecture(beta)](ten_service/astra_ai_agent_architecture_beta.md)
-
 ## Tutorials
 
 * [How to debug with logs](tutorials/how_to_debug_with_logs.md)
-* [🚧 How to build extension in Go(beta)](tutorials/how_to_build_extension_in_go_beta.md)
-* [🚧 How to build extension in C++(beta)](tutorials/how_to_build_extension_in_c++_beta.md)

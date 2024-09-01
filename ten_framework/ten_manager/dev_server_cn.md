@@ -2,9 +2,13 @@
 
 To start the `tman` development server, use the following command:
 
+{% code title=">_ Terminal" %}
+
 ```shell
 tman dev-server
 ```
+
+{% endcode %}
 
 If the `base-dir` is not specified, the current working directory will be used by default. Regardless, `base-dir` must be the base directory of a TEN app.
 
@@ -25,11 +29,13 @@ Retrieve the version of the dev-server.
 
 You will receive a `200 OK` response, with the body containing a JSON object like this:
 
+{% code title=".json" %}
 ```json
 {
   "version": "0.1.0"
 }
 ```
+  {% endcode %}
 
 ## Installed Extension Addons
 
@@ -40,6 +46,7 @@ Retrieve all installed extension addons recognized by the dev-server under the b
 
 You will receive a `200 OK` response, with the body containing a JSON array like this:
 
+{% code title=".json" %}
 ```json
 [
   {
@@ -50,6 +57,8 @@ You will receive a `200 OK` response, with the body containing a JSON array like
   }
 ]
 ```
+  {% endcode %}
+
 
 ## Available Graphs
 
@@ -60,6 +69,7 @@ Retrieve a list of available graphs.
 
 You will receive a `200 OK` response, with the body containing a JSON array like this:
 
+{% code title=".json" %}
 ```json
 [
   {
@@ -68,6 +78,7 @@ You will receive a `200 OK` response, with the body containing a JSON array like
   }
 ]
 ```
+  {% endcode %}
 
 If an error occurs, such as when the App package is not found, you will receive a `400 Bad Request` response with the body containing `Failed to find any app packages`.
 
@@ -89,6 +100,7 @@ Retrieve the list of connections within a specified graph.
 
 You will receive a `200 OK` response, with the body containing a JSON array like this:
 
+{% code title=".json" %}
 ```json
 [
   {
@@ -110,6 +122,7 @@ You will receive a `200 OK` response, with the body containing a JSON array like
   }
 ]
 ```
+{% code title=".json" %}
 
 ## Retrieve Compatible Messages for a Selected Extension
 
@@ -120,6 +133,7 @@ Select a message from an extension and retrieve all other messages from differen
 
 The input body is a JSON object that represents a request to find compatible pins (connections) for an output command from a specific extension within a specified graph.
 
+{% code title=".json" %}
 ```json
 {
   "app": "localhost",
@@ -131,9 +145,12 @@ The input body is a JSON object that represents a request to find compatible pin
   "msg_name": "test_cmd"
 }
 ```
+  {% endcode %}
+
 
 You will receive a `200 OK` response, with the body containing a JSON array like this:
 
+{% code title=".json" %}
 ```json
 [
   {
@@ -154,6 +171,8 @@ You will receive a `200 OK` response, with the body containing a JSON array like
   }
 ]
 ```
+  {% endcode %}
+
 
 ## Update a Graph
 
@@ -164,6 +183,7 @@ Update the specified graph.
 
 Input data (body):
 
+{% code title=".json" %}
 ```json
 {
   "auto_start": false,
@@ -205,6 +225,8 @@ Input data (body):
   ]
 }
 ```
+  {% endcode %}
+
 
 If successful, the client will receive a `200 OK` response; otherwise, a `40x` error code will be returned.
 
