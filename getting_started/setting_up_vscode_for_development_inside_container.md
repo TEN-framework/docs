@@ -1,4 +1,4 @@
-# Developing in VSCode Outside Container
+# Setting Up VSCode for Development Inside Container
 
 When developing with TEN, it's generally recommended to perform compilation and development within a container. However, if you're using VSCode outside the container, you may encounter issues where symbols cannot be resolved. This is because some environment dependencies are installed within the container, and VSCode can't recognize the container's environment, leading to unresolved header files.
 
