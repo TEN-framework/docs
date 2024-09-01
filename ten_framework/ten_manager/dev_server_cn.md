@@ -122,7 +122,8 @@ You will receive a `200 OK` response, with the body containing a JSON array like
   }
 ]
 ```
-{% code title=".json" %}
+{% endcode %}
+
 
 ## Retrieve Compatible Messages for a Selected Extension
 
@@ -225,7 +226,7 @@ Input data (body):
   ]
 }
 ```
-  {% endcode %}
+{% endcode %}
 
 
 If successful, the client will receive a `200 OK` response; otherwise, a `40x` error code will be returned.
