@@ -43,7 +43,6 @@ The basic syntax for defining an interface includes a mandatory `name` field. Th
 ```
 {% endcode %}
 
-
 ## Using Interfaces in Graphs
 
 The `name` of an interface is primarily used in graphs to specify routing. In the example below, `src_extension` uses the `foo` interface provided by `dest_extension`. The `src_extension` recognizes the `foo` interface from its `interface_out` definition, while `dest_extension` recognizes the `foo` interface from its `interface_in` definition.
@@ -130,7 +129,6 @@ The `name` of an interface is primarily used in graphs to specify routing. In th
    }
    ```
 {% endcode %}
-
 
 ## Interface and Message Declaration
 
