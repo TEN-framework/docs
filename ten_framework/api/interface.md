@@ -148,8 +148,9 @@ For example, if an interface defines three commands and one data message, an ext
 In the current design, an extension cannot declare support for two interfaces with the same message name under a single API item. For example, if both `foo` and `bar` interfaces define a command named `xxx`, the following combinations are either allowed or not allowed:
 
 
-{% code title=".json" %}
   - Not allowed
+
+{% code title=".json" %}
   ```json
   {
     "api": {
@@ -166,6 +167,8 @@ In the current design, an extension cannot declare support for two interfaces wi
     }
   }
   ```
+{% endcode %}
+
 - Allowed
 
 {% code title=".json" %}
