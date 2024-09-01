@@ -8,7 +8,7 @@
 * [Quickstart](getting_started/quickstart.md)
 * [Customize your agent](getting_started/publish_your_docs.md)
 * [Create a hello world extension](getting_started/create_a_hello_world_extension.md)
-* [How to develop in VSCode](getting_started/how_to_develop_in_vscode.md)
+* [Developing in VSCode Outside Container](getting_started/developing_in_vscode_outside_container.md)
 
 ## TEN framework
 
