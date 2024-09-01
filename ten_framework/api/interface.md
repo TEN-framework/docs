@@ -41,7 +41,7 @@ The basic syntax for defining an interface includes a mandatory `name` field. Th
   }
 }
 ```
-  {% endcode %}
+{% endcode %}
 
 
 ## Using Interfaces in Graphs
@@ -92,11 +92,11 @@ The `name` of an interface is primarily used in graphs to specify routing. In th
 
 ## Meaning of `interface_in` and `interface_out`
 
-{% code title=".json" %}
 1. **`interface_in`**
 
    Indicates that the extension supports the specified interface's functionality.
 
+{% code title=".json" %}
    ```json
    {
      "api": {
@@ -149,10 +149,9 @@ For example, if an interface defines three commands and one data message, an ext
 
 In the current design, an extension cannot declare support for two interfaces with the same message name under a single API item. For example, if both `foo` and `bar` interfaces define a command named `xxx`, the following combinations are either allowed or not allowed:
 
-{% tab %}
-{% tab title="Not Allowed" %}
 
 {% code title=".json" %}
+  - Not allowed
   ```json
   {
     "api": {
@@ -169,7 +168,9 @@ In the current design, an extension cannot declare support for two interfaces wi
     }
   }
   ```
+- Allowed
 
+{% code title=".json" %}
   ```json
   {
     "api": {
@@ -186,8 +187,7 @@ In the current design, an extension cannot declare support for two interfaces wi
     }
   }
   ```
-{% endcode %}
-{% endtab %}
+   {% endcode %}
 
 
 {% tab title="Allowed" %}
