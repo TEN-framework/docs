@@ -4,9 +4,10 @@ Welcome to TEN! TEN stands for Transformative Extensions Network, an open-source
 
 Here, you’ll get an overview of all the incredible features TEN offers to help you build engaging and interactive experiences.
 
+
 Before we get started, please click the [**star button on our GitHub repo**](https://github.com/rte-design/astra.ai) to stay updated with one of the AI agents powered by TEN.
 
-<figure><img src="assets/gif/star_the_repo_confetti.gif" alt=""><figcaption><p>Star us to stay updated</p></figcaption></figure>
+<figure><img src="assets/gif/star_the_repo_confetti.gif" alt=""><figcaption><p>Star us to stay updated with Astra Agent</p></figcaption></figure>
 
 ### Jump right in
 
