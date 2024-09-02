@@ -16,15 +16,19 @@ Next, install the [Dev Containers extension](https://marketplace.visualstudio.co
 
 This step is similar to the process outlined in the [Quick Start](./quickstart.md) guide. However, instead of running:
 
+{% code title=">_ Terminal" %}
 ```shell
 docker compose up
 ```
+{% endcode %}
 
-Run the following command to start the container in detached mode:
+Using the `docker compose up -d` command, start the container in detached mode:
 
+{% code title=">_ Terminal" %}
 ```shell
 docker compose up -d
 ```
+{% endcode %}
 
 After executing this command, the container should start. Open VSCode, switch to the Docker extension, and you should see the running container.
 
@@ -34,5 +38,7 @@ After executing this command, the container should start. Open VSCode, switch to
 
 In the Docker extension within VSCode, find the `astra_agents_dev` container in the list and click `Attach Visual Studio Code` to connect to the container. VSCode will then open a new window that is connected to the container, where you can proceed with development.
 
-> ⚠️ **Note:**
-> In the Dev Container environment connected to the container, your local extensions and settings will not be applied, as this environment is within the container. Therefore, you will need to install extensions and configure settings inside the container. To install extensions within the container, open the newly launched VSCode window, click on `Extensions` in the left sidebar, search for the required extension, and follow the prompts to install it inside the container.
+{% note style="warning" %}
+In the Dev Container environment connected to the container, your local extensions and settings will not be applied, as this environment is within the container. Therefore, you will need to install extensions and configure settings inside the container. To install extensions within the container, open the newly launched VSCode window, click on `Extensions` in the left sidebar, search for the required extension, and follow the prompts to install it inside the container.
+{% endnote %}
+
