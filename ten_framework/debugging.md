@@ -6,11 +6,9 @@ If you're using VS Code to develop the TEN framework, there is a `launch.json` f
 
 ## For Users of the TEN Framework
 
-If you're using VS Code to develop your own application based on the TEN
-framework, you can add configurations to your `.vscode/launch.json` file so
-that you can debug your application with breakpoints and variable inspection whichever programming language (C++/Golang/Python) you are using.
+If you're using VS Code to develop your own application based on the TEN framework, you can add configurations to your `.vscode/launch.json` file so that you can debug your application with breakpoints and variable inspection whichever programming language (C++/Golang/Python) you are using.
 
-### Debugging in C++ applications
+### Debugging in C++ Applications
 
 If the application is written in C++, it means the extensions can be written
 in C++ or Python.
@@ -19,75 +17,70 @@ in C++ or Python.
 
 You can use the following configurations to debug C++ code:
 
-```json
-debugging C++ code with lldb
+* **Debugging C++ code with lldb**
 
-{
-    "name": "app (C++) (lldb, launch)",
-    "type": "lldb",
-    "request": "launch", // "launch" or "attach"
-    "program": "${workspaceFolder}/bin/worker", // The executable path
-    "cwd": "${workspaceFolder}/",
-    "env": {
-        "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
-        "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib" // macOS
-    }
-}
-```
+  ```json
+  {
+      "name": "app (C++) (lldb, launch)",
+      "type": "lldb",
+      "request": "launch", // "launch" or "attach"
+      "program": "${workspaceFolder}/bin/worker", // The executable path
+      "cwd": "${workspaceFolder}/",
+      "env": {
+          "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
+          "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib" // macOS
+      }
+  }
+  ```
 
-```json
-debugging C++ code with gdb
+* **Debugging C++ code with gdb**
 
-{
-    "name": "app (C++) (gdb, launch)",
-    "type": "cppdbg",
-    "request": "launch", // "launch" or "attach"
-    "program": "${workspaceFolder}/bin/worker", // The executable path
-    "cwd": "${workspaceFolder}/",
-    "MIMode": "gdb",
-    "environment": [
-        {
-            // linux
-            "name": "LD_LIBRARY_PATH",
-            "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
-        },
-        {
-            // macOS
-            "name": "DYLD_LIBRARY_PATH",
-            "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
-        }
-    ]
-}
-```
+  ```json
+  {
+      "name": "app (C++) (gdb, launch)",
+      "type": "cppdbg",
+      "request": "launch", // "launch" or "attach"
+      "program": "${workspaceFolder}/bin/worker", // The executable path
+      "cwd": "${workspaceFolder}/",
+      "MIMode": "gdb",
+      "environment": [
+          {
+              // linux
+              "name": "LD_LIBRARY_PATH",
+              "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
+          },
+          {
+              // macOS
+              "name": "DYLD_LIBRARY_PATH",
+              "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
+          }
+      ]
+  }
+  ```
 
 #### Debugging Python code with debugpy
 
-You can use 'debugpy' to debug Python code. However, since the program is not
-started directly through the Python interpreter, the Python code is executed
-by the embedded Python interpreter. Therefore, you can only attach a debugger
-to a running process.
+You can use `debugpy` to debug Python code. However, since the program is not started directly through the Python interpreter, the Python code is executed by the embedded Python interpreter. Therefore, you can only attach a debugger to a running process.
 
-First, you should install `debugpy` in the Python environment:
+First, you need to install `debugpy` in the Python environment:
 
-```bash
+```shell
 pip install debugpy
 ```
 
-Then, you should start the application with environment variable `TEN_ENABLE_PYTHON_DEBUG` and `TEN_PYTHON_DEBUG_PORT` set. For example:
+Then, you need to start the application with environment variable `TEN_ENABLE_PYTHON_DEBUG` and `TEN_PYTHON_DEBUG_PORT` set. For example:
 
-```bash
+```shell
 TEN_ENABLE_PYTHON_DEBUG=true TEN_PYTHON_DEBUG_PORT=5678 ./bin/worker
 ```
 
-If the environment variable `TEN_ENABLE_PYTHON_DEBUG` is set to `true`, then
-the application will block until the debugger is attached.
-If the environment variable `TEN_PYTHON_DEBUG_PORT` is set, then the debug server will listen on the specified port for incoming connections.
+If the environment variable `TEN_ENABLE_PYTHON_DEBUG` is set to `true`, then the application will block until the debugger is attached. If the environment variable `TEN_PYTHON_DEBUG_PORT` is set, then the debugger server will listen on the specified port for incoming connections.
 
 Then, you can attach the debugger to the running process. Here is an example of the configuration:
 
-```json
-debugging Python code with debugpy
+**Debugging Python code with debugpy**
 
+```json
 {
     "name": "app (C++) (debugpy, attach)",
     "type": "debugpy",
@@ -115,7 +108,7 @@ If you want to start debugging C++ and Python code at the same time with one cli
         "command": "ping 127.0.0.1 -n 3 > nul"
       },
       "group": "none",
-    }
+   }
    ```
 
 2. Add the following configurations to the `launch.json` file:
@@ -162,16 +155,13 @@ Then, you can start debugging C++ and Python code with the compound configuratio
 
 ### Debugging in Go applications
 
-If the application is written in Go, it means the extensions can be written
-in Go or C++ or Python.
+If the application is written in Go, it means the extensions can be written in Go or C++ or Python.
 
 #### Debugging Go code with delve
 
 You can use the following configuration to debug in your Go extensions:
 
 ```json
-debugging Go code with delve
-
 {
     "name": "app (golang) (go, launch)",
     "type": "go",
@@ -191,63 +181,61 @@ debugging Go code with delve
 
 You can use the following configurations to debug C++ code:
 
-```json
-debugging C++ code with lldb
+* **debugging C++ code with lldb**
 
-{
-    "name": "app (Go) (lldb, launch)",
-    "type": "lldb",
-    "request": "launch", // "launch" or "attach"
-    "program": "${workspaceFolder}/bin/worker", // The executable path
-    "cwd": "${workspaceFolder}/",
-    "env": {
-        "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
-        "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib" // macOS
-    },
-    "initCommands": [
-        "process handle SIGURG --stop false --pass true"
-    ]
-}
-```
+  ```json
+  {
+      "name": "app (Go) (lldb, launch)",
+      "type": "lldb",
+      "request": "launch", // "launch" or "attach"
+      "program": "${workspaceFolder}/bin/worker", // The executable path
+      "cwd": "${workspaceFolder}/",
+      "env": {
+          "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
+          "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib" // macOS
+      },
+      "initCommands": [
+          "process handle SIGURG --stop false --pass true"
+      ]
+  }
+  ```
 
-```json
-debugging C++ code with gdb
+* **debugging C++ code with gdb**
 
-{
-    "name": "app (Go) (gdb, launch)",
-    "type": "cppdbg",
-    "request": "launch", // "launch" or "attach"
-    "program": "${workspaceFolder}/bin/worker", // The executable path
-    "cwd": "${workspaceFolder}/",
-    "MIMode": "gdb",
-    "environment": [
-        {
-            // linux
-            "name": "LD_LIBRARY_PATH",
-            "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
-        },
-        {
-            // macOS
-            "name": "DYLD_LIBRARY_PATH",
-            "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
-        }
-    ]
-}
-```
+  ```json
+  {
+      "name": "app (Go) (gdb, launch)",
+      "type": "cppdbg",
+      "request": "launch", // "launch" or "attach"
+      "program": "${workspaceFolder}/bin/worker", // The executable path
+      "cwd": "${workspaceFolder}/",
+      "MIMode": "gdb",
+      "environment": [
+          {
+              // linux
+              "name": "LD_LIBRARY_PATH",
+              "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
+          },
+          {
+              // macOS
+              "name": "DYLD_LIBRARY_PATH",
+              "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
+          }
+      ]
+  }
+  ```
 
 #### Debugging Python code with debugpy
 
 Refer to the section above for debugging Python code with debugpy. Start the application with environment variable `TEN_ENABLE_PYTHON_DEBUG` and `TEN_PYTHON_DEBUG_PORT` set.
 
-```bash
+```shell
 TEN_ENABLE_PYTHON_DEBUG=true TEN_PYTHON_DEBUG_PORT=5678 ./bin/worker
 ```
 
 Then, you can attach the debugger to the running process. Here is an example of the configuration:
 
 ```json
-debugging Python code with debugpy
-
 {
     "name": "app (C++) (debugpy, attach)",
     "type": "debugpy",
@@ -339,9 +327,7 @@ If you want to start debugging C++, Go and Python code at the same time with one
    ]
    ```
 
-If you want to debug C++ and Python code at the same time, you can use the compound configuration `Mixed Go/Python/C++ (lldb)`. With this configuration,
-you can perform breakpoint debugging for C++, Go and Python code simultaneously.
-However, the variable inspection is only supported for C++ and Python but not for Go code.
+If you want to debug C++ and Python code at the same time, you can use the compound configuration `Mixed Go/Python/C++ (lldb)`. With this configuration, you can perform breakpoint debugging for C++, Go and Python code simultaneously. However, the variable inspection is only supported for C++ and Python but not for Go code.
 
 If you want to debug Go and Python code at the same time, you can use the compound configuration `Mixed Go/Python`. With this configuration, you can perform breakpoint debugging for Go and Python code simultaneously and inspect variables for both Go and Python code.
 
@@ -354,8 +340,6 @@ If the application is written in Python, it means the extensions can be written 
 You can use the following configurations to debug C++ code:
 
 ```json
-debugging C++ code with gdb or lldb
-
 {
     "name": "app (Python) (cpp, launch)",
     "type": "cppdbg", //
@@ -385,8 +369,6 @@ Refer to the section above for debugging Python code with debugpy. You can use
 the following configurations to debug Python code:
 
 ```json
-debugging Python code with debugpy
-
 {
     "name": "app (Python) (debugpy, launch)",
     "type": "debugpy",
@@ -399,18 +381,15 @@ debugging Python code with debugpy
         "PYTHONPATH": "${workspaceFolder}/ten_packages/system/ten_runtime_python/lib:${workspaceFolder}/ten_packages/system/ten_runtime_python/interface",
         "TEN_APP_BASE_DIR": "${workspaceFolder}/",
         "TEN_ENABLE_PYTHON_DEBUG": "true",
-    },
+    }
 }
 ```
 
 #### Debugging C++ and Python code at the same time
 
-If you want to start debugging C++ and Python code at the same time, you can launch the application with the configuration `app (Python) (debugpy, launch)`
-and attach the debugger to the running process with the following configuration:
+If you want to start debugging C++ and Python code at the same time, you can launch the application with the configuration `app (Python) (debugpy, launch)` and attach the debugger to the running process with the following configuration:
 
 ```json
-debugging C++ code with lldb or gdb
-
 {
     "name": "app (Python) (cpp, attach)",
     "type": "cppdbg",
