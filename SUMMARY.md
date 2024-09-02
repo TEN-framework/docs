@@ -1,10 +1,10 @@
 # Table of contents
 
 * [🌟 Welcome to TEN](README.md)
-* [Vision of TEN](ten_framework/goal_and_application_scenarios.md)
-    * [Goal](ten_framework/goal_and_application_scenarios.md)
-    * [Key Concepts](ten_framework/goal_and_application_scenarios.md)
-    * [Scenarios](ten_framework/goal_and_application_scenarios.md)
+* [Vision of TEN](vision/vision.md)
+    * [Goal](vision/goal.md)
+    * [Key Concepts](vision/key_concepts.md)
+    * [Scenarios](vision/application_scenarios.md)
 
 ## Getting Started
 
