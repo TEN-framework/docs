@@ -1,8 +1,10 @@
 # TEN Framework Concepts Overview
 
-## Goal
+## Vision
 
-The goal of the TEN framework is to establish a modular, flexible, and scalable platform that enhances development speed, maintainability, and scalability. The framework is designed to support best engineering practices for modular development, enabling developers to create robust, efficient, and adaptable applications by leveraging comprehensive mechanisms provided by the platform.
+The vision of the TEN framework is to establish a modular, flexible, and scalable platform that enhances development speed, maintainability, and scalability. The framework is designed to support best engineering practices for modular development, enabling developers to create robust, efficient, and adaptable applications by leveraging comprehensive mechanisms provided by the platform.
+
+--- 
 
 ## Key Concepts
 
@@ -125,6 +127,8 @@ The goal of the TEN framework is to establish a modular, flexible, and scalable 
 2. **High Concurrency of RESTful Interfaces**: The platform can support over 20,000 RESTful clients in a single process.
 
 3. **High Concurrency of Non-RESTful Interfaces**: The platform can support over 1,000 non-RESTful clients in a single process.
+
+--- 
 
 ## Application Scenarios
 

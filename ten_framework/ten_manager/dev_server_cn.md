@@ -14,9 +14,11 @@ If the `base-dir` is not specified, the current working directory will be used b
 
 The server starts on port 49483 by default, and you can interact with the dev-server using the following URL:
 
+{% code title="https" %}
 ```text
 http://127.0.0.1:49483/api/dev-server/v1/
 ```
+{% endcode %}
 
 If the requested endpoint URL is not found, the client will receive a `404 Not Found` response, with the response body containing `Endpoint '\' not found` to prevent any confusion.
 
