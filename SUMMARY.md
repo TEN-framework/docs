@@ -1,10 +1,10 @@
 # Table of contents
 
 * [🌟 Welcome to TEN](README.md)
-* [Vision](ten_framework/goal_and_application_scenarios.md)
-    * [Goal](ten_framework/goal_and_application_scenarios.md#vision)
-    * [Key Concepts](ten_framework/goal_and_application_scenarios.md#key-concepts)
-    * [Scenarios](ten_framework/goal_and_application_scenarios.md#scenarios)
+* [Vision of TEN](ten_framework/goal_and_application_scenarios.md)
+    * [Goal](ten_framework/goal_and_application_scenarios.md)
+    * [Key Concepts](ten_framework/goal_and_application_scenarios.md)
+    * [Scenarios](ten_framework/goal_and_application_scenarios.md)
 
 ## Getting Started
 
@@ -17,14 +17,14 @@
 
 * [Overview](ten_framework/concept_overview.md)
 * [Preparation](ten_framework/preparation.md)
-    * [Systems](ten_framework/preparation.md#systems)
-        * [Version System](ten_framework/version_system.md)
-        * [Metadata System](ten_framework/metadata_system.md)
-        * [Message System](ten_framework/message_system.md)
-        * [Type System](ten_framework/type_system.md)
-        * [Schema System](ten_framework/schema_system.md)
-        * [Build System](ten_framework/build_system.md)
-        * [Test System](ten_framework/test_system.md)
+* [Systems](ten_framework/systems.md)
+    * [Version System](ten_framework/version_system.md)
+    * [Metadata System](ten_framework/metadata_system.md)
+    * [Message System](ten_framework/message_system.md)
+    * [Type System](ten_framework/type_system.md)
+    * [Schema System](ten_framework/schema_system.md)
+    * [Build System](ten_framework/build_system.md)
+    * [Test System](ten_framework/test_system.md)
 * [Graph](ten_framework/graph.md)
 * [Cloud Store](ten_framework/cloud_store.md)
 * [Debugging](ten_framework/debugging.md)
