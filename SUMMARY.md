@@ -1,28 +1,32 @@
 # Table of contents
 
 * [🌟 Welcome to TEN](README.md)
-* [🥅 Goal & Application Scenarios](ten_framework/goal_and_application_scenarios.md)
+* [Vision](ten_framework/goal_and_application_scenarios.md)
+    * [Goal](ten_framework/goal_and_application_scenarios.md#vision)
+    * [Key Concepts](ten_framework/goal_and_application_scenarios.md#key-concepts)
+    * [Scenarios](ten_framework/goal_and_application_scenarios.md#scenarios)
 
-## 🎉 Getting Started
+## Getting Started
 
 * [Quickstart](getting_started/quickstart.md)
-* [Customize your agent](getting_started/publish_your_docs.md)
-* [Create a hello world extension](getting_started/create_a_hello_world_extension.md)
-* [Setting Up VSCode for Development Inside Container](getting_started/setting_up_vscode_for_development_inside_container.md)
+* [Customize Agent](getting_started/publish_your_docs.md)
+* [Create a Hello World Extension](getting_started/create_a_hello_world_extension.md)
+* [Setup VSCode Inside Container](getting_started/setting_up_vscode_for_development_inside_container.md)
 
 ## TEN framework
 
-* [Concept overview](ten_framework/concept_overview.md)
+* [Overview](ten_framework/concept_overview.md)
 * [Preparation](ten_framework/preparation.md)
-* [Version system](ten_framework/version_system.md)
-* [Metadata system](ten_framework/metadata_system.md)
-* [Message system](ten_framework/message_system.md)
-* [Type system](ten_framework/type_system.md)
-* [Schema system](ten_framework/schema_system.md)
-* [Build system](ten_framework/build_system.md)
-* [Test system](ten_framework/test_system.md)
-* [⊷ Graph](ten_framework/graph.md)
-* [Cloud store](ten_framework/cloud_store.md)
+    * [Systems](ten_framework/preparation.md#systems)
+        * [Version System](ten_framework/version_system.md)
+        * [Metadata System](ten_framework/metadata_system.md)
+        * [Message System](ten_framework/message_system.md)
+        * [Type System](ten_framework/type_system.md)
+        * [Schema System](ten_framework/schema_system.md)
+        * [Build System](ten_framework/build_system.md)
+        * [Test System](ten_framework/test_system.md)
+* [Graph](ten_framework/graph.md)
+* [Cloud Store](ten_framework/cloud_store.md)
 * [Debugging](ten_framework/debugging.md)
 * [Profiling](ten_framework/profiling.md)
 * [Dependencies](ten_framework/dependencies.md)
@@ -31,12 +35,12 @@
 
 * [Go](ten_framework/binding/go.md)
 
-### API
+### API Reference
 
 * [Required](ten_framework/api/required.md)
 * [Interface](ten_framework/api/interface.md)
 
-### 📦 TEN packages
+### TEN Packages
 
 * [Overview](ten_framework/ten_packages/overview.md)
 * [App](ten_framework/ten_packages/app.md)
