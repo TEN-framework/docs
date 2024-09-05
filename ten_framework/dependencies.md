@@ -1,14 +1,18 @@
 # Dependencies
 
-The TEN framework utilizes several third-party libraries. Below is a description of these libraries, along with any necessary modifications required for their use within the TEN framework.
+The TEN framework utilizes several third-party libraries. Some are used specifically for testing, while others are integrated into the TEN runtime. Below is a description of these libraries, along with any necessary modifications required for their use within the TEN framework.
 
 ## Google gn
 
 Version: 2112 (1de45d1a11cc)
 
+Download directly from [Google GN webpage](https://gn.googlesource.com/gn/).
+
 ## Google ninja
 
 Version: 1.11.1
+
+Download directly from [Ninja release page](https://github.com/ninja-build/ninja/releases).
 
 ## Jansson
 
@@ -16,7 +20,7 @@ Version: 2.14
 
 [MIT license](https://github.com/akheron/jansson/blob/master/LICENSE)
 
-This is used in the TEN framework core to parse and generate JSON data.
+This is used in the TEN framework core to parse and generate JSON data. Please refer to `third_party/jansson` for details.
 
 ## libuv
 
@@ -24,13 +28,15 @@ Version: 1.48.0
 
 [MIT license](https://github.com/libuv/libuv#licensing)
 
-This is one of the event loop libraries used in the TEN runtime.
+This is one of the event loop libraries used in the TEN runtime. Please refer to `third_party/libuv` for details.
 
 ## msgpack-c
 
-A MessagePack library for C. Version: 6.0.0
+Version: 6.0.0
 
 [Boost Software License, Version 1.0](https://github.com/msgpack/msgpack-c#license)
+
+A MessagePack library for C. Please refer to `third_party/msgpack` for details.
 
 ## libwebsockets
 
@@ -38,7 +44,9 @@ Version: 4.3.2
 
 [MIT license](https://github.com/warmcat/libwebsockets/blob/main/LICENSE)
 
-``` diff
+Canonical libwebsockets.org networking library. Please refer to `third_party/libwebsockets` for details.
+
+```diff
 --- /home/wei/MyData/Temp/libwebsockets-4.3.2/CMakeLists.txt
 +++ libwebsockets/CMakeLists.txt
 @@ -851,6 +851,7 @@
@@ -53,7 +61,7 @@ Version: 4.3.2
 
 Apply the following patch.
 
-``` diff
+```diff
 diff --git a/third_party/libwebsockets/cmake/lws_config.h.in b/third_party/libwebsockets/cmake/lws_config.h.in
 index f3f4a9d79..e8d36c3ae 100644
 --- a/third_party/libwebsockets/cmake/lws_config.h.in
@@ -92,7 +100,7 @@ index e8a0cb2d4..84a164e90 100755
 
 Apply the following patch if the CMake version is higher than 3.24, as `find_package` supports the `GLOBAL` keyword since 3.24.
 
-``` diff
+```diff
 diff --git a/third_party/libwebsockets/lib/tls/mbedtls/CMakeLists.txt b/third_party/libwebsockets/lib/tls/mbedtls/CMakeLists.txt
 index e34151724..79b15089d 100644
 --- a/third_party/libwebsockets/lib/tls/mbedtls/CMakeLists.txt
@@ -120,7 +128,7 @@ index e34151724..79b15089d 100644
 +        set(LWS_MBEDTLS_LIBRARIES MbedTLS::mbedcrypto MbedTLS::mbedx509 MbedTLS::mbedtls)
 ```
 
-``` diff
+```diff
 diff --git a/third_party/libwebsockets/BUILD.gn b/third_party/libwebsockets/BUILD.gn
 index 4c89c2e2e..e6d641b9c 100644
 --- a/third_party/libwebsockets/BUILD.gn
@@ -145,11 +153,13 @@ Version: 8.1.2
 
 A command-line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, and TFTP. libcurl offers a myriad of powerful features.
 
+Please refer to `third_party/curl` for details.
+
 ### Patches for curl
 
 Patch `lib/CMakeLists.txt`, to change the shared library name from `_imp.lib` to `.lib`.
 
-``` cmake
+```cmake
 if(WIN32)
   if(BUILD_SHARED_LIBS)
     if(MSVC)
@@ -164,7 +174,7 @@ endif()
 
 Export `Curl_ws_done` in `lib/ws.h`, because this function needs to be called to prevent memory leaks.
 
-``` c
+```c
 CURL_EXTERN void Curl_ws_done(struct Curl_easy *data);
 // ^^^^^^^^
 ```
@@ -177,6 +187,8 @@ Version: 5.6.2
 
 A grounder and solver for logic programs.
 
+Please refer to `third_party/clingo` for details.
+
 ## FFmpeg
 
 Version: 6.0
@@ -184,3 +196,37 @@ Version: 6.0
 [GPL or LGPL license](https://github.com/FFmpeg/FFmpeg/blob/master/LICENSE.md)
 
 The FFmpeg codebase is mainly LGPL-licensed with optional components licensed under GPL. Please refer to the LICENSE file for detailed information.
+
+Used in ffmpeg extensions, primarily for testing purposes. Please refer to `third_party/ffmpeg` for details.
+
+## libbacktrace
+
+Version: 1.0
+
+[BSD license](https://github.com/ianlancetaylor/libbacktrace/blob/master/LICENSE)
+
+A C library that may be linked into a C/C++ program to produce symbolic backtraces.
+
+> ⚠️ **Note:**
+> We have significantly modified `libbacktrace` to conform to the naming conventions and folder structure of the TEN framework. Please refer to `core/src/ten_utils/backtrace` for details.
+
+## uthash
+
+Version: 2.3.0
+
+[BSD license](https://github.com/troydhanson/uthash/blob/master/LICENSE)
+
+C macros for hash tables and more.
+
+> ⚠️ **Note:**
+> We have significantly modified `uthash` to conform to the naming conventions and folder structure of the TEN framework. Please refer to the files under `core/include/ten_utils/container` that have `uthash` mentioned in the file headers.
+
+## uuid4
+
+[MIT license](https://github.com/gpakosz/uuid4/blob/master/LICENSE.MIT)
+[WTFPLv2 license](<https://github.com/gpakosz/uuid4/blob/master/LICENSE.WTFPLv2>)
+
+UUID v4 generation in C.
+
+> ⚠️ **Note:**
+> We have significantly modified `uuid4` to conform to the naming conventions and folder structure of the TEN framework. Please refer to `core/src/ten_utils/lib/sys/general/uuid.c` for details.
