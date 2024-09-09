@@ -230,3 +230,12 @@ UUID v4 generation in C.
 
 > ⚠️ **Note:**
 > We have significantly modified `uuid4` to conform to the naming conventions and folder structure of the TEN framework. Please refer to `core/src/ten_utils/lib/sys/general/uuid.c` for details.
+
+## zf_log
+
+[MIT license](https://github.com/wonder-mice/zf_log/blob/master/LICENSE)
+
+Core logging library for C/ObjC/C++.
+
+> ⚠️ **Note:**
+> We have significantly modified `zf_log` to conform to the naming conventions and folder structure of the TEN framework. Please refer to `core/src/ten_utils/log` for details.
