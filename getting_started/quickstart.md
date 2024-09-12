@@ -140,12 +140,8 @@ TEN Graph Designer (beta), a tool that requires zero coding knowledge and makes 
 
 ## Video tutorials
 
-{% tabs %}
-{% tab title="English" %}
-{% embed url="<https://www.youtube.com/watch?t=1s&v=_AZ3RedzvRg>" %}
-{% endtab %}
+English:
+<https://www.youtube.com/watch?t=1s&v=_AZ3RedzvRg>
 
-{% tab title="中文" %}
-{% embed url="<https://www.youtube.com/watch?v=MbqF4c2Myrw>" %}
-{% endtab %}
-{% endtabs %}
+中文:
+<https://www.youtube.com/watch?v=MbqF4c2Myrw>

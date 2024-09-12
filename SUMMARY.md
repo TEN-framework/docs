@@ -1,15 +1,14 @@
 # Table of contents
 
 * [🌟 Welcome to TEN](README.md)
-* [Vision of TEN](vision/vision.md)
-    * [Goal](vision/goal.md)
-    * [Key Concepts](vision/key_concepts.md)
-    * [Scenarios](vision/application_scenarios.md)
+* [Goal](vision/goal.md)
+* [Key Concepts](vision/key_concepts.md)
+* [Scenarios](vision/application_scenarios.md)
 
 ## Getting Started
 
 * [Quickstart](getting_started/quickstart.md)
-* [Customize Agent](getting_started/publish_your_docs.md)
+* [Customize Agent](getting_started/customize_your_agent.md)
 * [Create a Hello World Extension](getting_started/create_a_hello_world_extension.md)
 * [Setup VSCode Inside Container](getting_started/setting_up_vscode_for_development_inside_container.md)
 
@@ -17,14 +16,13 @@
 
 * [Overview](ten_framework/concept_overview.md)
 * [Preparation](ten_framework/preparation.md)
-* [Systems](ten_framework/systems.md)
-    * [Version System](ten_framework/version_system.md)
-    * [Metadata System](ten_framework/metadata_system.md)
-    * [Message System](ten_framework/message_system.md)
-    * [Type System](ten_framework/type_system.md)
-    * [Schema System](ten_framework/schema_system.md)
-    * [Build System](ten_framework/build_system.md)
-    * [Test System](ten_framework/test_system.md)
+* [Version System](ten_framework/version_system.md)
+* [Metadata System](ten_framework/metadata_system.md)
+* [Message System](ten_framework/message_system.md)
+* [Type System](ten_framework/type_system.md)
+* [Schema System](ten_framework/schema_system.md)
+* [Build System](ten_framework/build_system.md)
+* [Test System](ten_framework/test_system.md)
 * [Graph](ten_framework/graph.md)
 * [Cloud Store](ten_framework/cloud_store.md)
 * [Debugging](ten_framework/debugging.md)
