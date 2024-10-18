@@ -654,3 +654,149 @@ The message declared in each message flow in the connections will be checked if 
 	💔  Error: 1/1 graphs failed.
   ```
 
+### The `app` in node must be unambiguous.
+
+The `app` field in each node must met the following rules.
+
+* The `app` field must be equal to the `_ten::uri` of the TEN app.
+* Either all nodes should have 'app' declared, or none should.
+* The `app` field can not be `localhost`.
+
+
+* case 10: some of the nodes specified the `app` field.
+
+  Checking graph with the following command.
+
+  ```shell
+  tman check graph --graph '{
+		"nodes": [
+			{
+				"type": "extension",
+				"name": "some_extension",
+				"addon": "addon_a",
+				"extension_group": "some_group"
+			},
+			{
+				"type": "extension",
+				"name": "another_ext",
+				"addon": "addon_b",
+				"extension_group": "some_group",
+				"app": "http://localhost:8000"
+			}
+		]
+	}' --app /home/TEN-Agent/agents
+  ```
+
+  The output will be as follows.
+
+  ```text
+  💔  Error: The graph json string is invalid
+
+	Caused by:
+			Either all nodes should have 'app' declared, or none should, but not a mix of both.
+  ```
+
+* case 11: no `app` specified in all nodes, but some source extension specified `app` in the connections.
+
+  Checking graph with the following command.
+
+  ```shell
+  tman check graph --graph '{
+		"nodes": [
+			{
+				"type": "extension",
+				"name": "some_extension",
+				"addon": "addon_a",
+				"extension_group": "some_group"
+			},
+			{
+				"type": "extension",
+				"name": "another_ext",
+				"addon": "addon_b",
+				"extension_group": "some_group"
+			}
+		],
+		"connections": [
+			{
+				"extension": "some_extension",
+				"extension_group": "some_group",
+				"app": "http://localhost:8000",
+				"cmd": [
+					{
+						"name": "cmd_1",
+						"dest": [
+							{
+								"extension_group": "some_group",
+								"extension": "another_ext"
+							}
+						]
+					}
+				]
+			}
+		]
+	}' --app /home/TEN-Agent/agents
+  ```
+
+  The output will be as follows.
+
+  ```text
+  💔  Error: The graph json string is invalid
+
+	Caused by:
+			connections[0].the 'app' should not be declared, as not any node has declared it
+  ```
+
+* case 12: no `app` specified in all nodes, but some target extension specified `app` in the connections.
+
+  Checking graph with the following command.
+
+  ```shell
+  tman check graph --graph '{
+		"nodes": [
+			{
+				"type": "extension",
+				"name": "some_extension",
+				"addon": "addon_a",
+				"extension_group": "some_group"
+			},
+			{
+				"type": "extension",
+				"name": "another_ext",
+				"addon": "addon_b",
+				"extension_group": "some_group"
+			}
+		],
+		"connections": [
+			{
+				"extension": "some_extension",
+				"extension_group": "some_group",
+				"cmd": [
+					{
+						"name": "cmd_1",
+						"dest": [
+							{
+								"extension_group": "some_group",
+								"extension": "another_ext",
+								"app": "http://localhost:8000"
+							}
+						]
+					}
+				]
+			}
+		]
+	}' --app /home/TEN-Agent/agents
+  ```
+
+  The output will be as follows.
+
+  ```text
+  💔  Error: The graph json string is invalid
+
+	Caused by:
+			connections[0].cmd[0].dest[0]: the 'app' should not be declared, as not any node has declared it
+  ```
+
+* case 13: the `app` field in nodes is not equal to the `_ten::uri` of app.
+
+  Same as `case 5`.
+
