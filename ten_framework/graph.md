@@ -354,3 +354,295 @@ Essentially, you place the complete graph definition above under the `ten` field
   }
 }
 ```
+
+## Specification for Graph Definition
+
+* Nodes can not be empty.
+
+  The `nodes` array is required in a graph. And the `connections` array is optional.
+
+* The `app` field in a node must be equal to the `_ten::uri` in the property.json of app.
+
+  > **Note**
+  >
+  > * The `app` field in a node can **_NOT_** be `localhost`. You do not need to specify the `app` field if the belonging app does not have a `_ten::uri`.
+
+* Nodes should not be duplicated.
+
+  The elements in the Nodes list must be unique based on the app + group + name dimension. In other words, you can not specify two different addons with the same instance name in the same extension_group of app. Ex:
+
+  ```json
+  {
+    "nodes": [
+      {
+        "type": "extension",
+        "name": "some_ext",
+        "addon": "addon_1",
+        "extension_group": "test",
+      },
+      {
+        "type": "extension",
+        "name": "some_ext",
+        "addon": "addon_2",
+        "extension_group": "test",
+      }
+    ]
+  }
+  ```
+
+  The above definition is invalid, as the `name` in two nodes are same.
+
+  > **Note**:
+  >
+  > * If the `app` field is not specified, it will be `localhost` by default.
+  > * The above definition is invalid, even if the `addon` in both nodes are same.
+
+* Extensions used in connections should be defined in nodes.
+
+  Each extension used in connections, no matter the source or dest, must be defined in the nodes. Ex:
+
+  ```json
+  {
+    "nodes": [
+      {
+        "type": "extension",
+        "name": "ext_1",
+        "addon": "addon_1",
+        "extension_group": "some_group"
+      }
+    ],
+    "connections": [
+      {
+        "extension_group": "some_group",
+        "extension": "ext_1",
+        "cmd": [
+          {
+            "name": "hello",
+            "dest": [
+              {
+                "extension_group": "some_group",
+                "extension": "ext_2"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  ```
+
+  In above graph, the extension `ext_2` is missing in nodes.
+
+  > **Note**
+  >
+  > * Same as the second rule, each node in `nodes` and `connections` is identified by `app` + `extension_group` + `name` (i.e., the `extension` field in connections).
+
+* In connections, messages sent from one extension should be defined in the same section.
+
+  In other words, each extension in `connections` can only be defined in one section. Ex:
+
+  ```json
+  {
+    "nodes": [
+      {
+        "type": "extension",
+        "name": "ext_1",
+        "addon": "addon_1",
+        "extension_group": "some_group"
+      },
+      {
+        "type": "extension",
+        "name": "ext_2",
+        "addon": "addon_2",
+        "extension_group": "some_group"
+      }
+    ],
+    "connections": [
+      {
+        "extension_group": "some_group",
+        "extension": "ext_1",
+        "cmd": [
+          {
+            "name": "hello",
+            "dest": [
+              {
+                "extension_group": "some_group",
+                "extension": "ext_2"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "extension_group": "some_group",
+        "extension": "ext_1",
+        "data": [
+          {
+            "name": "hello",
+            "dest": [
+              {
+                "extension_group": "some_group",
+                "extension": "ext_2"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  ```
+
+  The above graph is invalid, as the extension `ext_1` appears in two sections in the `connections` array, even through the messages sent out are different. The `connections` should be as follows.
+
+  ```json
+  {
+    "connections": [
+      {
+        "extension_group": "some_group",
+        "extension": "ext_1",
+        "cmd": [
+          {
+            "name": "hello",
+            "dest": [
+              {
+                "extension_group": "some_group",
+                "extension": "ext_2"
+              }
+            ]
+          }
+        ],
+        "data": [
+          {
+            "name": "hello",
+            "dest": [
+              {
+                "extension_group": "some_group",
+                "extension": "ext_2"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  ```
+
+* In connections, the messages sent out from one extension should have a unique name in each type.
+
+  Ex:
+
+  ```json
+  {
+    "nodes": [
+      {
+        "type": "extension",
+        "name": "ext_1",
+        "addon": "addon_1",
+        "extension_group": "some_group"
+      },
+      {
+        "type": "extension",
+        "name": "ext_2",
+        "addon": "addon_2",
+        "extension_group": "some_group"
+      },
+      {
+        "type": "extension",
+        "name": "ext_3",
+        "addon": "addon_3",
+        "extension_group": "some_group"
+      }
+    ],
+    "connections": [
+      {
+        "extension_group": "some_group",
+        "extension": "ext_1",
+        "cmd": [
+          {
+            "name": "hello",
+            "dest": [
+              {
+                "extension_group": "some_group",
+                "extension": "ext_2"
+              }
+            ]
+          },
+          {
+            "name": "hello",
+            "dest": [
+              {
+                "extension_group": "some_group",
+                "extension": "ext_3"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  ```
+
+  The above graph is invalid, as the cmd name `hello` appears twice. If you want to send a `hello` cmd from `ext_1` to both `ext_2` and `ext_3`, change the connections as follows.
+
+  ```json
+  {
+    "connections": [
+      {
+        "extension_group": "some_group",
+        "extension": "ext_1",
+        "cmd": [
+          {
+            "name": "hello",
+            "dest": [
+              {
+                "extension_group": "some_group",
+                "extension": "ext_2"
+              },
+              {
+                "extension_group": "some_group",
+                "extension": "ext_3"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  ```
+
+  However, it's OK if two messages have the same name in different types. Ex:
+
+  ```json
+  {
+    "connections": [
+      {
+        "extension_group": "some_group",
+        "extension": "ext_1",
+        "cmd": [
+          {
+            "name": "hello",
+            "dest": [
+              {
+                "extension_group": "some_group",
+                "extension": "ext_2"
+              }
+            ]
+          }
+        ],
+        "data": [
+          {
+            "name": "hello",
+            "dest": [
+              {
+                "extension_group": "some_group",
+                "extension": "ext_3"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  ```
+
+See more examples in `check graph` command in tman.
