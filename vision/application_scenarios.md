@@ -1,15 +1,15 @@
-# Application Scenarios
+# 应用场景
 
-The TEN framework is designed to make AI feature integration and application development more efficient and flexible. Developers can create and deploy AI function extensions quickly, combining them to form customized applications or services. Typical AI scenarios include:
+TEN 框架旨在使 AI 功能集成和应用开发变得更加高效和灵活。开发者可以快速创建和部署 AI 功能扩展，并将它们组合成定制化的应用程序或服务。典型的 AI 场景包括：
 
-- **Intelligent Speech Processing**: Extensions for speech recognition (STT), speech synthesis (TTS), and sentiment analysis can be combined to create conversational systems.
+- **智能语音处理**：可以将语音识别（STT）、语音合成（TTS）和情感分析等扩展组合，构建对话系统。
 
-- **Visual Recognition Systems**: Extensions for image recognition and video analysis can be used to build security or retail solutions with face recognition, object detection, and motion tracking.
+- **视觉识别系统**：可以利用图像识别和视频分析扩展，构建具有人脸识别、物体检测和运动追踪功能的安防或零售解决方案。
 
-- **Recommendation Systems and Data Analysis**: Extensions for machine learning and data processing can be combined to create personalized recommendation systems and analytical tools.
+- **推荐系统和数据分析**：可以组合机器学习和数据处理扩展，创建个性化推荐系统和分析工具。
 
-- **Interactive Education and Training Platforms**: Extensions for interactive teaching, intelligent tutoring, and assessments can be assembled into comprehensive educational technology solutions.
+- **交互式教育和培训平台**：可以将交互式教学、智能辅导和评估等扩展组装成完整的教育科技解决方案。
 
-- **Health Monitoring and Diagnostic Systems**: Medical image analysis and AI-driven diagnostic extensions can be used to develop systems for disease monitoring and early diagnosis.
+- **健康监测和诊断系统**：可以利用医学图像分析和 AI 驱动的诊断扩展，开发疾病监测和早期诊断系统。
 
-Through the TEN framework, developers can create, share, and extend AI extensions, enabling rapid development and innovation. The flexible architecture ensures scalability and maintainability, providing a solid foundation for modern AI solutions.
+通过 TEN 框架，开发者可以创建、共享和扩展 AI 扩展，实现快速开发和创新。灵活的架构确保了可扩展性和可维护性，为现代 AI 解决方案提供了坚实的基础。

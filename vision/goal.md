@@ -1,3 +1,3 @@
-# Goal
+# 目标
 
-The vision of the TEN framework is to establish a modular, flexible, and scalable platform that enhances development speed, maintainability, and scalability. The framework is designed to support best engineering practices for modular development, enabling developers to create robust, efficient, and adaptable applications by leveraging comprehensive mechanisms provided by the platform.
+TEN 框架的愿景是建立一个模块化、灵活且可扩展的平台，以提升开发速度、可维护性和扩展性。该框架旨在支持模块化开发的最佳工程实践，通过平台提供的全面机制，使开发者能够创建健壮、高效且适应性强的应用程序。

@@ -1,11 +1,11 @@
-# Architecture Flow
+# 架构流程
 
-The whole system contains multiple components that work together to provide a seamless experience. The main components are:
+整个系统包含多个协同工作的组件，以提供无缝的体验。主要组件包括：
 
-- **TEN Agent App**: The main application that orchestrates the extensions and manages the data flow between them. It runs as a background process. Depending on the graph configuration, the agent starts the required extensions and handles the data flow between them.
-- **Front-end UI**: A web-based interface to interact with the agent. It allows users to configure the agent, start/stop the agent, and talk to the agent.
-- **Web Server**: A simple Golang web server that serves the HTTP requests. It is responsible for handling the incoming requests and starting/stopping agent processes. It also passes parameter like `graph_name` to determine which graph to use.
+- **TEN Agent App**: 主要应用程序，负责协调扩展并管理它们之间的数据流。它作为后台进程运行。根据图配置，agent 启动所需的扩展并处理它们之间的数据流。
+- **前端 UI**: 一个基于 Web 的界面，用于与 agent 交互。它允许用户配置 agent、启动/停止 agent 以及与 agent 对话。
+- **Web 服务器**: 一个简单的 Golang Web 服务器，用于处理 HTTP 请求。它负责处理传入的请求并启动/停止 agent 进程。它还传递诸如 `graph_name` 之类的参数来确定要使用的图。
 
-The flow of the system is as follows:
+系统的流程如下：
 
-![Architecture Flow](https://github.com/TEN-framework/docs/blob/main/assets/png/architecture_flow.png?raw=true)
+![架构流程](https://github.com/TEN-framework/docs/blob/main/assets/png/architecture_flow.png?raw=true)

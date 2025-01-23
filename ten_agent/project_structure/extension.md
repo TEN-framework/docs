@@ -1,29 +1,29 @@
-# Understand extension folder
+# 理解 extension 文件夹
 
-The `ten_packages/extension` folder contains the extension modules. Each extension module is a separate Python/Golang/C++ package.
+`ten_packages/extension` 文件夹包含扩展模块。每个扩展模块都是一个独立的 Python/Golang/C++ 包。
 
-The extension folder name is often the same as the extension module name, while you can also find the extension module name in the `manifest.json` file under the extension folder. The module name shall be used in the `addon` property of the `property.json` file.
+扩展文件夹名称通常与扩展模块名称相同，你也可以在扩展文件夹下的 `manifest.json` 文件中找到扩展模块名称。模块名称应在 `property.json` 文件的 `addon` 属性中使用。
 
-Below is a sample structure of the extension folder:
+以下是扩展文件夹的示例结构：
 
-![Extension Folder Structure](https://github.com/TEN-framework/docs/blob/main/assets/png/extension_folder_struct.png?raw=true)
+![扩展文件夹结构](https://github.com/TEN-framework/docs/blob/main/assets/png/extension_folder_struct.png?raw=true)
 
-## Extension Common Files
+## 扩展通用文件
 
-- manifest.json: This file contains the metadata of the extension. It includes the extension name, version, properties, and apis (data, audio_frame, video_frame).
-- property.json: This file contains the default properties of the extension. It is used to define the default configuration of the extension.
+- manifest.json: 此文件包含扩展的元数据。它包括扩展名称、版本、属性和 API（data、audio_frame、video_frame）。
+- property.json: 此文件包含扩展的默认属性。它用于定义扩展的默认配置。
 
-## Python Extension
+## Python 扩展
 
-- extension.py: This file contains the main logic of the extension. It usually contains the core implementation of the extension.
-- requirements.txt: This file contains the Python dependencies required by the extension. Dependencies specified in this file will be installed automatically when you run `task use`.
+- extension.py: 此文件包含扩展的主要逻辑。它通常包含扩展的核心实现。
+- requirements.txt: 此文件包含扩展所需的 Python 依赖项。当你运行 `task use` 时，将自动安装此文件中指定的依赖项。
 
-## Golang Extension
+## Golang 扩展
 
-- <xxx>_extension.go: This file contains the main logic of the extension. It usually contains the core implementation of the extension.
-- go.mod: This file contains the Go module definition. It specifies the module name and the dependencies of the extension.
+- <xxx>_extension.go: 此文件包含扩展的主要逻辑。它通常包含扩展的核心实现。
+- go.mod: 此文件包含 Go 模块定义。它指定模块名称和扩展的依赖项。
 
-## C++ Extension
+## C++ 扩展
 
-- src/main.cc: This file contains the main logic of the extension. It usually contains the core implementation of the extension.
-- BUILD.gn: This file contains the build configuration of the extension. It specifies the target name and dependencies of the extension.
+- src/main.cc: 此文件包含扩展的主要逻辑。它通常包含扩展的核心实现。
+- BUILD.gn: 此文件包含扩展的构建配置。它指定扩展的目标名称和依赖项。

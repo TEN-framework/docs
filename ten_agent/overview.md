@@ -1,57 +1,55 @@
-# Overview
+# 概述
 
-TEN Agent is a conversational AI agent powered by the TEN, integrating Gemini 2.0 Live, OpenAI Realtime, RTC, and more. It delivers real-time capabilities to see, hear, and speak, while being fully compatible with popular workflow platforms like Dify and Coze.
+TEN Agent 是一个由 TEN 驱动的对话式人工智能智能体，集成了 Gemini 2.0 Live、OpenAI Realtime、RTC 等技术。它提供实时的视觉、听觉和语音能力，同时完全兼容 Dify 和 Coze 等流行的工作流平台。
 
-## Links
+## 链接
 
 - [TEN Agent](https://github.com/TEN-framework/TEN-Agent)
 - [TEN Framework](https://github.com/TEN-framework/ten_framework)
 
-## Architecture
+## 架构
 
-The TEN Agent project is organized into the following major components, offering clarity and extensibility for developers:
+TEN Agent 项目组织为以下主要组件，为开发者提供清晰的结构和可扩展性：
 
-1.	**Agents**: Contains the core logic, binaries, and examples for building and running AI agents. Within the Agents folder, there is a subfolder called `ten_packages,` which houses a variety of ready-to-use extensions. By leveraging these extensions, developers can build and customize powerful agents tailored to specific tasks or workflows.
+1. **智能体**：包含构建和运行 AI 智能体的核心逻辑、二进制文件和示例。在 Agents 文件夹中，有一个名为 `ten_packages` 的子文件夹，其中包含各种即用型扩展。开发者可以利用这些扩展，构建和定制适合特定任务或工作流的强大智能体。
+2. **开发服务器**：后端服务，负责编排智能体和处理扩展。
+3. **Web 服务器**：运行在 8080 端口，提供前端界面。Web 服务器处理 HTTP 请求并提供资源文件。
+4. **扩展**：用于 LLM、TTS/STT 和外部 API 的模块化集成，支持轻松定制。
+5. **演练场**：用于测试、配置和微调智能体的交互式环境。
+6. **示例**：一个部署完毕的 TEN Agent 实际应用示例。
 
-2.	**Dev Server**: Backend services, orchestrating agents and handling extensions.
-3.	**Web Server**: Runs on port 8080 and serves the frontend interface. The web server handles HTTP requests and delivers assets.
-4.	**Extensions**: Modular integrations for LLMs, TTS/STT, and external APIs, enabling easy customization.
-5.	**Playground**: An interactive environment for testing, configuring, and fine-tuning agents.
-6.	**Demo**: A deployment-ready setup to showcase real-world applications of TEN Agent.
+## Docker 容器
 
-## Docker Containers
+TEN Agent 包含三个 Docker 容器：
 
-There are two Docker containers in TEN Agent:
+- `ten_agent_dev`：TEN Agent 的主要开发容器。它包含核心运行时环境、开发工具和构建运行智能体所需的依赖项。通过这个容器，你可以执行 `task use` 等命令来构建智能体，以及使用 `task run` 启动 Web 服务器。
+- `ten_agent_playground`：运行在 3000 端口，专用于 Web 前端界面的容器。它提供编译后的前端资源，并提供一个交互式环境，用户可以在其中配置模块、选择扩展和测试智能体。该前端界面允许你可视化选择图类型（如语音智能体或实时对话智能体）、选择模块和配置 API 设置。
+- `ten_agent_demo`：运行在 3002 端口，一个已经部署好的容器，提供生产就绪的示例设置。它展示了用户如何在实际场景中部署配置好的智能体，所有必要组件都打包在了一起，便于部署。
 
-- `ten_agent_dev`: The main development container that powers TEN Agent. It contains the core runtime environment, development tools, and dependencies needed to build and run agents. This container lets you execute commands like `task use` to build agents and `task run` to start the web server.
+## 智能体
 
-- `ten_agent_playground`: Port 3000, a dedicated container for the web frontend interface. It serves the compiled frontend assets and provides an interactive environment where users can configure modules, select extensions, and test their agents. The playground UI allows you to visually select graph types (like Voice Agent or Realtime Agent), choose modules, and configure API settings.
+Agents 文件夹是项目的核心，包含：
 
-- `ten_agent_demo`: Port 3002, a deployment-focused container that provides a production-ready sample setup. It demonstrates how users can deploy their configured agents in real-world scenarios, with all necessary components packaged together for easy deployment.
+- 定义智能体行为的核心二进制文件和示例。
+- 支持各种 AI 用例灵活配置的脚本和输出。
+- 供开发者创建、修改和增强 AI 智能体的工具。
 
+通过其结构化设计，Agents 文件夹允许你构建适用于特定应用的智能体，无论是语音助手、聊天机器人还是任务自动化。
 
-## Agents
+## 示例
 
-The Agents folder is the heart of the project, housing:
+Demo 文件夹提供了展示 TEN Agent 实际运行的部署就绪环境。它包括：
 
--	Core binaries and examples that define agent behaviors.
--	Scripts and outputs that enable flexible configurations for various AI use cases.
--	Tools for developers to create, modify, and enhance AI agents.
+- 在生产环境中运行智能体的示例配置。
+- 展示框架功能的预构建智能体和工作流。
+- 向用户、客户或合作者展示实际应用的工具。
 
-With its structured design, the Agents folder allows you to build agents tailored to specific applications, whether it’s voice assistants, chatbots, or task automation.
+## 演练场
 
-## Demo
+演练场启动并运行后，用户可以利用模块选择器：
 
-The Demo folder provides a deployment-ready environment for showcasing TEN Agent in action. It includes:
--	Example configurations for running agents in production.
--	Prebuilt agents and workflows to highlight the framework’s capabilities.
--	Tools for demonstrating real-world applications to users, clients, or collaborators.
+- 从一系列预构建模块中选择和配置扩展。
+- 尝试不同的 AI 模型、TTS/STT 系统和实时通信工具。
+- 在安全的交互式环境中测试智能体行为。
 
-## Playground
-
-Once the playground is up and running, users can leverage the module picker to:
--	Select and configure extensions from a range of prebuilt modules.
--	Experiment with different AI models, TTS/STT systems, and real-time communication tools.
--	Test agent behaviors in a safe, interactive environment.
-
-The playground serves as a hub for innovation, empowering developers to explore and fine-tune their AI systems effortlessly.
+演练场作为创新中心，使开发者能够轻松探索和微调他们的 AI 系统。

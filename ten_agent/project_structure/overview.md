@@ -1,14 +1,14 @@
-# TEN Agent Project Overview
+# TEN Agent 项目概览
 
-The TEN Agent project is built on top of the TEN Framework. For basic concepts of a TEN Framework project, please refer to the [TEN Framework Project Overview](https://doc.theten.ai/ten-framework/concept_overview).
+TEN Agent 项目构建于 TEN 框架之上。有关 TEN 框架项目基本概念，请参考 [TEN 框架项目概览](https://doc.theten.ai/ten-framework/concept_overview)。
 
-Below is the folder structure of TEN Agent project,
+以下是 TEN Agent 项目的文件夹结构：
 
-![Project structure](https://raw.githubusercontent.com/TEN-framework/docs/refs/heads/main/assets/png/folder_structure.png)
+![项目结构](https://raw.githubusercontent.com/TEN-framework/docs/refs/heads/main/assets/png/folder_structure.png)
 
-It contains the following important folders and files:
+它包含以下重要的文件夹和文件：
 
-- `property.json`: This file contains the orchestration of extensions. It is the main runtime configuration file.
-- `ten_packages/extension`: This folder contains the extension modules. Each extension module is a separate Python/Golang/C++ package.
-- `server`: This folder contains the web server code. It is responsible for handling the incoming requests and start/stop of agent processes.
-- `playground`: This folder contains the UI code for the playground. It is a web-based interface to interact with the agent.
+- `property.json`: 此文件包含扩展的编排配置。它是主要的运行时配置文件。
+- `ten_packages/extension`: 此文件夹包含扩展模块。每个扩展模块都是一个独立的 Python/Golang/C++ 包。
+- `server`: 此文件夹包含 Web 服务器代码。它负责处理传入的请求以及 agent 进程的启动/停止。
+- `playground`: 此文件夹包含 playground 的 UI 代码。它是一个基于 Web 的界面，用于与 agent 交互。
