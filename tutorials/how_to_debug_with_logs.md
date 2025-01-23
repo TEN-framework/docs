@@ -12,11 +12,11 @@ layout:
     visible: true
 ---
 
-# How to debug with logs
+# 如何使用日志进行调试
 
-We’ll cover how to view the logs, now they are ported to stdout, it's very easy to view them.
+我们将介绍如何查看日志，现在它们已移植到 stdout，因此查看它们非常容易。
 
-For instance, if the TEN Agent is running at localhost:3000, you might see output similar to the following in the logs:
+例如，如果 TEN Agent 在 localhost:3000 上运行，您可能会在日志中看到类似于以下的输出：
 
 <pre class="language-bash" data-title=">_ Bash" data-overflow="wrap"><code class="lang-bash">...
 [GIN] 2024/09/29 - 09:29:42 | 200 |     634.458µs |    192.168.65.1 | POST     "/ping"
@@ -32,7 +32,7 @@ For instance, if the TEN Agent is running at localhost:3000, you might see outpu
 ...
 </code></pre>
 
-And once you interact with the TEN Agent, you should then see entries like these:
+一旦您与 TEN Agent 交互，您应该会看到如下条目：
 
 {% code title=">_Bash" overflow="wrap" %}
 ```bash
@@ -43,4 +43,4 @@ And once you interact with the TEN Agent, you should then see entries like these
 ```
 {% endcode %}
 
-When you see logs like this, it means the system is working correctly and logging each sentence you say.
+当您看到这样的日志时，这意味着系统工作正常并且正在记录您说的每句话。

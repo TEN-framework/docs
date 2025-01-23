@@ -18,7 +18,7 @@
   * [在 Codespace 中进行云开发](ten_agent/setup_development_env/setting_up_development_inside_codespace.md)
   * [VSCode 开发容器](ten_agent/setup_development_env/setting_up_vscode_for_development_inside_container.md)
 * [运行示例](ten_agent/demo/quickstart.md)
-* [运行演练场](ten_agent/playground/quickstart.md)
+* [运行Playground](ten_agent/playground/quickstart.md)
   * [配置模块](ten_agent/playground/configure_modules.md)
   * [配置属性](ten_agent/playground/configure_properties.md)
   * 使用案例

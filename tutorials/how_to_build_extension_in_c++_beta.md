@@ -13,121 +13,121 @@ layout:
     visible: true
 ---
 
-# 🚧 How to build extension with C++(beta)
+# 🚧 如何使用 C++ 构建扩展（测试版）
 
-## Overview
+## 概述
 
-This tutorial introduces how to develop an TEN extension using C++, as well as how to debug and deploy it to run in an TEN app. This tutorial covers the following topics:
+本教程介绍了如何使用 C++ 开发 TEN 扩展，以及如何调试和部署它以在 TEN 应用程序中运行。本教程涵盖以下主题：
 
-* How to create a C++ extension development project using tman.
-* How to use TEN API to implement the functionality of the extension, such as sending and receiving messages.
-* How to write unit test cases and debug the code.
-* How to deploy the extension locally to an app and perform integration testing within the app.
-* How to debug the extension code within the app.
+* 如何使用 tman 创建 C++ 扩展开发项目。
+* 如何使用 TEN API 实现扩展的功能，例如发送和接收消息。
+* 如何编写单元测试用例并调试代码。
+* 如何在本地将扩展部署到应用程序中，并在应用程序内执行集成测试。
+* 如何在应用程序内调试扩展代码。
 
-Note
+注意
 
-Unless otherwise specified, the commands and code in this tutorial are executed in a Linux environment. Since TEN has a consistent development approach and logic across all platforms (e.g., Windows, Mac), this tutorial is also suitable for other platforms.
+除非另有说明，否则本教程中的命令和代码在 Linux 环境中执行。由于 TEN 在所有平台（例如，Windows、Mac）上都具有一致的开发方法和逻辑，因此本教程也适用于其他平台。
 
-### Preparation
+### 准备工作
 
-* Download the latest tman and configure the PATH. You can check if it is configured correctly with the following command:
+* 下载最新的 tman 并配置 PATH。您可以使用以下命令检查是否配置正确：
 
     ```
     $ tman -h
     ```
 
-    If the configuration is successful, it will display the help information for tman as follows:
+    如果配置成功，它将显示 tman 的帮助信息，如下所示：
 
     ```
     TEN manager
 
-    Usage: tman [OPTIONS] <COMMAND>
+    用法：tman [选项] <命令>
 
-    Commands:
-      install     Install a package. For more detailed usage, run 'install -h'
-      uninstall   Uninstall a package. For more detailed usage, run 'uninstall -h'
-      package     Create a package file. For more detailed usage, run 'package -h'
-      publish     Publish a package. For more detailed usage, run 'publish -h'
-      designer  Install a package. For more detailed usage, run 'designer -h'
-      help        Print this message or the help of the given subcommand(s)
+    命令：
+      install     安装一个软件包。有关更详细的用法，请运行“install -h”
+      uninstall   卸载一个软件包。有关更详细的用法，请运行“uninstall -h”
+      package     创建一个软件包文件。有关更详细的用法，请运行“package -h”
+      publish     发布一个软件包。有关更详细的用法，请运行“publish -h”
+      designer  安装一个软件包。有关更详细的用法，请运行“designer -h”
+      help        打印此消息或给定子命令的帮助
 
-    Options:
-      -c, --config-file <CONFIG_FILE>  The location of config.json
-          --user-token <USER_TOKEN>    The user token
-          --verbose                    Enable verbose output
-      -h, --help                       Print help
-      -V, --version                    Print version
+    选项：
+      -c, --config-file <CONFIG_FILE>  config.json 的位置
+          --user-token <USER_TOKEN>    用户令牌
+          --verbose                    启用详细输出
+      -h, --help                       打印帮助
+      -V, --version                    打印版本
     ```
 
-* Download the latest ten\_gn and configure the PATH. For example:
+* 下载最新的 ten\_gn 并配置 PATH。例如：
 
-    Note
+    注意
 
-    ten\_gn is the C++ build system for the TEN platform. To facilitate developers, TEN provides a ten\_gn toolchain for building C++ extension projects.
+    ten\_gn 是 TEN 平台的 C++ 构建系统。为了方便开发人员，TEN 提供了一个 ten\_gn 工具链来构建 C++ 扩展项目。
 
     ```
     $ export PATH=/path/to/ten_gn:$PATH
     ```
 
-    You can check if the configuration is successful with the following command:
+    您可以使用以下命令检查是否配置成功：
 
     ```
     $ tgn -h
     ```
 
-    usage: tgn [-h] [-v] [--verbose] [--out-dir OUT_DIR] command target-OS target-CPU build-type
+    用法：tgn [-h] [-v] [--verbose] [--out-dir OUT_DIR] command target-OS target-CPU build-type
 
-    An easy-to-use Google gn wrapper
+    一个易于使用的 Google gn 包装器
 
-    positional arguments:
-      command            possible commands are:
+    位置参数：
+      command            可能的命令是：
                         gen         build        rebuild            refs    clean
                         graph       uninstall    explain_build      desc    check
                         show_deps   show_input   show_input_output  path    args
-      target-OS          possible OS values are:
+      target-OS          可能的 OS 值是：
                         win   mac   linux
-      target-CPU         possible values are:
+      target-CPU         可能的值是：
                         x86   x64   arm   arm64
-      build-type         possible values are:
+      build-type         可能的值是：
                         debug   release
 
-    options:
-      -h, --help         show this help message and exit
-      -v, --version      show program's version number and exit
-      --verbose          dump verbose outputs
-      --out-dir OUT_DIR  build output dir, default is 'out/'
+    选项：
+      -h, --help         显示此帮助消息并退出
+      -v, --version      显示程序的版本号并退出
+      --verbose          转储详细输出
+      --out-dir OUT_DIR  构建输出目录，默认为“out/”
 
-    I recommend you to put /usr/local/ten_gn/.gnfiles into your PATH so that you can run tgn anywhere.
+    我建议您将 /usr/local/ten_gn/.gnfiles 放入您的 PATH 中，以便您可以在任何地方运行 tgn。
 
     ```
 
-    Note
+    注意
 
-  * gn depends on python3, please make sure that Python 3.10 or above is installed.
-* Install a C/C++ compiler, either clang/clang++ or gcc/g++.
+  * gn 依赖于 python3，请确保已安装 Python 3.10 或更高版本。
+* 安装 C/C++ 编译器，可以是 clang/clang++ 或 gcc/g++。
 
-In addition, we provide a base compilation image where all of the above dependencies are already installed and configured. You can refer to the [TEN-Agent](https://github.com/ten-framework/TEN-Agent) project on GitHub.
+此外，我们提供了一个基本编译镜像，其中已安装和配置了上述所有依赖项。您可以参考 GitHub 上的 [TEN-Agent](https://github.com/ten-framework/TEN-Agent) 项目。
 
-### Creating C++ extension project
+### 创建 C++ 扩展项目
 
-#### Creating Based on Templates
+#### 基于模板创建
 
-Assuming we want to create a project named first\_cxx\_extension, we can use the following command to create it:
+假设我们要创建一个名为 first\_cxx\_extension 的项目，我们可以使用以下命令创建它：
 
 ```
 $ tman install extension default_extension_cpp --template-mode --template-data package_name=first_cxx_extension
 ```
 
-Note
+注意
 
-The above command indicates that we are installing an TEN package using the default\_extension\_cpp template to create an extension project named first\_cxx\_extension.
+以上命令表示我们正在使用 default\_extension\_cpp 模板安装 TEN 软件包，以创建名为 first\_cxx\_extension 的扩展项目。
 
-* \--template-mode indicates installing the TEN package as a template. The template rendering parameters can be specified using --template-data.
-* extension is the type of TEN package to install. Currently, TEN provides app/extension\_group/extension/system packages. In the following sections on testing extensions in an app, we will use several other types of packages.
-* default\_extension\_cpp is the default C++ extension provided by TEN. Developers can also specify other C++ extensions available in the store as templates.
+*   \--template-mode 表示将 TEN 软件包作为模板安装。可以使用 --template-data 指定模板渲染参数。
+*   extension 是要安装的 TEN 软件包的类型。目前，TEN 提供 app/extension\_group/extension/system 软件包。在以下关于在应用程序中测试扩展的部分中，我们将使用其他几种类型的软件包。
+*   default\_extension\_cpp 是 TEN 提供的默认 C++ 扩展。开发人员还可以指定商店中可用的其他 C++ 扩展作为模板。
 
-After the command is executed, a directory named first\_cxx\_extension will be generated in the current directory, which is our C++ extension project. The directory structure is as follows:
+执行命令后，将在当前目录中生成一个名为 first\_cxx\_extension 的目录，这是我们的 C++ 扩展项目。目录结构如下：
 
 ```
 .
@@ -138,19 +138,19 @@ After the command is executed, a directory named first\_cxx\_extension will be g
   └── main.cc
 ```
 
-Where:
+其中：
 
-* src/main.cc contains a simple implementation of the extension, including calls to the C++ API provided by TEN. We will discuss how to use the TEN API in the next section.
-* manifest.json and property.json are the standard configuration files for TEN extensions. In manifest.json, metadata information such as the version, dependencies, and schema definition of the extension are typically declared. property.json is used to declare the business configuration of the extension.
-* BUILD.gn is the configuration file for ten\_gn, used to compile the C++ extension project.
+*   src/main.cc 包含扩展的简单实现，包括对 TEN 提供的 C++ API 的调用。我们将在下一节讨论如何使用 TEN API。
+*   manifest.json 和 property.json 是 TEN 扩展的标准配置文件。在 manifest.json 中，通常声明诸如扩展的版本、依赖项和架构定义之类的元数据信息。property.json 用于声明扩展的业务配置。
+*   BUILD.gn 是 ten\_gn 的配置文件，用于编译 C++ 扩展项目。
 
-The property.json file is initially an empty JSON file, like this:
+property.json 文件最初是一个空的 JSON 文件，如下所示：
 
 ```
 {}
 ```
 
-The manifest.json file will include the ten\_runtime dependency by default, like this:
+manifest.json 文件默认将包括 ten\_runtime 依赖项，如下所示：
 
 ```
 {
@@ -168,39 +168,39 @@ The manifest.json file will include the ten\_runtime dependency by default, like
 }
 ```
 
-Note
+注意
 
-* Please note that according to TEN's naming convention, the name should be alphanumeric. This is because when integrating the extension into an app, a directory will be created based on the extension name. TEN also provides the functionality to automatically load the manifest.json and property.json files from the extension directory.
-* Dependencies are used to declare the dependencies of the extension. When installing TEN packages, tman will automatically download the dependencies based on the declarations in the dependencies section.
-* The api section is used to declare the schema of the extension. Refer to `usage of ten schema <usage_of_ten_schema_cn>`.
+*   请注意，根据 TEN 的命名约定，名称应为字母数字。这是因为在将扩展集成到应用程序时，将根据扩展名称创建一个目录。TEN 还提供了从扩展目录自动加载 manifest.json 和 property.json 文件的功能。
+*   依赖项用于声明扩展的依赖项。在安装 TEN 软件包时，tman 将根据依赖项部分中的声明自动下载依赖项。
+*   api 部分用于声明扩展的架构。请参考 `ten 架构的用法 <usage_of_ten_schema_cn>`。
 
-#### Manual Creation
+#### 手动创建
 
-Developers can also manually create a C++ extension project or transform an existing project into an TEN extension project.
+开发人员还可以手动创建 C++ 扩展项目或将现有项目转换为 TEN 扩展项目。
 
-First, ensure that the project's output target is a shared library. Then, refer to the example above to create `property.json` and `manifest.json` in the project's root directory. The `manifest.json` should include information such as `type`, `name`, `version`, `language`, and `dependencies`. Specifically:
+首先，确保项目的输出目标是共享库。然后，参考上面的示例在项目的根目录中创建 `property.json` 和 `manifest.json`。`manifest.json` 应包括 `type`、`name`、`version`、`language` 和 `dependencies` 等信息。具体而言：
 
-* `type` must be `extension`.
-* `language` must be `cpp`.
-* `dependencies` should include `ten_runtime`.
+*   `type` 必须为 `extension`。
+*   `language` 必须为 `cpp`。
+*   `dependencies` 应包括 `ten_runtime`。
 
-Finally, configure the build settings. The `default_extension_cpp` provided by TEN uses `ten_gn` as the build toolchain. If developers are using a different build toolchain, they can refer to the configuration in `BUILD.gn` to set the compilation parameters. Since `BUILD.gn` contains the directory structure of the TEN package, we will discuss it in the next section (Downloading Dependencies).
+最后，配置构建设置。TEN 提供的 `default_extension_cpp` 使用 `ten_gn` 作为构建工具链。如果开发人员使用不同的构建工具链，他们可以参考 `BUILD.gn` 中的配置来设置编译参数。由于 `BUILD.gn` 包含 TEN 软件包的目录结构，我们将在下一节（下载依赖项）中讨论它。
 
-### Download Dependencies
+### 下载依赖项
 
-To download dependencies, execute the following command in the extension project directory:
+要下载依赖项，请在扩展项目目录中执行以下命令：
 
 ```
 $ tman install
 ```
 
-After the command is executed successfully, a `.ten` directory will be generated in the current directory, which contains all the dependencies of the current extension.
+成功执行命令后，将在当前目录中生成一个 `.ten` 目录，其中包含当前扩展的所有依赖项。
 
-Note
+注意
 
-* There are two modes for extensions: development mode and runtime mode. In development mode, the root directory is the source code directory of the extension. In runtime mode, the root directory is the app directory. Therefore, the placement path of dependencies is different in these two modes. The `.ten` directory mentioned here is the root directory of dependencies in development mode.
+*   扩展有两种模式：开发模式和运行时模式。在开发模式下，根目录是扩展的源代码目录。在运行时模式下，根目录是应用程序目录。因此，依赖项的放置路径在这两种模式下是不同的。这里提到的 `.ten` 目录是开发模式下依赖项的根目录。
 
-The directory structure is as follows:
+目录结构如下：
 
 ```
 .
@@ -216,12 +216,12 @@ The directory structure is as follows:
   └── main.cc
 ```
 
-Where:
+其中：
 
-* `.ten/app/include` is the root directory for header files.
-* `.ten/app/lib` is the root directory for precompiled dynamic libraries of TEN runtime.
+*   `.ten/app/include` 是头文件的根目录。
+*   `.ten/app/lib` 是 TEN 运行时预编译动态库的根目录。
 
-If it is in runtime mode, the extension will be placed in the `addon/extension` directory of the app, and the dynamic libraries will be placed in the `lib` directory of the app. The structure is as follows:
+如果在运行时模式下，扩展将放置在应用程序的 `addon/extension` 目录中，动态库将放置在应用程序的 `lib` 目录中。结构如下：
 
 ```
 .
@@ -235,11 +235,11 @@ If it is in runtime mode, the extension will be placed in the `addon/extension` 
 └── lib
 ```
 
-So far, an TEN C++ extension project has been created.
+到目前为止，已经创建了一个 TEN C++ 扩展项目。
 
 ### BUILD.gn
 
-The content of `BUILD.gn` for `default_extension_cpp` is as follows:
+`default_extension_cpp` 的 `BUILD.gn` 内容如下：
 
 ```
 import("//exts/ten/base_options.gni")
@@ -261,10 +261,9 @@ config("common_config") {
 config("build_config") {
   configs = [ ":common_config" ]
 
-  # 1. The `include` refers to the `include` directory in current extension.
-  # 2. The `//include` refers to the `include` directory in the base directory
-  #    of running `tgn gen`.
-  # 3. The `.ten/app/include` is used in extension standalone building.
+  # 1. `include` 指的是当前扩展中的 `include` 目录。
+  # 2. `//include` 指的是运行 `tgn gen` 的基本目录中的 `include` 目录。
+  # 3. `.ten/app/include` 用于扩展独立构建。
   include_dirs = [
   "include",
   "//core/include",
@@ -300,7 +299,7 @@ ten_package("first_cxx_extension") {
   property = "property.json"
 
   if (package_type == "develop") {
-  # It's 'develop' package, therefore, need to build the result.
+  # 它是“develop”软件包，因此需要构建结果。
   build_type = "shared_library"
 
   sources = [ "src/main.cc" ]
@@ -310,40 +309,40 @@ ten_package("first_cxx_extension") {
 }
 ```
 
-Let's first take a look at the `ten_package` target, which declares a build target for an TEN package.
+我们首先看一下 `ten_package` 目标，它声明了 TEN 软件包的构建目标。
 
-* The `package_kind` is set to `extension`, and the `build_type` is set to `shared_library`. This means that the expected output of the compilation is a shared library.
-* The `sources` field specifies the source file(s) to be compiled. If there are multiple source files, they need to be added to the `sources` field.
-* The `configs` field specifies the build configurations. It references the `build_config` defined in this file.
+*   `package_kind` 设置为 `extension`，`build_type` 设置为 `shared_library`。这意味着编译的预期输出是一个共享库。
+*   `sources` 字段指定要编译的源文件。如果有多个源文件，则需要将它们添加到 `sources` 字段中。
+*   `configs` 字段指定构建配置。它引用此文件中定义的 `build_config`。
 
-Next, let's look at the content of `build_config`.
+接下来，让我们看一下 `build_config` 的内容。
 
-* The `include_dirs` field defines the search paths for header files.
-  * The difference between `include` and `//include` is that `include` refers to the `include` directory in the current extension directory, while `//include` is based on the working directory of the `tgn gen` command. So, if the compilation is executed in the extension directory, it will be the same as `include`. But if it is executed in the app directory, it will be the `include` directory in the app.
-  * `.ten/app/include` is used for standalone development and compilation of the extension, which is the scenario being discussed in this tutorial. In other words, the default `build_config` is compatible with both development mode and runtime mode compilation.
-* The `lib_dirs` field defines the search paths for dependency libraries. The difference between `lib` and `//lib` is similar to `include`.
-* The `libs` field defines the dependent libraries. `ten_runtime` and `utils` are libraries provided by TEN.
+*   `include_dirs` 字段定义了头文件的搜索路径。
+    *   `include` 和 `//include` 之间的区别在于，`include` 指的是当前扩展目录中的 `include` 目录，而 `//include` 基于 `tgn gen` 命令的工作目录。因此，如果在扩展目录中执行编译，它将与 `include` 相同。但如果在应用程序目录中执行，它将是应用程序中的 `include` 目录。
+    *   `.ten/app/include` 用于扩展的独立开发和编译，这是本教程中讨论的场景。换句话说，默认的 `build_config` 与开发模式和运行时模式编译兼容。
+*   `lib_dirs` 字段定义了依赖库的搜索路径。`lib` 和 `//lib` 之间的区别与 `include` 类似。
+*   `libs` 字段定义了依赖库。`ten_runtime` 和 `utils` 是 TEN 提供的库。
 
-Therefore, if developers are using a different build toolchain, they can refer to the above configuration and set the compilation parameters in their own build toolchain. For example, if using g++ to compile:
+因此，如果开发人员使用不同的构建工具链，他们可以参考以上配置并在自己的构建工具链中设置编译参数。例如，如果使用 g++ 进行编译：
 
 ```
 $ g++ -shared -fPIC -I.ten/app/include/ -L.ten/app/lib -lten_runtime -lutils -Wl,-rpath=\$ORIGIN -Wl,-rpath=\$ORIGIN/../../../lib src/main.cc
 ```
 
-The setting of `rpath` is also considered for the runtime mode, where the ten\_runtime dependency of the extension is placed in the `app/lib` directory.
+`rpath` 的设置也考虑了运行时模式，其中扩展的 ten\_runtime 依赖项放置在 `app/lib` 目录中。
 
-### Implementation of Extension Functionality
+### 扩展功能的实现
 
-For developers, there are two things to do:
+对于开发人员来说，需要做两件事：
 
-* Create an extension as a channel for interacting with TEN runtime.
-* Register the extension as an addon in TEN, allowing it to be used in the graph through a declarative approach.
+*   创建扩展作为与 TEN 运行时交互的通道。
+*   在 TEN 中将扩展注册为插件，允许通过声明方式在图中使用它。
 
-#### Creating the Extension Class
+#### 创建扩展类
 
-The extension created by developers needs to inherit the `ten::extension_t` class. The main definition of this class is as follows:
+开发人员创建的扩展需要继承 `ten::extension_t` 类。该类的主要定义如下：
 
-```
+```cpp
 class extension_t {
 protected:
   explicit extension_t(const char *name) {...}
@@ -374,40 +373,40 @@ protected:
 }
 ```
 
-In the markdown content you provided, there are descriptions of the lifecycle functions and message handling functions in Chinese. Here is the translation:
+在您提供的 markdown 内容中，有对生命周期函数和中文消息处理函数的描述。以下是翻译：
 
-Lifecycle Functions:
+生命周期函数：
 
-* on\_init: Used to initialize the extension instance, such as setting the extension's configuration.
-* on\_start: Used to start the extension instance, such as establishing connections to external services. The extension will not receive messages until on\_start is completed. In on\_start, you can use the ten.get\_property API to retrieve the extension's configuration.
-* on\_stop: Used to stop the extension instance, such as closing connections to external services.
-* on\_deinit: Used to destroy the extension instance, such as releasing memory resources.
+*   on\_init：用于初始化扩展实例，例如设置扩展的配置。
+*   on\_start：用于启动扩展实例，例如建立与外部服务的连接。在 on\_start 完成之前，扩展不会接收消息。在 on\_start 中，您可以使用 ten.get\_property API 来检索扩展的配置。
+*   on\_stop：用于停止扩展实例，例如关闭与外部服务的连接。
+*   on\_deinit：用于销毁扩展实例，例如释放内存资源。
 
-Message Handling Functions:
+消息处理函数：
 
-* on\_cmd/on\_data/on\_pcm\_frame/on\_image\_frame: These are callback methods used to receive messages of four different types. For more information on TEN message types, you can refer to the [message-system](https://github.com/TEN-framework/ten_framework/blob/main/docs/ten_framework/message_system.md)
+*   on\_cmd/on\_data/on\_pcm\_frame/on\_image\_frame：这些是用于接收四种不同类型消息的回调方法。有关 TEN 消息类型的更多信息，您可以参考[消息系统](https://github.com/TEN-framework/ten_framework/blob/main/docs/ten_framework/message_system.md)
 
-The ten::extension\_t class provides default implementations for these functions, and developers can override them according to their needs.
+ten::extension\_t 类为这些函数提供了默认实现，开发人员可以根据需要重写它们。
 
-#### Registering the Extension
+#### 注册扩展
 
-After defining the extension, it needs to be registered as an addon in the TEN runtime. For example, in the `first_cxx_extension/src/main.cc` file, the registration code is as follows:
+定义扩展后，需要将其注册为 TEN 运行时中的插件。例如，在 `first_cxx_extension/src/main.cc` 文件中，注册代码如下：
 
-```
+```cpp
 TEN_CPP_REGISTER_ADDON_AS_EXTENSION(first_cxx_extension, first_cxx_extension_extension_t);
 ```
 
-* TEN\_CPP\_REGISTER\_ADDON\_AS\_EXTENSION is a macro provided by the TEN runtime for registering extension addons.
-  * The first parameter is the name of the addon, which serves as a unique identifier for the addon. It will be used to define the extension in the graph using a declarative approach.
-  * The second parameter is the implementation class of the extension, which is the class that inherits from ten::extension\_t.
+*   TEN\_CPP\_REGISTER\_ADDON\_AS\_EXTENSION 是 TEN 运行时提供的用于注册扩展插件的宏。
+    *   第一个参数是插件的名称，它作为插件的唯一标识符。它将用于通过声明方式在图中定义扩展。
+    *   第二个参数是扩展的实现类，它是继承自 ten::extension\_t 的类。
 
-Please note that the addon name must be unique because it is used as a unique index to find the implementation in the graph.
+请注意，插件名称必须是唯一的，因为它用作在图中查找实现的唯一索引。
 
 #### on\_init
 
-Developers can set the extension's configuration in the on\_init() function, as shown in the example:
+开发人员可以在 on\_init() 函数中设置扩展的配置，如示例所示：
 
-```
+```cpp
 void on_init(ten::ten_t& ten, ten::metadata_info_t& manifest,
              ten::metadata_info_t& property) override {
   property.set(TEN_METADATA_JSON_FILENAME, "customized_property.json");
@@ -415,17 +414,17 @@ void on_init(ten::ten_t& ten, ten::metadata_info_t& manifest,
 }
 ```
 
-Both the property and manifest can be customized using the set() method. In the example, the first parameter TEN\_METADATA\_JSON\_FILENAME indicates that the custom property is stored as a local file, and the second parameter is the file path relative to the extension directory. So in this example, when the app loads the extension, it will load `<app>/addon/extension/first_cxx_extension/customized_property.json`.
+可以使用 set() 方法自定义属性和清单。在示例中，第一个参数 TEN\_METADATA\_JSON\_FILENAME 表示自定义属性存储为本地文件，第二个参数是相对于扩展目录的文件路径。因此，在此示例中，当应用程序加载扩展时，它将加载 `<app>/addon/extension/first_cxx_extension/customized_property.json`。
 
-TEN's on\_init provides default logic for loading default configurations. If developers do not call property.set(), the property.json file in the extension directory will be loaded by default. Similarly, if manifest.set() is not called, the manifest.json file in the extension directory will be loaded by default. In the example, since property.set() is called, the property.json file will not be loaded by default.
+TEN 的 on\_init 提供了加载默认配置的默认逻辑。如果开发人员不调用 property.set()，则默认情况下将加载扩展目录中的 property.json 文件。类似地，如果不调用 manifest.set()，则默认情况下将加载扩展目录中的 manifest.json 文件。在示例中，由于调用了 property.set()，因此默认情况下不会加载 property.json 文件。
 
-Please note that on\_init is an asynchronous method, and developers need to call ten.on\_init\_done() to inform the TEN runtime that on\_init has completed as expected.
+请注意，on\_init 是一个异步方法，开发人员需要调用 ten.on\_init\_done() 以告知 TEN 运行时 on\_init 已按预期完成。
 
 #### on\_start
 
-When on\_start is called, it means that on\_init\_done() has been executed and the extension's property has been loaded. From this point on, the extension can access the configuration. For example:
+当调用 on\_start 时，表示已执行 on\_init\_done() 并且已加载扩展的属性。从此时起，扩展可以访问配置。例如：
 
-```
+```cpp
 void on_start(ten::ten_t& ten) override {
   auto prop = ten.get_property_string("some_string");
   // do something
@@ -434,30 +433,30 @@ void on_start(ten::ten_t& ten) override {
 }
 ```
 
-ten.get\_property\_string() is used to retrieve a property of type string with the name "some\_string". If the property does not exist or the type does not match, an error will be returned. If the extension's configuration contains the following content:
+ten.get\_property\_string() 用于检索名为“some\_string”的字符串类型属性。如果该属性不存在或类型不匹配，则将返回错误。如果扩展的配置包含以下内容：
 
-```
+```json
 {
   "some_string": "hello world"
 }
 ```
 
-Then the value of prop will be "hello world".
+则 prop 的值将为“hello world”。
 
-Similar to on\_init, on\_start is also an asynchronous method, and developers need to call ten.on\_start\_done() to inform the TEN runtime that on\_start has completed as expected.
+与 on\_init 类似，on\_start 也是一个异步方法，开发人员需要调用 ten.on\_start\_done() 以告知 TEN 运行时 on\_start 已按预期完成。
 
-For more information, you can refer to the API documentation: ten api doc.
+有关更多信息，您可以参考 API 文档：ten api doc。
 
-#### Error Handling
+#### 错误处理
 
-As shown in the previous example, if "some\_string" does not exist or is not of type string, ten.get\_property\_string() will return an error. You can handle the error as follows:
+如前面的示例所示，如果 “some\_string” 不存在或不是字符串类型，则 ten.get\_property\_string() 将返回错误。您可以按如下方式处理错误：
 
 ```C++
 void on_start(ten::ten_t& ten) override {
   ten::error_t err;
   auto prop = ten.get_property_string("some_string", &err);
 
-  // error handling
+  // 错误处理
   if (!err.is_success()) {
     TEN_LOGE("Failed to get property: %s", err.errmsg());
   }
@@ -465,16 +464,15 @@ void on_start(ten::ten_t& ten) override {
   ten.on_start_done();
 }
 ```
+#### 消息处理
 
-#### Message Handling
+TEN 提供四种类型的消息：`cmd`、`data`、`image_frame` 和 `pcm_frame`。开发人员可以通过实现 `on_cmd`、`on_data`、`on_image_frame` 和 `on_pcm_frame` 回调方法来处理这四种类型的消息。
 
-TEN provides four types of messages: `cmd`, `data`, `image_frame`, and `pcm_frame`. Developers can handle these four types of messages by implementing the `on_cmd`, `on_data`, `on_image_frame`, and `on_pcm_frame` callback methods.
+以 `cmd` 为例，让我们看看如何接收和发送消息。
 
-Taking `cmd` as an example, let's see how to receive and send messages.
+假设 `first_cxx_extension` 接收到一个名为 `hello` 的 `cmd`，其中包括以下属性：
 
-Assume that `first_cxx_extension` receives a `cmd` with the name `hello`, which includes the following properties:
-
-| name             | type   |
+| 名称             | 类型   |
 | ---------------- | ------ |
 | app\_id          | string |
 | client\_type     | int8   |
@@ -482,9 +480,9 @@ Assume that `first_cxx_extension` receives a `cmd` with the name `hello`, which 
 | payload.err\_no  | uint8  |
 | payload.err\_msg | string |
 
-The processing logic of `first_cxx_extension` for the `hello` cmd is as follows:
+`first_cxx_extension` 对 `hello` cmd 的处理逻辑如下：
 
-* If the `app_id` or `client_type` parameters are invalid, return an error:
+*   如果 `app_id` 或 `client_type` 参数无效，则返回错误：
 
     ```json
     {
@@ -493,35 +491,35 @@ The processing logic of `first_cxx_extension` for the `hello` cmd is as follows:
     }
     ```
 
-* If `payload.err_no` is greater than 0, return an error with the content from the `payload`.
-* If `payload.err_no` is equal to 0, forward the `hello` cmd downstream for further processing. After receiving the processing result from the downstream extension, return the result.
+*   如果 `payload.err_no` 大于 0，则返回包含 `payload` 内容的错误。
+*   如果 `payload.err_no` 等于 0，则将 `hello` cmd 转发到下游以进行进一步处理。在收到下游扩展的处理结果后，返回结果。
 
-**Describing the Extension's Behavior in manifest.json**
+**在 manifest.json 中描述扩展的行为**
 
-Based on the above description, the behavior of `first_cxx_extension` is as follows:
+基于以上描述，`first_cxx_extension` 的行为如下：
 
-* It receives a `cmd` named `hello` with properties.
-* It may send a `cmd` named `hello` with properties.
-* It receives a response from a downstream extension, which includes error information.
-* It returns a response to an upstream extension, which includes error information.
+*   它接收一个名为 `hello` 的 `cmd`，其中包含属性。
+*   它可能会发送一个名为 `hello` 的 `cmd`，其中包含属性。
+*   它接收来自下游扩展的响应，其中包括错误信息。
+*   它向上游扩展返回一个响应，其中包括错误信息。
 
-For a TEN extension, you can describe the above behavior in the `manifest.json` file of the extension, including:
+对于 TEN 扩展，您可以在扩展的 `manifest.json` 文件中描述上述行为，包括：
 
-* What messages the extension receives, their names, and the structure definition of their properties (schema definition).
-* What messages the extension generates/sends, their names, and the structure definition of their properties.
-* Additionally, for `cmd` type messages, a response definition is required (referred to as a result in TEN).
+*   扩展接收哪些消息，它们的名称以及其属性的结构定义（架构定义）。
+*   扩展生成/发送哪些消息，它们的名称以及其属性的结构定义。
+*   此外，对于 `cmd` 类型消息，需要响应定义（在 TEN 中称为结果）。
 
-With these definitions, TEN runtime will perform validity checks based on the schema definition before delivering messages to the extension or when the extension sends messages through TEN runtime. It also helps the users of the extension to see the protocol definition.
+通过这些定义，TEN 运行时将在将消息传递到扩展之前或在扩展通过 TEN 运行时发送消息时，基于架构定义执行有效性检查。它还有助于扩展的用户查看协议定义。
 
-The schema is defined in the `api` field of the `manifest.json` file. `cmd_in` defines the cmds that the extension will receive, and `cmd_out` defines the cmds that the extension will send.
+架构在 `manifest.json` 文件的 `api` 字段中定义。`cmd_in` 定义扩展将接收的 cmd，而 `cmd_out` 定义扩展将发送的 cmd。
 
-Note
+注意
 
-For the usage of schema, refer to: [TEN Framework Schema System](https://github.com/TEN-framework/ten_framework/blob/main/docs/ten_framework/schema_system.md)
+有关架构的用法，请参阅：[TEN 框架架构系统](https://github.com/TEN-framework/ten_framework/blob/main/docs/ten_framework/schema_system.md)
 
-Based on the above description, the content of `manifest.json` for `first_cxx_extension` is as follows:
+基于以上描述，`first_cxx_extension` 的 `manifest.json` 内容如下：
 
-```
+```json
 {
   "type": "extension",
   "name": "first_cxx_extension",
@@ -610,13 +608,13 @@ Based on the above description, the content of `manifest.json` for `first_cxx_ex
 }
 ```
 
-**Getting Request Data**
+**获取请求数据**
 
-In the `on_cmd` method, the first step is to retrieve the request data, which is the property in the cmd. We define a `request_t` class to represent the request data.
+在 `on_cmd` 方法中，第一步是检索请求数据，即 cmd 中的属性。我们定义一个 `request_t` 类来表示请求数据。
 
-Create a file called `model.h` in the `include` directory of your extension project with the following content:
+在扩展项目的 `include` 目录中创建一个名为 `model.h` 的文件，内容如下：
 
-```
+```cpp
 #pragma once
 
 #include "nlohmann/json.hpp"
@@ -649,9 +647,9 @@ private:
 } // namespace first_cxx_extension_extension
 ```
 
-In the `src` directory, create a file called `model.cc` with the following content:
+在 `src` 目录中，创建一个名为 `model.cc` 的文件，内容如下：
 
-```
+```cpp
 #include "model.h"
 
 namespace first_cxx_extension_extension {
@@ -681,9 +679,9 @@ void from_json(const nlohmann::json &j, request_t &request) {
 } // namespace first_cxx_extension_extension
 ```
 
-To parse the request data, you can use the `get_property` API provided by TEN. Here is an example of how to implement it:
+要解析请求数据，您可以使用 TEN 提供的 `get_property` API。以下是如何实现的示例：
 
-```
+```cpp
 // model.h
 
 class request_t {
@@ -707,9 +705,9 @@ void request_t::from_cmd(ten::cmd_t &cmd) {
 }
 ```
 
-To return a response, you need to create a `cmd_result_t` object and set the properties accordingly. Then, pass the `cmd_result_t` object to TEN runtime to return it to the requester. Here is an example:
+要返回响应，您需要创建一个 `cmd_result_t` 对象并相应地设置属性。然后，将 `cmd_result_t` 对象传递给 TEN 运行时以返回给请求者。以下是一个示例：
 
-```
+```cpp
 // model.h
 
 class request_t {
@@ -741,13 +739,13 @@ void on_cmd(ten::ten_t &ten, std::unique_ptr<ten::cmd_t> cmd) override {
 }
 ```
 
-In the example above, `ten::cmd_result_t::create` is used to create a `cmd_result_t` object with an error code. `result.set_property` is used to set the properties of the `cmd_result_t` object. Finally, `ten.return_result` is called to return the `cmd_result_t` object to the requester.
+在上面的示例中，`ten::cmd_result_t::create` 用于创建具有错误代码的 `cmd_result_t` 对象。`result.set_property` 用于设置 `cmd_result_t` 对象的属性。最后，调用 `ten.return_result` 以将 `cmd_result_t` 对象返回给请求者。
 
-**Passing Requests to Downstream Extensions**
+**将请求传递给下游扩展**
 
-If an extension needs to send a message to another extension, it can call the `send_cmd()` API. Here is an example:
+如果扩展需要向另一个扩展发送消息，则可以调用 `send_cmd()` API。以下是一个示例：
 
-```
+```cpp
 void on_cmd(ten::ten_t &ten, std::unique_ptr<ten::cmd_t> cmd) override {
   request_t request;
   request.from_cmd(*cmd);
@@ -761,11 +759,11 @@ void on_cmd(ten::ten_t &ten, std::unique_ptr<ten::cmd_t> cmd) override {
 }
 ```
 
-The first parameter in `send_cmd()` is the command of the request, and the second parameter is the handler for the returned `cmd_result_t`. The second parameter can also be omitted, indicating that no special handling is required for the returned result. If the command was originally sent from a higher-level extension, the runtime will automatically return it to the upper-level extension.
+`send_cmd()` 中的第一个参数是请求的命令，第二个参数是返回的 `cmd_result_t` 的处理程序。第二个参数也可以省略，表示不需要对返回的结果进行特殊处理。如果该命令最初是从更高级别的扩展发送的，则运行时将自动将其返回到更高级别的扩展。
 
-Developers can also pass a response handler, like this:
+开发人员还可以传递一个响应处理程序，如下所示：
 
-```
+```cpp
 ten.send_cmd(
     std::move(cmd),
     [](ten::ten_t &ten, std::unique_ptr<ten::cmd_result_t> result) {
@@ -773,39 +771,39 @@ ten.send_cmd(
     });
 ```
 
-In the example above, the `return_result_directly()` method is used in the response handler. You can see that this method differs from `return_result()` in that it does not pass the original command object. This is mainly because:
+在上面的示例中，响应处理程序中使用了 `return_result_directly()` 方法。您可以看到此方法与 `return_result()` 的不同之处在于它不传递原始命令对象。这主要是因为：
 
-* For TEN message objects (cmd/data/pcm\_frame/image\_frame), ownership is transferred to the extension in the message callback method, such as `on_cmd()`. This means that once the extension receives the command, the TEN runtime will not perform any read/write operations on it. When the extension calls the `send_cmd()` or `return_result()` API, it means that the extension is returning the ownership of the command back to the TEN runtime for further processing, such as message delivery. After that, the extension should not perform any read/write operations on the command.
-* The `result` in the response handler (i.e., the second parameter of `send_cmd()`) is returned by the downstream extension, and at this point, the result is already bound to the command, meaning that the runtime has the return path information for the result. Therefore, there is no need to pass the command object again.
+*   对于 TEN 消息对象（cmd/data/pcm\_frame/image\_frame），所有权在消息回调方法（例如 `on_cmd()`）中转移到扩展。这意味着一旦扩展收到命令，TEN 运行时将不会对其执行任何读/写操作。当扩展调用 `send_cmd()` 或 `return_result()` API 时，这意味着扩展正在将命令的所有权返回给 TEN 运行时以进行进一步处理，例如消息传递。此后，扩展不应再对该命令执行任何读/写操作。
+*   响应处理程序中的 `result`（即 `send_cmd()` 的第二个参数）由下游扩展返回，此时，该结果已绑定到命令，这意味着运行时具有该结果的返回路径信息。因此，无需再次传递命令对象。
 
-Of course, developers can also process the result in the response handler.
+当然，开发人员也可以在响应处理程序中处理结果。
 
-So far, an example of a simple command processing logic is complete. For other message types such as data, you can refer to the TEN API documentation.
+到目前为止，一个简单命令处理逻辑的示例已经完成。对于其他消息类型（例如数据），您可以参考 TEN API 文档。
 
-### Deploying Locally to an App for Integration Testing
+### 在本地部署到应用程序以进行集成测试
 
-tman provides the ability to publish to a local registry, allowing you to perform integration testing locally without uploading the extension to the central repository. Unlike GO extensions, for C++ extensions, there are no strict requirements on the app's programming language. It can be GO, C++, or Python.
+tman 提供了发布到本地注册表的功能，允许您在本地执行集成测试，而无需将扩展上传到中央存储库。与 GO 扩展不同，对于 C++ 扩展，对应用程序的编程语言没有严格的要求。它可以是 GO、C++ 或 Python。
 
-The deployment process may vary for different apps. The specific steps are as follows:
+不同应用程序的部署过程可能会有所不同。具体步骤如下：
 
-* Set up the tman local registry.
-* Upload the extension to the local registry.
-* Download the app from the central repository (default\_app\_cpp/default\_app\_go) for integration testing.
-* For C++ apps:
-  * Install the first\_cxx\_extension in the app directory.
-  * Compile in the app directory. At this point, both the app and the extension will be compiled into the out/linux/x64/app/default\_app\_cpp directory.
-  * Install the required dependencies in out/linux/x64/app/default\_app\_cpp. The working directory for testing is the current directory.
-* For GO apps:
-  * Install the first\_cxx\_extension in the app directory.
-  * Compile in the addon/extension/first\_cxx\_extension directory, as the GO and C++ compilation toolchains are different.
-  * Install the dependencies in the app directory. The working directory for testing is the app directory.
-* Configure the graph in the app's manifest.json, specifying the recipient of the message as first\_cxx\_extension, and send test messages.
+*   设置 tman 本地注册表。
+*   将扩展上传到本地注册表。
+*   从中央存储库下载应用程序（default\_app\_cpp/default\_app\_go）以进行集成测试。
+*   对于 C++ 应用程序：
+    *   在应用程序目录中安装 first\_cxx\_extension。
+    *   在应用程序目录中编译。此时，应用程序和扩展都将被编译到 out/linux/x64/app/default\_app\_cpp 目录中。
+    *   在 out/linux/x64/app/default\_app\_cpp 中安装所需的依赖项。测试的工作目录是当前目录。
+*   对于 GO 应用程序：
+    *   在应用程序目录中安装 first\_cxx\_extension。
+    *   在 addon/extension/first\_cxx\_extension 目录中编译，因为 GO 和 C++ 编译工具链不同。
+    *   在应用程序目录中安装依赖项。测试的工作目录是应用程序目录。
+*   在应用程序的 manifest.json 中配置图，指定消息的接收者为 first\_cxx\_extension，并发送测试消息。
 
-#### Uploading the Extension to the Local Registry
+#### 将扩展上传到本地注册表
 
-First, create a temporary config.json file to set up the tman local registry. For example, the contents of /tmp/code/config.json are as follows:
+首先，创建一个临时 config.json 文件以设置 tman 本地注册表。例如，/tmp/code/config.json 的内容如下：
 
-```
+```json
 {
   "registry": {
     "default": {
@@ -815,264 +813,264 @@ First, create a temporary config.json file to set up the tman local registry. Fo
 }
 ```
 
-This sets the local directory `/tmp/code/repository` as the tman local registry.
+这将本地目录 `/tmp/code/repository` 设置为 tman 本地注册表。
 
-Note
+注意
 
-* Be careful not to place it in \~/.tman/config.json, as it will affect the subsequent download of dependencies from the central repository.
+*   小心不要将其放置在 \~/.tman/config.json 中，因为它会影响后续从中央存储库下载依赖项。
 
-Then, in the first\_cxx\_extension directory, execute the following command to upload the extension to the local registry:
+然后，在 first\_cxx\_extension 目录中，执行以下命令将扩展上传到本地注册表：
 
 ```
 $ tman --config-file /tmp/code/config.json publish
 ```
 
-After the command completes, the uploaded extension can be found in the /tmp/code/repository/extension/first\_cxx\_extension/0.1.0 directory.
+命令完成后，可以在 /tmp/code/repository/extension/first\_cxx\_extension/0.1.0 目录中找到上传的扩展。
 
-#### Prepare app for testing (C++)
+#### 准备用于测试的应用程序（C++）
 
-1. Install default\_app\_cpp as the test app in an empty directory.
+1.  在空目录中安装 default\_app\_cpp 作为测试应用程序。
 
-> ```
-> $ tman install app default_app_cpp
-> ```
->
-> After the command is successfully executed, there will be a directory named default\_app\_cpp in the current directory.
->
-> Note
->
-> * When installing an app, its dependencies will be automatically installed.
+    > ```
+    > $ tman install app default_app_cpp
+    > ```
+    >
+    > 成功执行命令后，当前目录中将有一个名为 default\_app\_cpp 的目录。
+    >
+    > 注意
+    >
+    > *   安装应用程序时，将自动安装其依赖项。
 
-2. Install first\_cxx\_extension that we want to test in the app directory.
+2.  在应用程序目录中安装我们想要测试的 first\_cxx\_extension。
 
-> Execute the following command:
->
-> ```
-> $ tman --config-file /tmp/code/config.json install extension first_cxx_extension
-> ```
->
-> After the command is completed, there will be a first\_cxx\_extension directory in the addon/extension directory.
->
-> Note
->
-> * It is important to note that since first\_cxx\_extension is in the local registry, the configuration file path with the local registry specified by --config-file needs to be the same as when publishing.
+    > 执行以下命令：
+    >
+    > ```
+    > $ tman --config-file /tmp/code/config.json install extension first_cxx_extension
+    > ```
+    >
+    > 完成命令后，addon/extension 目录中将有一个 first\_cxx\_extension 目录。
+    >
+    > 注意
+    >
+    > *   重要的是要注意，由于 first\_cxx\_extension 在本地注册表中，因此具有本地注册表指定的 --config-file 的配置文件路径需要与发布时相同。
 
-3. Add an extension as a message producer.
+3.  添加一个扩展作为消息生产者。
 
-> first\_cxx\_extension is expected to receive a hello cmd, so we need a message producer. One way is to add an extension as a message producer. To conveniently generate test messages, an http server can be integrated into the producer's extension.
->
-> First, create an http server extension based on default\_extension\_cpp. Execute the following command in the app directory:
->
-> ```
-> $ tman install extension default_extension_cpp --template-mode --template-data package_name=http_server
-> ```
->
-> The main functionality of the http server is:
->
-> * Start a thread running the http server in the extension's on\_start().
-> * Convert incoming requests into TEN cmds named hello and send them using send\_cmd().
-> * Expect to receive a cmd\_result\_t response and write its content to the http response.
->
-> Here, we use cpp-httplib ([https://github.com/yhirose/cpp-httplib](https://github.com/yhirose/cpp-httplib)) as the implementation of the http server.
->
-> First, download httplib.h and place it in the include directory of the extension. Then, add the implementation of the http server in src/main.cc. Here is an example code:
->
-> ```
-> #include "httplib.h"
-> #include "nlohmann/json.hpp"
-> #include "ten_runtime/binding/cpp/ten.h"
->
-> namespace http_server_extension {
->
-> class http_server_extension_t : public ten::extension_t {
-> public:
->   explicit http_server_extension_t(const char *name)
->       : extension_t(name) {}
->
->   void on_start(ten::ten_t &ten) override {
->     ten_proxy = ten::ten_proxy_t::create(ten);
->     srv_thread = std::thread([this] {
->       server.Get("/health",
->                 [](const httplib::Request &req, httplib::Response &res) {
->                   res.set_content("OK", "text/plain");
->                 });
->
->       // Post handler, receive json body.
->       server.Post("/hello", [this](const httplib::Request &req,
->                                   httplib::Response &res) {
->         // Receive json body.
->         auto body = nlohmann::json::parse(req.body);
->         body["ten"]["name"] = "hello";
->
->         auto cmd = ten::cmd_t::create_from_json(body.dump().c_str());
->         auto cmd_shared =
->             std::make_shared<std::unique_ptr<ten::cmd_t>>(std::move(cmd));
->
->         std::condition_variable *cv = new std::condition_variable();
->
->         auto response_body = std::make_shared<std::string>();
->
->         ten_proxy->notify([cmd_shared, response_body, cv](ten::ten_t &ten) {
->           ten.send_cmd(
->               std::move(*cmd_shared),
->               [response_body, cv](ten::ten_t &ten,
->                                   std::unique_ptr<ten::cmd_result_t> result) {
->                 auto err_no = result->get_property_uint8("err_no");
->                 if (err_no > 0) {
->                   auto err_msg = result->get_property_string("err_msg");
->                   response_body->append(err_msg);
->                 } else {
->                   response_body->append("OK");
->                 }
->
->                 cv->notify_one();
->               });
->         });
->
->         std::unique_lock<std::mutex> lk(mtx);
->         cv->wait(lk);
->         delete cv;
->
->         res.set_content(response_body->c_str(), "text/plain");
->       });
->
->       server.listen("0.0.0.0", 8001);
->     });
->
->     ten.on_start_done();
->   }
->
->   void on_stop(ten::ten_t &ten) override {
->     // Extension stop.
->
->     server.stop();
->     srv_thread.join();
->     delete ten_proxy;
->
->     ten.on_stop_done();
->   }
->
-> private:
->   httplib::Server server;
->   std::thread srv_thread;
->   ten::ten_proxy_t *ten_proxy{nullptr};
->   std::mutex mtx;
-> };
->
-> TEN_CPP_REGISTER_ADDON_AS_EXTENSION(http_server, http_server_extension_t);
->
-> } // namespace http_server_extension
-> ```
+    > `first_cxx_extension` 预期接收 `hello` cmd，因此我们需要一个消息生产者。一种方法是添加一个扩展作为消息生产者。为了方便生成测试消息，可以将 http 服务器集成到生产者的扩展中。
+    >
+    > 首先，基于 `default_extension_cpp` 创建一个 http 服务器扩展。在应用程序目录中执行以下命令：
+    >
+    > ```
+    > $ tman install extension default_extension_cpp --template-mode --template-data package_name=http_server
+    > ```
+    >
+    > http 服务器的主要功能是：
+    >
+    > *   在扩展的 `on_start()` 中启动一个运行 http 服务器的线程。
+    > *   将传入的请求转换为名为 `hello` 的 TEN cmd，并使用 `send_cmd()` 发送它们。
+    > *   期望接收 `cmd_result_t` 响应，并将其内容写入 http 响应。
+    >
+    > 在这里，我们使用 cpp-httplib ([https://github.com/yhirose/cpp-httplib](https://github.com/yhirose/cpp-httplib)) 作为 http 服务器的实现。
+    >
+    > 首先，下载 httplib.h 并将其放置在扩展的 include 目录中。然后，在 src/main.cc 中添加 http 服务器的实现。以下是一个示例代码：
+    >
+    > ```cpp
+    > #include "httplib.h"
+    > #include "nlohmann/json.hpp"
+    > #include "ten_runtime/binding/cpp/ten.h"
+    >
+    > namespace http_server_extension {
+    >
+    > class http_server_extension_t : public ten::extension_t {
+    > public:
+    >   explicit http_server_extension_t(const char *name)
+    >       : extension_t(name) {}
+    >
+    >   void on_start(ten::ten_t &ten) override {
+    >     ten_proxy = ten::ten_proxy_t::create(ten);
+    >     srv_thread = std::thread([this] {
+    >       server.Get("/health",
+    >                 [](const httplib::Request &req, httplib::Response &res) {
+    >                   res.set_content("OK", "text/plain");
+    >                 });
+    >
+    >       // Post handler, receive json body.
+    >       server.Post("/hello", [this](const httplib::Request &req,
+    >                                   httplib::Response &res) {
+    >         // Receive json body.
+    >         auto body = nlohmann::json::parse(req.body);
+    >         body["ten"]["name"] = "hello";
+    >
+    >         auto cmd = ten::cmd_t::create_from_json(body.dump().c_str());
+    >         auto cmd_shared =
+    >             std::make_shared<std::unique_ptr<ten::cmd_t>>(std::move(cmd));
+    >
+    >         std::condition_variable *cv = new std::condition_variable();
+    >
+    >         auto response_body = std::make_shared<std::string>();
+    >
+    >         ten_proxy->notify([cmd_shared, response_body, cv](ten::ten_t &ten) {
+    >           ten.send_cmd(
+    >               std::move(*cmd_shared),
+    >               [response_body, cv](ten::ten_t &ten,
+    >                                   std::unique_ptr<ten::cmd_result_t> result) {
+    >                 auto err_no = result->get_property_uint8("err_no");
+    >                 if (err_no > 0) {
+    >                   auto err_msg = result->get_property_string("err_msg");
+    >                   response_body->append(err_msg);
+    >                 } else {
+    >                   response_body->append("OK");
+    >                 }
+    >
+    >                 cv->notify_one();
+    >               });
+    >         });
+    >
+    >         std::unique_lock<std::mutex> lk(mtx);
+    >         cv->wait(lk);
+    >         delete cv;
+    >
+    >         res.set_content(response_body->c_str(), "text/plain");
+    >       });
+    >
+    >       server.listen("0.0.0.0", 8001);
+    >     });
+    >
+    >     ten.on_start_done();
+    >   }
+    >
+    >   void on_stop(ten::ten_t &ten) override {
+    >     // Extension stop.
+    >
+    >     server.stop();
+    >     srv_thread.join();
+    >     delete ten_proxy;
+    >
+    >     ten.on_stop_done();
+    >   }
+    >
+    > private:
+    >   httplib::Server server;
+    >   std::thread srv_thread;
+    >   ten::ten_proxy_t *ten_proxy{nullptr};
+    >   std::mutex mtx;
+    > };
+    >
+    > TEN_CPP_REGISTER_ADDON_AS_EXTENSION(http_server, http_server_extension_t);
+    >
+    > } // namespace http_server_extension
+    > ```
+    >
+    > 这里，在 `on_start()` 中创建一个新线程来运行 http 服务器，因为我们不想阻止扩展线程。这样，转换后的 cmd 请求将由 `srv_thread` 生成和发送。在 TEN 运行时中，为了确保线程安全，我们使用 `ten_proxy_t` 来传递来自扩展线程之外的线程的 `send_cmd()` 之类的调用。
+    >
+    > 此代码还演示了如何在 `on_stop()` 中清理外部资源。对于扩展，您应该在 `on_stop_done()` 之前释放 `ten_proxy_t`，这将停止外部线程。
 
-Here, a new thread is created in `on_start()` to run the http server because we don't want to block the extension thread. This way, the convetend cmd requests are generated and sent from `srv_thread`. In the TEN runtime, to ensure thread safety, we use `ten_proxy_t` to pass calls like `send_cmd()` from threads outside the extension thread.
+4.  配置图。
 
-This code also demonstrates how to clean up external resources in `on_stop()`. For an extension, you should release the `ten_proxy_t` before `on_stop_done()`, which stops the external thread.
+    在应用程序的 `manifest.json` 中，配置 `predefined_graph` 以指定由 `http_server` 生成的 `hello` cmd 应发送到 `first_cxx_extension`。例如：
 
-1. Configure the graph.
+    > ```json
+    > "predefined_graphs": [
+    >   {
+    >     "name": "testing",
+    >     "auto_start": true,
+    >     "nodes": [
+    >       {
+    >         "type": "extension_group",
+    >         "name": "http_thread",
+    >         "addon": "default_extension_group"
+    >       },
+    >       {
+    >         "type": "extension",
+    >         "name": "http_server",
+    >         "addon": "http_server",
+    >         "extension_group": "http_thread"
+    >       },
+    >       {
+    >         "type": "extension",
+    >         "name": "first_cxx_extension",
+    >         "addon": "first_cxx_extension",
+    >         "extension_group": "http_thread"
+    >       }
+    >     ],
+    >     "connections": [
+    >       {
+    >         "extension": "http_server",
+    >         "cmd": [
+    >           {
+    >             "name": "hello",
+    >             "dest": [
+    >               {
+    >                 "extension": "first_cxx_extension"
+    >               }
+    >             ]
+    >           }
+    >         ]
+    >       }
+    >     ]
+    >   }
+    > ]
+    > ```
 
-In the app's `manifest.json`, configure `predefined_graph` to specify that the `hello` cmd generated by `http_server` should be sent to `first_cxx_extension`. For example:
+5.  编译应用程序。
 
-> ```
-> "predefined_graphs": [
->   {
->     "name": "testing",
->     "auto_start": true,
->     "nodes": [
->       {
->         "type": "extension_group",
->         "name": "http_thread",
->         "addon": "default_extension_group"
->       },
->       {
->         "type": "extension",
->         "name": "http_server",
->         "addon": "http_server",
->         "extension_group": "http_thread"
->       },
->       {
->         "type": "extension",
->         "name": "first_cxx_extension",
->         "addon": "first_cxx_extension",
->         "extension_group": "http_thread"
->       }
->     ],
->     "connections": [
->       {
->         "extension": "http_server",
->         "cmd": [
->           {
->             "name": "hello",
->             "dest": [
->               {
->                 "extension": "first_cxx_extension"
->               }
->             ]
->           }
->         ]
->       }
->     ]
->   }
-> ]
-> ```
+    > 在应用程序目录中执行以下命令：
+    >
+    > ```
+    > $ tgn gen linux x64 debug
+    > $ tgn build linux x64 debug
+    > ```
+    >
+    > 编译完成后，应用程序和扩展的编译输出将生成在目录 out/linux/x64/app/default\_app\_cpp 中。
+    >
+    > 但是，此时无法直接运行它，因为它缺少扩展组的依赖项。
 
-5. Compile the app.
+6.  安装扩展组。
 
-> Execute the following commands in the app directory:
->
-> ```
-> $ tgn gen linux x64 debug
-> $ tgn build linux x64 debug
-> ```
->
-> After the compilation is complete, the compilation output for the app and extension will be generated in the directory out/linux/x64/app/default\_app\_cpp.
->
-> However, it cannot be run directly at this point as it is missing the dependencies of the extension group.
+    > 切换到编译输出目录。
+    >
+    > ```
+    > $ cd out/linux/x64/app/default_app_cpp
+    > ```
+    >
+    > 安装扩展组。
+    >
+    > ```
+    > $ tman install extension_group default_extension_group
+    > ```
 
-6. Install the extension group.
+7.  启动应用程序。
 
-> Switch to the compilation output directory.
->
-> ```
-> $ cd out/linux/x64/app/default_app_cpp
-> ```
->
-> Install the extension group.
->
-> ```
-> $ tman install extension_group default_extension_group
-> ```
+    > 在编译输出目录中，执行以下命令：
+    >
+    > ```
+    > $ ./bin/default_app_cpp
+    > ```
+    >
+    > 应用程序启动后，您现在可以通过向 http 服务器发送消息来测试它。例如，使用 curl 发送一个带有无效 app\_id 的请求：
+    >
+    > ```
+    > $ curl --location 'http://127.0.0.1:8001/hello' \
+    >   --header 'Content-Type: application/json' \
+    >   --data '{
+    >       "app_id": "123",
+    >       "client_type": 1,
+    >       "payload": {
+    >           "err_no": 0
+    >       }
+    >   }'
+    > ```
+    >
+    > 预期的响应应该是“invalid app\_id”。
 
-7. Start the app.
+### 在应用程序中调试扩展
 
-> In the compilation output directory, execute the following command:
->
-> ```
-> $ ./bin/default_app_cpp
-> ```
->
-> After the app starts, you can now test it by sending messages to the http server. For example, use curl to send a request with an invalid app\_id:
->
-> ```
-> $ curl --location 'http://127.0.0.1:8001/hello' \
->   --header 'Content-Type: application/json' \
->   --data '{
->       "app_id": "123",
->       "client_type": 1,
->       "payload": {
->           "err_no": 0
->       }
->   }'
-> ```
->
-> The expected response should be "invalid app\_id".
+#### 应用程序（C++）
 
-### Debugging extension in an app
+C++ 应用程序被编译成一个可执行文件，并设置了正确的 `rpath`。因此，调试 C++ 应用程序只需要在 `.vscode/launch.json` 中添加以下配置：
 
-#### App (C++)
-
-A C++ app is compiled into an executable file with the correct `rpath` set. Therefore, debugging a C++ app only requires adding the following configuration to `.vscode/launch.json`:
-
-```
+```json
 "configurations": [
   {
       "name": "App (C/C++) (lldb, launch)",
