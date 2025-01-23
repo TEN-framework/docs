@@ -12,23 +12,23 @@ layout:
     visible: true
 ---
 
-# Create a hello world extension
+# 创建一个 “Hello World” 扩展
 
-In this chapter, we are going to create a `Hello World` extension step by step, available in Python, Go, and C++. Feel free to choose whichever language you prefer. So buckle up.
+在本章中，我们将逐步创建一个 “Hello World” 扩展，该扩展将以 Python、Go 和 C++ 提供。您可以随意选择您喜欢的任何语言。准备好了吗？
 
-## Prerequisites
+## 前提条件
 
-Before diving into this chapter, you’ll need to be familiar with the [basics covered earlier](quickstart.md). Specifically, ensure you understand how to use `docker compose up` and are aware of the services running in the background.
+在深入本章之前，您需要熟悉[前面介绍的基础知识](quickstart.md)。具体而言，请确保您了解如何使用 `docker compose up` 并了解后台运行的服务。
 
-## 1. Compose up the servers
+## 1. 启动服务器
 
-First things first, let’s start by composing the servers. Run the following command:
+首先，让我们先启动服务器。运行以下命令：
 
 {% hint style="info" %}
-If the caption says `Terminal`, it means you are running the command locally. If the caption says `Bash`, it means you are running the command in the Docker container.
+如果标题显示“终端”，则表示您正在本地运行命令。如果标题显示“Bash”，则表示您正在 Docker 容器中运行命令。
 {% endhint %}
 
-{% code title=">_ Terminal" %}
+{% code title=">_ 终端" %}
 
 ```bash
 docker compose up
@@ -36,9 +36,9 @@ docker compose up
 
 {% endcode %}
 
-Once the command is entered, you should see output similar to this:
+输入命令后，您应该看到类似于以下内容的输出：
 
-<pre class="language-bash" data-title=">_ Terminal"><code class="lang-bash">....
+<pre class="language-bash" data-title=">_ 终端"><code class="lang-bash">....
 Attaching to ten_agent_dev, ten_agent_playground
 ten_agent_dev         | cd agents && tman designer
 ten_agent_dev         | :-)  Starting server at http://0.0.0.0:49483
@@ -51,17 +51,17 @@ ten_agent_playground  |  ✓ Ready in 429ms
 ...
 </code></pre>
 
-Now, we’ve got the following services running:
+现在，我们正在运行以下服务：
 
-• `ten_agent_dev` at `http://0.0.0.0:49483` (dev server)
+• `ten_agent_dev`，地址为 `http://0.0.0.0:49483`（开发服务器）
 
-• `ten_agent_playground` at `http://localhost:3000` (TEN Agent playground)
+• `ten_agent_playground`，地址为 `http://localhost:3000` (TEN Agent playground)
 
-## 2. Enter the docker container
+## 2. 进入 Docker 容器
 
-To work within the isolated environment, run the following command:
+要在隔离的环境中工作，请运行以下命令：
 
-{% code title=">_ Terminal" %}
+{% code title=">_ 终端" %}
 
 ```bash
 docker exec -it ten_agent_dev bash
@@ -69,9 +69,9 @@ docker exec -it ten_agent_dev bash
 
 {% endcode %}
 
-## 3. Create the hello world extension
+## 3. 创建 Hello World 扩展
 
-By running the following commands, an extension called `hello_world` will be created in Python, Go, or C++.
+通过运行以下命令，将在 Python、Go 或 C++ 中创建一个名为 `hello_world` 的扩展。
 
 {% tabs %}
 {% tab title="Python" %}
@@ -102,15 +102,15 @@ tman create extension hello_world --template=default_extension_cpp --template-da
 {% endtab %}
 {% endtabs %}
 
-After running the command, the log will display something like this:
+运行命令后，日志将显示如下内容：
 
 <pre class="language-bash" data-title=">_ Bash"><code class="lang-bash">
 Package 'extension:hello_world' created successfully in '/app' in 3 seconds.
 </code></pre>
 
-## 4. Adding API to the extension
+## 4. 向扩展添加 API
 
-Navigate into the `hello_world` directory and open manifest.json. Add the API objects with `data_in` and `cmd_out`:
+导航到 `hello_world` 目录并打开 manifest.json。添加带有 `data_in` 和 `cmd_out` 的 API 对象：
 
 <pre class="language-json" data-title="./hello_world/manifest.json"><code class="lang-json">{
   "type": "extension",
@@ -157,9 +157,9 @@ Navigate into the `hello_world` directory and open manifest.json. Add the API ob
 }
 </code></pre>
 
-## 5. Build the extension
+## 5. 构建扩展
 
-Let's use `cd /app` command to go back to the root of the project, and run `make build` to build the extension.
+让我们使用 `cd /app` 命令返回到项目的根目录，并运行 `make build` 来构建扩展。
 
 {% code title=">_ Bash" %}
 
@@ -171,12 +171,12 @@ task use
 
 {% endcode %}
 
-## 6. Restart the server
+## 6. 重启服务器
 
-You don’t need to restart the server when you first build the agent. However, after making minor updates, if refreshing the page doesn’t apply the changes, you’ll need to restart the server in Docker to ensure the updates take effect.
+当您第一次构建代理时，无需重启服务器。但是，在进行细微更新后，如果刷新页面没有应用更改，您将需要在 Docker 中重启服务器以确保更新生效。
 
-<figure><img src="../assets/gif/docker_restart_server.gif" alt=""><figcaption><p>Restart the server for ten_agent_dev</p></figcaption></figure>
+<figure><img src="../assets/gif/docker_restart_server.gif" alt=""><figcaption><p>重启 ten_agent_dev 的服务器</p></figcaption></figure>
 
-## 7. Verify the extension
+## 7. 验证扩展
 
-Congratulations! You’ve successfully created your first `hello_world` extension.
+恭喜！您已成功创建了第一个 `hello_world` 扩展。

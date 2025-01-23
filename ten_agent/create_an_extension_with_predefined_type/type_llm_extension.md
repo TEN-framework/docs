@@ -1,35 +1,35 @@
-# Create a LLM Extension
+# 创建 LLM 扩展
 
-## Creating AsyncLLMBaseExtension by using tman
+## 使用 tman 创建 AsyncLLMBaseExtension
 
-Run the following command,
+运行以下命令，
 
 ```bash
 tman install extension default_async_llm_extension_python --template-mode --template-data package_name=llm_extension --template-data class_name_prefix=LLMExtension
 ```
 
-## Abstract APIs to implement
+## 要实现的抽象 API
 
 ### `on_data_chat_completion(self, ten_env: TenEnv, **kargs: LLMDataCompletionArgs) -> None`
 
-This method is called when the LLM Extension receives a data completion request. It's used when data is passed in via data protocol in streaming mode.
+当 LLM 扩展接收到数据补全请求时，会调用此方法。当以流模式通过数据协议传递数据时使用。
 
 ### `on_call_chat_completion(self, ten_env: TenEnv, **kargs: LLMCallCompletionArgs) -> any`
 
-This method is called when the LLM Extension receives a call completion request. It's used when data is passed in via call protocol in non-streaming mode.
+当 LLM 扩展接收到调用补全请求时，会调用此方法。当以非流模式通过调用协议传递数据时使用。
 
-This method is called when the LLM Extension receives a call completion request.
+当 LLM 扩展接收到调用补全请求时，会调用此方法。
 
 ### `on_tools_update(self, ten_env: TenEnv, tool: LLMToolMetadata) -> None`
 
-This method is called when the LLM Extension receives a tool update request.
+当 LLM 扩展接收到工具更新请求时，会调用此方法。
 
-## APIs
+## API
 
 ### cmd_in: `tool_register`
 
-This API is used to consume the tool registration request. An array of LLMToolMetadata will be received as input. The tools will be appended to `self.available_tools` for future use.
+此 API 用于接收工具注册请求。将接收 LLMToolMetadata 数组作为输入。这些工具将附加到 `self.available_tools` 以供将来使用。
 
 ### cmd_out: `tool_call`
 
-This API is used to send the tool call request. You can connect this API to any LLMTool extension destination to get the tool call result.
+此 API 用于发送工具调用请求。您可以将此 API 连接到任何 LLMTool 扩展目的地以获取工具调用结果。

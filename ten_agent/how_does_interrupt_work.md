@@ -1,53 +1,46 @@
-# How does interrupt work in TEN-Agent
+# TEN-Agent 中断的工作原理
 
-## Overview
+## 概述
 
-The interrupt mechanism in
-[TEN-Agent](https://github.com/TEN-framework/TEN-Agent) consists of two main
-parts: **Interrupt Detection** and **Interrupt Response**. This document details
-both parts and explains how the interrupt command propagates through the AI
-agent graph.
+[TEN-Agent](https://github.com/TEN-framework/TEN-Agent) 中的中断机制由两个主要部分组成：**中断检测**和**中断响应**。本文档详细介绍了这两个部分，并解释了中断命令如何在 AI 代理图中传播。
 
-## Part 1: Interrupt Detection
+## 第 1 部分：中断检测
 
-### 1. Current Interrupt Detection Implementation
+### 1. 当前中断检测的实现
 
-The current
+当前的
 ([interrupt_detector_python](https://github.com/TEN-framework/TEN-Agent/tree/main/agents/ten_packages/extension/interrupt_detector_python))
-extension implements a text-based interrupt detection mechanism:
+扩展实现了一种基于文本的中断检测机制：
 
 ```python
 def on_data(self, ten: TenEnv, data: Data) -> None:
     text = data.get_property_string(TEXT_DATA_TEXT_FIELD)
     final = data.get_property_bool(TEXT_DATA_FINAL_FIELD)
 
-    # Trigger interrupt when text is final or reaches threshold length
+    # 当文本为 final 或达到阈值长度时触发中断
     if final or len(text) >= 2:
         self.send_flush_cmd(ten)
 ```
 
-The interrupt detector triggers in the following cases:
+中断检测器在以下情况下触发：
 
-1. When receiving final text (`is_final = true`)
-2. When text length reaches a threshold (≥ 2 characters)
+1.  当接收到最终文本时 (`is_final = true`)
+2.  当文本长度达到阈值时（≥ 2 个字符）
 
-### 2. Customize Interrupt Detection
+### 2. 自定义中断检测
 
-To implement your own interrupt detection logic, you can refer to the
-implementation of
+要实现您自己的中断检测逻辑，您可以参考
 [interrupt_detector_python](https://github.com/TEN-framework/TEN-Agent/tree/main/agents/ten_packages/extension/interrupt_detector_python)
-as an example and customize the interrupt conditions based on your specific
-needs.
+的实现作为示例，并根据您的特定需求自定义中断条件。
 
-## Part 2: Interrupt Response
+## 第 2 部分：中断响应
 
-### Chain Processing in AI Agent Graph
+### AI 代理图中的链式处理
 
-In a typical AI agent graph, the interrupt command (`flush`) follows a chain
-processing pattern:
+在典型的 AI 代理图中，中断命令 (`flush`) 遵循链式处理模式：
 
 ```text
-Interrupt Detector
+中断检测器
        ↓
     LLM/ChatGPT
        ↓
@@ -56,22 +49,17 @@ Interrupt Detector
    agora_rtc
 ```
 
-Each extension in the chain follows two key steps when receiving a `flush`
-command:
+链中的每个扩展在接收到 `flush` 命令时都遵循两个关键步骤：
 
-1. Clean up its own resources and internal state
-2. Forward the `flush` command to downstream extensions
+1.  清理其自身的资源和内部状态
+2.  将 `flush` 命令转发到下游扩展
 
-This ensures that:
+这确保：
 
-- Extensions are cleaned up in the correct order
-- No residual data flows through the system
-- Each extension returns to a clean state before the next operation
+-   扩展按正确的顺序清理
+-   没有残留数据流经系统
+-   每个扩展在下一个操作之前都返回到干净状态
 
-## Conclusion
+## 结论
 
-[TEN-Agent](https://github.com/TEN-framework/TEN-Agent)'s interrupt mechanism
-uses a chain processing pattern to ensure orderly cleanup of all extensions in
-the AI agent graph. When an interrupt occurs, each extension first cleans up its
-own state and then forwards the `flush` command to downstream extensions,
-ensuring a clean system state for subsequent operations.
+[TEN-Agent](https://github.com/TEN-framework/TEN-Agent) 的中断机制使用链式处理模式来确保 AI 代理图中所有扩展的有序清理。当发生中断时，每个扩展首先清理自身的状态，然后将 `flush` 命令转发到下游扩展，从而确保后续操作的系统状态干净。

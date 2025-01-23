@@ -1,26 +1,26 @@
-# Overview
+# 概述
 
-## Extension types
+## 扩展类型
 
-When developing Extensions, we often notice that implementations for Extensions of the same category share similarities. For example, the Extensions for Gemini and OpenAI have similar implementation logic, but they also differ in certain details. To improve development efficiency, these similar Extension implementations can be abstracted into a generic Extension type. During actual development, you only need to inherit from this type and implement a few specific methods.
+在开发扩展时，我们经常注意到同一类别的扩展的实现具有相似之处。例如，Gemini 和 OpenAI 的扩展具有相似的实现逻辑，但在某些细节上也存在差异。为了提高开发效率，可以将这些类似的扩展实现抽象为通用的扩展类型。在实际开发过程中，您只需从该类型继承并实现一些特定的方法。
 
-Currently, TEN Agent supports the following Extension types:
+目前，TEN Agent 支持以下扩展类型：
 
-- `AsyncLLMBaseExtension`: Designed for implementing large language model Extensions, such as those similar to OpenAI.
-- `AsyncLLMToolBaseExtension`: Used to implement tool Extensions for large language models. These are Extensions that provide tool capabilities based on Function Call mechanisms.
+- `AsyncLLMBaseExtension`：专为实现大型语言模型扩展而设计，例如那些类似于 OpenAI 的扩展。
+- `AsyncLLMToolBaseExtension`：用于实现大型语言模型的工具扩展。这些扩展基于函数调用机制提供工具功能。
 
-This abstraction helps standardize development while reducing repetitive work.
+这种抽象有助于标准化开发，同时减少重复性工作。
 
-You can execute the following command in the TEN project to install the abstract base class library:
+您可以在 TEN 项目中执行以下命令以安装抽象基类库：
 
 ```bash
 tman install system ten_ai_base@0.1.0
 ```
 
-## Extension behavior
+## 扩展行为
 
-### LLM Extension and LLMTool Extension
+### LLM 扩展和 LLMTool 扩展
 
-Any LLMTool Extension can be connected with an LLM Extension. When the LLMTool is started, it will automatically connect to the LLM Extension.
+任何 LLMTool 扩展都可以与 LLM 扩展连接。当 LLMTool 启动时，它将自动连接到 LLM 扩展。
 
-When the LLM Extension detects a Function Call, it will pass the Function Call to the LLMTool Extension for processing. Once the LLMTool Extension has completed the processing, it will return the result to the LLM Extension.
+当 LLM 扩展检测到函数调用时，它会将函数调用传递给 LLMTool 扩展进行处理。LLMTool 扩展完成处理后，会将结果返回给 LLM 扩展。

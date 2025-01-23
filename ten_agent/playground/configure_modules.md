@@ -1,50 +1,50 @@
-# Configure Modules in Playground
+# 在 Playground 中配置模块
 
-This guide will help you to configure modules in the TEN-Agent Playground.
+本指南将帮助您在 TEN-Agent Playground 中配置模块。
 
-## Configure Modules
+## 配置模块
 
-1. Open the playground at [localhost:3000](http://localhost:3000) to configure your agent.
-2. Select a graph type (e.g. Voice Agent, Realtime Agent).
-3. Click on the Button to the right of the graph selection to open the module selection.
-4. Depending on the graph type, you can select available modules from the dropdown list.
-5. Click on `Save Change` to apply the module to the graph.
-6. If you see the success toast, the module is successfully applied to the graph.
+1.  打开 [localhost:3000](http://localhost:3000) 上的 Playground 以配置您的代理。
+2.  选择一种图表类型（例如，语音代理、实时代理）。
+3.  单击图表选择右侧的按钮以打开模块选择。
+4.  根据图表类型，您可以从下拉列表中选择可用的模块。
+5.  单击“保存更改”以将模块应用于图表。
+6.  如果您看到成功提示，则表示该模块已成功应用于图表。
 
-## Available Modules
+## 可用模块
 
-The following module types are available for the TEN-Agent Playground:
+以下模块类型可用于 TEN-Agent Playground：
 
-### Speech Recognition (STT)
+### 语音识别 (STT)
 
-The Speech Recognition module converts spoken language into text.
+语音识别模块将口语转换为文本。
 
-### Text-to-Speech (TTS)
+### 文本转语音 (TTS)
 
-The Text-to-Speech module converts text into spoken language.
+文本转语音模块将文本转换为口语。
 
-### Large Language Model (LLM)
+### 大型语言模型 (LLM)
 
-The Large Language Model module generates text based on the input text with influence.
+大型语言模型模块基于受影响的输入文本生成文本。
 
-### Voide to Voice Model (V2V)
+### 语音转语音模型 (V2V)
 
-The Voice to Voice Model module generates voice based on the input voice with influence.
+语音转语音模型模块基于受影响的输入语音生成语音。
 
-### Tool (TOOL)
+### 工具 (TOOL)
 
-The Tool module provides a set of tools for the agent to use. The tools can be binded to `LLM` module or `V2V` module.
+工具模块提供一组供代理使用的工具。这些工具可以绑定到 `LLM` 模块或 `V2V` 模块。
 
-## Bind Tool Modules
+## 绑定工具模块
 
-You can bind tool modules to `LLM` or `V2V` modules in the TEN-Agent Playground.
-Tool can provide additional capabilities to the agent, such as weather check, news update, etc. You can also write your own tool extension if needed.
+您可以在 TEN-Agent Playground 中将工具模块绑定到 `LLM` 或 `V2V` 模块。
+工具可以为代理提供其他功能，例如天气检查、新闻更新等。如果需要，您也可以编写自己的工具扩展。
 
-1. Open the playground at [localhost:3000](http://localhost:3000) to configure your agent.
-2. Select a graph type (e.g. Voice Agent, Realtime Agent).
-3. Click on the Button to the right of the graph selection to open the module selection.
-4. Depending on the graph type, you will see `LLM` or `V2V` module in the Module Picker.
-5. Click on the button to the right of the module to open the tool selection.
-6. Select a tool available to bind to the module.
-7. Click on `Save Change` to apply the tool to the module.
-8. If you see the success toast, the tool is successfully applied to the module.
+1.  打开 [localhost:3000](http://localhost:3000) 上的 Playground 以配置您的代理。
+2.  选择一种图表类型（例如，语音代理、实时代理）。
+3.  单击图表选择右侧的按钮以打开模块选择。
+4.  根据图表类型，您将在模块选择器中看到 `LLM` 或 `V2V` 模块。
+5.  单击模块右侧的按钮以打开工具选择。
+6.  选择可绑定到模块的可用工具。
+7.  单击“保存更改”以将工具应用于模块。
+8.  如果您看到成功提示，则表示该工具已成功应用于模块。

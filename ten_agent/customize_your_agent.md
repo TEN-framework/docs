@@ -12,29 +12,28 @@ layout:
     visible: true
 ---
 
-# Customize your agent
+# 自定义您的代理
 
-
-## Using Playground
+## 使用 Playground
 
 <figure><img src="https://github.com/TEN-framework/docs/blob/main/assets/gif/module-example.gif?raw=true" alt=""><figcaption></figcaption></figure>
 
-Once you have the playground running at [ localhost:3000 ](http://localhost:3000), you can customize your agent through three simple steps:
+一旦您在 [localhost:3000](http://localhost:3000) 上运行了 playground，您可以通过三个简单的步骤自定义您的代理：
 
-1. Graph Type Selection
-   - Choose between Voice Agent, Realtime Agent, or other types
+1.  **图表类型选择**
+    -   在语音代理、实时代理或其他类型之间选择
 
-2. Module Selection
-   - Pick a module that matches your chosen graph type
+2.  **模块选择**
+    -   选择与您选择的图表类型匹配的模块
 
-3. Extension Configuration
-   - Select extensions and configure their API keys
-   - Adjust settings as needed
+3.  **扩展配置**
+    -   选择扩展并配置其 API 密钥
+    -   根据需要调整设置
 
-The playground provides an intuitive interface to connect these components without coding.
+playground 提供了一个直观的界面来连接这些组件，无需编码。
 
-## Changing the code yourself
+## 自己更改代码
 
-If you feel comfortable editing the code yourself, you are more than welcome to do so. In `agents/property.json`, find the corresponding graph and manipulate any values you want.
+如果您觉得可以自己编辑代码，我们非常欢迎您这样做。在 `agents/property.json` 中，找到相应的图表并操作您想要的任何值。
 
-After making changes, simply refresh the page and connect to the agent, and the changes will take effect.
+进行更改后，只需刷新页面并连接到代理，更改将生效。

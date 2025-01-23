@@ -1,14 +1,14 @@
-# Web Server
+# Web 服务器
 
-The web server is a simple Golang web server that serves the http requests. It is responsible for handling the incoming requests and starting/stopping agent processes.
+Web 服务器是一个简单的 Golang Web 服务器，用于处理 HTTP 请求。它负责处理传入的请求并启动/停止代理进程。
 
-The playground/demo UI has been built to interact with the web server. You can also interact with the web server using curl or any other http client.
+已构建 Playground/演示 UI 来与 Web 服务器进行交互。您还可以使用 curl 或任何其他 HTTP 客户端与 Web 服务器进行交互。
 
-## Request & Response Examples
+## 请求与响应示例
 
-The server provides a simple layer for managing agent processes. The API resources are described below.
+该服务器提供一个用于管理代理进程的简单层。API 资源如下所述。
 
-### API Resources
+### API 资源
 
 - [POST /start](#post-start)
 - [POST /stop](#post-stop)
@@ -16,19 +16,19 @@ The server provides a simple layer for managing agent processes. The API resourc
 
 ### POST /start
 
-This api starts an agent with given graph and override properties. The started agent will join into the specified channel, and subscribe to the uid which your browser/device's rtc use to join.
+此 API 使用给定的图和覆盖属性启动代理。启动的代理将加入到指定的频道，并订阅您的浏览器/设备的 RTC 用于加入的 UID。
 
-| Param    | Description |
-| -------- | ------- |
-| request_id  | any uuid for tracing purpose    |
-| channel_name | channel name, it needs to be the same with the one your browser/device joins, agent needs to stay with your browser/device in the same channel to communicate  |
-| user_uid    | the uid which your browser/device's rtc use to join, agent needs to know your rtc uid to subscribe your audio    |
-| bot_uid    | optional, the uid bot used to join rtc    |
-| graph_name    | the graph to be used when starting agent, will find in property.json    |
-| properties    | additional properties to override in property.json, the override will not change original property.json, only the one agent used to start    |
-| timeout | determines how long the agent will remain active without receiving any pings. If the timeout is set to `-1`, the agent will not terminate due to inactivity. By default, the timeout is set to 60 seconds, but this can be adjusted using the `WORKER_QUIT_TIMEOUT_SECONDS` variable in your `.env` file. |
+| 参数         | 描述                                                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| request_id  | 用于跟踪目的的任何 UUID                                                                                                           |
+| channel_name | 频道名称，需要与您的浏览器/设备加入的频道相同，代理需要与您的浏览器/设备在同一频道中进行通信                                                                               |
+| user_uid    | 您的浏览器/设备的 RTC 用于加入的 UID，代理需要知道您的 RTC UID 才能订阅您的音频                                                                           |
+| bot_uid    | 可选，机器人用于加入 RTC 的 UID                                                                                                   |
+| graph_name  | 启动代理时要使用的图，将在 property.json 中查找                                                                                               |
+| properties  | 要在 property.json 中覆盖的其他属性，覆盖不会更改原始的 property.json，仅更改代理启动时使用的属性                                                               |
+| timeout     | 确定代理在未收到任何 ping 的情况下将保持活动状态的时间。如果超时设置为 `-1`，则代理不会因不活动而终止。默认情况下，超时设置为 60 秒，但可以使用 `.env` 文件中的 `WORKER_QUIT_TIMEOUT_SECONDS` 变量进行调整。 |
 
-Example:
+示例:
 
 ```bash
 curl 'http://localhost:8080/start' \
@@ -48,14 +48,14 @@ curl 'http://localhost:8080/start' \
 
 ### POST /stop
 
-This api stops the agent you started
+此 API 停止您启动的代理。
 
-| Param    | Description |
-| -------- | ------- |
-| request_id  | any uuid for tracing purpose    |
-| channel_name | channel name, the one you used to start the agent  |
+| 参数         | 描述                                  |
+| ----------- | ------------------------------------ |
+| request_id  | 用于跟踪目的的任何 UUID                   |
+| channel_name | 频道名称，即您用于启动代理的频道 |
 
-Example:
+示例:
 
 ```bash
 curl 'http://localhost:8080/stop' \
@@ -66,17 +66,16 @@ curl 'http://localhost:8080/stop' \
   }'
 ```
 
-
 ### POST /ping
 
-This api sends a ping to the server to indicate connection is still alive. This is not needed if you specify `timeout:-1` when starting the agent, otherwise the agent will quit if not receiving ping after timeout in seconds.
+此 API 向服务器发送 ping，以表明连接仍然有效。如果在启动代理时指定 `timeout:-1`，则不需要此操作，否则如果未在超时（以秒为单位）后收到 ping，则代理将退出。
 
-| Param    | Description |
-| -------- | ------- |
-| request_id  | any uuid for tracing purpose    |
-| channel_name | channel name, the one you used to start the agent  |
+| 参数         | 描述                                  |
+| ----------- | ------------------------------------ |
+| request_id  | 用于跟踪目的的任何 UUID                   |
+| channel_name | 频道名称，即您用于启动代理的频道 |
 
-Example:
+示例:
 
 ```bash
 curl 'http://localhost:8080/ping' \

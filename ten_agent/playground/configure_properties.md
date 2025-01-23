@@ -1,27 +1,27 @@
-# Configure Properties in Playground
+# 在 Playground 中配置属性
 
-This guide will help you to configure properties in the TEN-Agent Playground.
+本指南将帮助您在 TEN-Agent Playground 中配置属性。
 
-## Configure Properties
+## 配置属性
 
-1. Open the playground at [localhost:3000](http://localhost:3000) to configure your agent.
-2. Select a graph type (e.g. Voice Agent, Realtime Agent).
-3. Click on the Button to the right of the graph selection to open the property configuration.
-4. From the dropdown list, you can find all extension nodes used in the graph.
-5. Choose an extension node to configure its properties. e.g. stt / llm / tts / v2v / tool.
-6. You will see a list of properties that can be configured for the selected extension node.
-7. You can change the value of the property by clicking on the input field or switch (if it's a boolean)
-8. Click on `Save Change` to apply the property to the extension node.
-9. If you see the success toast, the property is successfully applied to the extension node.
+1. 打开 [localhost:3000](http://localhost:3000) 上的 Playground 以配置您的代理。
+2. 选择一种图表类型（例如，语音代理、实时代理）。
+3. 单击图表选择右侧的按钮以打开属性配置。
+4. 从下拉列表中，您可以找到图中使用的所有扩展节点。
+5. 选择一个扩展节点以配置其属性。例如：stt / llm / tts / v2v / tool。
+6. 您将看到可以为所选扩展节点配置的属性列表。
+7. 您可以通过单击输入字段或开关（如果是布尔值）来更改属性的值。
+8. 单击“保存更改”以将属性应用于扩展节点。
+9. 如果您看到成功提示，则表示该属性已成功应用于扩展节点。
 
-## Add more properties
+## 添加更多属性
 
-Some properties are defined in the extension node, while does not currently has a value. These properties will not be shown in the property configuration. You can add more properties by following the steps below:
+有些属性在扩展节点中定义，但目前没有值。这些属性不会显示在属性配置中。您可以按照以下步骤添加更多属性：
 
-1. In the propety list drawer, click on the `Add Property` button.
-2. A new drawer will be opened with a dropdown list of available properties.
-3. Select a property from the dropdown list.
-4. Click on `Add` to add the property to the extension node.
-5. Configure the value of the property.
-6. Click on `Save Change` to apply the property to the extension node.
-7. If you see the success toast, the property is successfully applied to the extension node.
+1. 在属性列表抽屉中，单击“添加属性”按钮。
+2. 将打开一个新抽屉，其中包含可用属性的下拉列表。
+3. 从下拉列表中选择一个属性。
+4. 单击“添加”以将该属性添加到扩展节点。
+5. 配置属性的值。
+6. 单击“保存更改”以将属性应用于扩展节点。
+7. 如果您看到成功提示，则表示该属性已成功应用于扩展节点。

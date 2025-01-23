@@ -1,34 +1,34 @@
-# Run TEN-Agent Demo
+# 运行 TEN-Agent 演示
 
-This guide will help you to run the TEN-Agent demo. The demo is a web-based interface that allows you to interact with the TEN-Agent. The orchestration of demo site is fixed and cannot be changed.
+本指南将帮助您运行 TEN-Agent 演示。该演示是一个基于 Web 的界面，允许您与 TEN-Agent 进行交互。演示站点的编排是固定的，无法更改。
 
-## Run demo from pre-built Docker image
+## 从预构建的 Docker 镜像运行演示
 
-The easiest way to run the demo is to use the pre-built Docker image. The image contains the latest version of the TEN-Agent and the demo. The project docker compose file already contains the pre-built image, so you can start by following the steps in [getting started guide](https://doc.theten.ai/ten-agent/getting_started).
+运行演示的最简单方法是使用预构建的 Docker 镜像。该镜像包含 TEN-Agent 和演示的最新版本。项目 docker compose 文件已包含预构建的镜像，因此您可以按照[入门指南](https://doc.theten.ai/ten-agent/getting_started)中的步骤开始。
 
-After you successfully setup, you will need to run an additional command to switch graph folder to demo folder,
+成功设置后，您需要运行一个额外的命令将图表文件夹切换到演示文件夹，
 
 ```bash
 task use AGENT=agents/examples/demo
 ```
 
-Once finished, you can access the demo by opening the browser and navigating to `http://localhost:3002`.
+完成后，您可以通过打开浏览器并导航到 `http://localhost:3002` 来访问演示。
 
-## Run demo from source code
+## 从源代码运行演示
 
-If you want to run the demo from the source code, start a new terminal, change to the folder where you cloned TEN-Agent project, follow below steps:
+如果您想从源代码运行演示，请启动一个新终端，更改到克隆 TEN-Agent 项目的文件夹，然后按照以下步骤操作：
 
 ```bash
-# Change to the demo directory
+# 切换到演示目录
 cd demo
 
-# Install dependencies
+# 安装依赖项
 pnpm install
 
-# Start the demo
+# 启动演示
 pnpm dev
 ```
 
-Once the demo is started, you can access it by opening the browser and navigating to `http://localhost:3001`.
+演示启动后，您可以通过打开浏览器并导航到 `http://localhost:3001` 来访问它。
 
-> **Note:** The demo depends on the golang web server (located in `server` directory). The web server will start when you run `task run` command in the container after you follow the steps in the [getting started guide](https://doc.theten.ai/ten-agent/getting_started).
+> **注意：** 该演示依赖于 golang Web 服务器（位于 `server` 目录中）。在您按照[入门指南](https://doc.theten.ai/ten-agent/getting_started)中的步骤操作后，在容器中运行 `task run` 命令时，Web 服务器将启动。

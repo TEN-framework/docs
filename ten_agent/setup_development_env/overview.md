@@ -1,8 +1,8 @@
-# Overview
+# 概述
 
-The easiest way to get started with TEN Agent is to use the provided Docker container. This container includes all the necessary dependencies and configurations to run the agent. You can also customize the agent by creating your own extensions or modifying the existing ones.
+开始使用 TEN Agent 的最简单方法是使用提供的 Docker 容器。此容器包含运行代理所需的所有依赖项和配置。您还可以通过创建自己的扩展或修改现有扩展来自定义代理。
 
-While if you want to develop the agent, using suitable development tools can save you lots of time. This guide will contain following tutorials,
+如果您想开发代理，使用合适的开发工具可以节省大量时间。本指南将包含以下教程：
 
-- Setup local development environment with VSCode to connect with your Docker container.
-- Setup cloud development environment with Github Codespace.
+-   使用 VSCode 设置本地开发环境以连接您的 Docker 容器。
+-   使用 Github Codespace 设置云开发环境。

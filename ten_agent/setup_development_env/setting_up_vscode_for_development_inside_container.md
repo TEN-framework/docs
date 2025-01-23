@@ -1,72 +1,72 @@
-# Setting Up VSCode for Development Inside Container
+# 在容器内设置 VSCode 进行开发
 
-When developing with TEN, it's generally recommended to perform compilation and development within a container. However, if you're using VSCode outside the container, you may encounter issues where symbols cannot be resolved. This is because some environment dependencies are installed within the container, and VSCode can't recognize the container's environment, leading to unresolved header files.
+使用 TEN 进行开发时，通常建议在容器内执行编译和开发。但是，如果您在容器外使用 VSCode，则可能会遇到无法解析符号的问题。这是因为某些环境依赖项安装在容器内，而 VSCode 无法识别容器的环境，从而导致无法解析头文件。
 
-To solve this, you can mount VSCode within the container so that it recognizes the container’s environment and resolves the header files accordingly. This guide will walk you through using VSCode's Dev Containers and Docker extensions to achieve this.
+为了解决这个问题，您可以将 VSCode 安装在容器内，以便它识别容器的环境并相应地解析头文件。本指南将引导您使用 VSCode 的 Dev Containers 和 Docker 扩展来实现此目的。
 
-## Step 1: Install the Docker Extension
+## 步骤 1：安装 Docker 扩展
 
-First, install the [Docker extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) in VSCode. This extension allows you to manage Docker containers directly within VSCode.
+首先，在 VSCode 中安装 [Docker 扩展](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)。此扩展允许您直接在 VSCode 中管理 Docker 容器。
 
-## Step 2: Install the Dev Containers Extension
+## 步骤 2：安装 Dev Containers 扩展
 
-Next, install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers). This extension enables VSCode to connect to Docker containers for development.
+接下来，安装 [Dev Containers 扩展](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)。此扩展使 VSCode 能够连接到 Docker 容器进行开发。
 
-## Step 3: Start the Development Environment Using Docker Compose
+## 步骤 3：使用 Docker Compose 启动开发环境
 
-This step is similar to the process outlined in the [Quick Start](https://doc.theten.ai/ten-agent/getting_started) guide. However, instead of running:
+此步骤类似于[快速入门](https://doc.theten.ai/ten-agent/getting_started)指南中概述的过程。但是，请勿运行：
 
-{% code title=">_ Terminal" %}
+{% code title=">_ 终端" %}
 ```shell
 docker compose up
 ```
 {% endcode %}
 
-Using the `docker compose up -d` command, start the container in detached mode:
+使用 `docker compose up -d` 命令，在分离模式下启动容器：
 
-{% code title=">_ Terminal" %}
+{% code title=">_ 终端" %}
 ```shell
 docker compose up -d
 ```
 {% endcode %}
 
-After executing this command, the container should start. Open VSCode, switch to the Docker extension, and you should see the running container.
+执行此命令后，容器应启动。打开 VSCode，切换到 Docker 扩展，您应该会看到正在运行的容器。
 
-![Docker Containers](../assets/png/docker_containers.png)
+![Docker 容器](../assets/png/docker_containers.png)
 
-## Step 4: Connect to the Container
+## 步骤 4：连接到容器
 
-In the Docker extension within VSCode, find the `astra_agents_dev` container in the list and click `Attach Visual Studio Code` to connect to the container. VSCode will then open a new window that is connected to the container, where you can proceed with development.
+在 VSCode 中的 Docker 扩展中，在列表中找到 `astra_agents_dev` 容器，然后单击“Attach Visual Studio Code”以连接到容器。然后，VSCode 将打开一个连接到容器的新窗口，您可以在其中继续进行开发。
 
-In the Dev Container environment connected to the container, your local extensions and settings will not be applied, as this environment is within the container. Therefore, you will need to install extensions and configure settings inside the container. To install extensions within the container, open the newly launched VSCode window, click on `Extensions` in the left sidebar, search for the required extension, and follow the prompts to install it inside the container.
+在连接到容器的 Dev Container 环境中，不会应用您的本地扩展和设置，因为此环境位于容器内。因此，您需要在容器内安装扩展并配置设置。要在容器内安装扩展，请打开新启动的 VSCode 窗口，单击左侧边栏中的“Extensions”，搜索所需的扩展，然后按照提示在容器内安装它。
 
-## Step 5: Setup breakpoint for debugging
+## 步骤 5：设置断点进行调试
 
-Setting breakpoints in the code is a common practice when debugging. To set a breakpoint in the code, click on the left margin of the line number where you want to set the breakpoint. A red dot will appear, indicating that a breakpoint has been set.
+在代码中设置断点是调试时常用的做法。要在代码中设置断点，请单击要设置断点的行号的左侧边距。将出现一个红色圆点，表示已设置断点。
 
-![Setting Breakpoint](https://raw.githubusercontent.com/TEN-framework/docs/refs/heads/main/assets/png/setting_breakpoint.png)
+![设置断点](https://raw.githubusercontent.com/TEN-framework/docs/refs/heads/main/assets/png/setting_breakpoint.png)
 
-if you cannot set the breakpoint, it usually means you have not installed the language extension in the container. You can install the language extension by clicking on the `Extensions` icon in the left sidebar, searching for the required extension, and following the prompts to install it.
+如果无法设置断点，通常意味着您尚未在容器中安装语言扩展。您可以通过单击左侧边栏中的“Extensions”图标，搜索所需的扩展，然后按照提示安装它来安装语言扩展。
 
-Once you have set the breakpoint, you can start debugging by clicking on the `Run and Debug` icon in the left sidebar, selecting the `debug python` configuration, and clicking on the green play button to start debugging.
+设置断点后，您可以通过单击左侧边栏中的“Run and Debug”图标，选择“debug python”配置，然后单击绿色播放按钮开始调试来开始调试。
 
-![Debug Configuration](https://github.com/TEN-framework/docs/blob/main/assets/png/debug_config.png?raw=true)
+![调试配置](https://github.com/TEN-framework/docs/blob/main/assets/png/debug_config.png?raw=true)
 
-In this way, VSCode is directly starting the agent application, which means Golang web server is not paticipating in the run. Therefore, you will need to pay attention to below points:
+通过这种方式，VSCode 直接启动代理应用程序，这意味着 Golang Web 服务器不参与运行。因此，您需要注意以下几点：
 
-### Which graph is being used in this mode?
+### 在此模式下使用哪个图？
 
-Web server will help you manipulate `property.json` when starting agent to help you select the graph you want to use. However, in this mode, you will need to manually modify `property.json` to select the graph you want to use. Ten will by default select **the first graph with `auto_start` property set to true** to start.
+Web 服务器将在启动代理时帮助您操作 `property.json`，以帮助您选择要使用的图。但是，在此模式下，您需要手动修改 `property.json` 以选择要使用的图。Ten 默认会选择**第一个将 `auto_start` 属性设置为 true 的图**进行启动。
 
-### RTC properties
+### RTC 属性
 
-RTC feature is mandatory for your client to talk to agent server. Web server will help you generate RTC tokens and channels and update these into `property.json` for you. However, in this mode, you will need to manually modify `property.json` to update RTC tokens and channels yourself. The easiest way is to run with playground/demo first, and a temp property file will be generated, you can copy the RTC tokens and channels from there.
+RTC 功能对于您的客户端与代理服务器通信是强制性的。Web 服务器将帮助您生成 RTC 令牌和频道，并将这些信息更新到 `property.json` 中。但是，在此模式下，您需要手动修改 `property.json` 以自行更新 RTC 令牌和频道。最简单的方法是先使用 playground/demo 运行，然后会生成一个临时属性文件，您可以从中复制 RTC 令牌和频道。
 
-You shall find the temp property file path in the ping request logs like below,
+您应在 ping 请求日志中找到临时属性文件路径，如下所示：
 
 ```shell
 2024/11/23 08:39:19 INFO handlerPing start channelName=agora_74np6e requestId=218f8e36-f4d0-4c83-a6e8-d3b4dec2a187 service=HTTP_SERVER
 2024/11/23 08:39:19 INFO handlerPing end worker="&{ChannelName:agora_74np6e HttpServerPort:10002 LogFile:/tmp/astra/app-agora_74np6e-20241123_083855_000.log Log2Stdout:true PropertyJsonFile:/tmp/astra/property-agora_74np6e-20241123_083855_000.json Pid:5330 QuitTimeoutSeconds:60 CreateTs:1732351135 UpdateTs:1732351159}" requestId=218f8e36-f4d0-4c83-a6e8-d3b4dec2a187 service=HTTP_SERVER
 ```
 
-The temp property file path is shown as `PropertyJsonFile:/tmp/astra/property-agora_74np6e-20241123_083855_000.json`.
+临时属性文件路径显示为 `PropertyJsonFile:/tmp/astra/property-agora_74np6e-20241123_083855_000.json`。

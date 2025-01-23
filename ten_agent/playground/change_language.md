@@ -1,47 +1,47 @@
-# Change language of your agent
+# 更改你的代理的语言
 
-When we talk about the language of the agent, we are referring to following aspects,
+当我们谈论代理的语言时，我们指的是以下几个方面：
 
-- The language in which agent understands the user's audio input. i.e. STT language
-- The language in which agent responds to the user. i.e. TTS language
+- 代理理解用户音频输入的语言。即 STT 语言。
+- 代理回复用户的语言。即 TTS 语言。
 
-You will need to configure different properties of above extensions depending on your requirements.
+您需要根据您的要求配置上述扩展的不同属性。
 
-## Change STT language for STT + LLM + TTS agents
+## 更改 STT + LLM + TTS 代理的 STT 语言
 
-To change the language in which agent understands the user's audio input, you will need to change the properties of the STT extension. You can do this by following the steps below,
+要更改代理理解用户音频输入的语言，您需要更改 STT 扩展的属性。您可以按照以下步骤操作：
 
-1. Open the playground at [localhost:3000](http://localhost:3000) to configure your agent.
-2. Select "voice_assistant" graph type.
-3. Click on the Button to the right of the graph selection to open the properties configuration.
-4. Choose the "STT" extension from the dropdown list.
-5. Change the language property to the desired language.
-6. Click on `Save Change` to apply the language to the STT extension.
+1. 打开 [localhost:3000](http://localhost:3000) 上的 playground 以配置您的代理。
+2. 选择“voice_assistant”图表类型。
+3. 单击图表选择右侧的按钮以打开属性配置。
+4. 从下拉列表中选择“STT”扩展。
+5. 将语言属性更改为所需的语言。
+6. 单击“保存更改”以将语言应用于 STT 扩展。
 
-> Note: The language property of the STT extension differs based on the STT service provider. Please refer to the documentation of the STT service provider for the list of supported options.
+> 注意：STT 扩展的语言属性根据 STT 服务提供商而异。有关支持的选项列表，请参阅 STT 服务提供商的文档。
 
-## Change STT language for STT + LLM + TTS agents (Use RTC Integrated Azure STT)
+## 更改 STT + LLM + TTS 代理的 STT 语言（使用 RTC 集成的 Azure STT）
 
-To change the language in which agent understands the user's audio input, you will need to change the properties of the RTC extension, as STT extension is integrated within it. You can do this by following the steps below,
+要更改代理理解用户音频输入的语言，您需要更改 RTC 扩展的属性，因为 STT 扩展集成在其中。您可以按照以下步骤操作：
 
-1. Open the playground at [localhost:3000](http://localhost:3000) to configure your agent.
-2. Select "voice_assistant_stt_integrated" graph type.
-3. Click on the Button to the right of the graph selection to open the properties configuration.
-4. Choose the "RTC" extension from the dropdown list.
-5. Change the language property to the desired language. For Azure, 'en-US' stands for English. You can find more language options in the Azure documentation.
-6. Click on `Save Change` to apply the language to the RTC extension.
+1. 打开 [localhost:3000](http://localhost:3000) 上的 playground 以配置您的代理。
+2. 选择“voice_assistant_stt_integrated”图表类型。
+3. 单击图表选择右侧的按钮以打开属性配置。
+4. 从下拉列表中选择“RTC”扩展。
+5. 将语言属性更改为所需的语言。对于 Azure，“en-US”代表英语。您可以在 Azure 文档中找到更多语言选项。
+6. 单击“保存更改”以将语言应用于 RTC 扩展。
 
-## Change language that agent speaks
+## 更改代理说话的语言
 
-> Note: The language TTS support usually are determined by the voice of the TTS. Some TTS support multilingual voices, while some support only a single language.
+> 注意：TTS 支持的语言通常由 TTS 的声音决定。有些 TTS 支持多语言声音，而有些只支持一种语言。
 
-To change the language in which agent responds to the user, you will need to change the properties of the TTS extension. You can do this by following the steps below,
+要更改代理回复用户的语言，您需要更改 TTS 扩展的属性。您可以按照以下步骤操作：
 
-1. Open the playground at [localhost:3000](http://localhost:3000) to configure your agent.
-2. Select "voice_assistant" graph type.
-3. Click on the Button to the right of the graph selection to open the properties configuration.
-4. Choose the "TTS" extension from the dropdown list.
-5. Change the voice property to the desired voice of the language.
-6. Click on `Save Change` to apply the language to the TTS extension.
+1. 打开 [localhost:3000](http://localhost:3000) 上的 playground 以配置您的代理。
+2. 选择“voice_assistant”图表类型。
+3. 单击图表选择右侧的按钮以打开属性配置。
+4. 从下拉列表中选择“TTS”扩展。
+5. 将声音属性更改为所需语言的声音。
+6. 单击“保存更改”以将语言应用于 TTS 扩展。
 
-> Note: The voice property of the TTS extension differs based on the TTS service provider. Please refer to the documentation of the TTS service provider for the list of supported options.
+> 注意：TTS 扩展的声音属性根据 TTS 服务提供商而异。有关支持的选项列表，请参阅 TTS 服务提供商的文档。

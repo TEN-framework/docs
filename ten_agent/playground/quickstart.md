@@ -1,28 +1,28 @@
-# Run TEN-Agent Playground
+# 运行 TEN-Agent Playground
 
-This guide will help you to run the TEN-Agent Playground. The playground is a web-based interface that allows you to interact with the TEN-Agent. You can replace modules, change configurations, and test the agent's behavior in a controlled environment.
+本指南将帮助您运行 TEN-Agent Playground。Playground 是一个基于 Web 的界面，允许您与 TEN-Agent 进行交互。您可以在受控环境中替换模块、更改配置并测试代理的行为。
 
-## Run playground from pre-built Docker image
+## 从预构建的 Docker 镜像运行 Playground
 
-The easiest way to run the playground is to use the pre-built Docker image. The image contains the latest version of the TEN-Agent and the playground. The project docker compose file already contains the pre-built image, so you can start by following the steps in [getting started guide](https://doc.theten.ai/ten-agent/getting_started).
+运行 Playground 的最简单方法是使用预构建的 Docker 镜像。该镜像包含 TEN-Agent 和 Playground 的最新版本。项目 docker compose 文件已包含预构建的镜像，因此您可以按照[入门指南](https://doc.theten.ai/ten-agent/getting_started)中的步骤开始。
 
-Once finished, you can access the playground by opening the browser and navigating to `http://localhost:3000`.
+完成后，您可以通过打开浏览器并导航到 `http://localhost:3000` 来访问 Playground。
 
-## Run playground from source code
+## 从源代码运行 Playground
 
-If you want to run the playground from the source code, start a new terminal, change to the folder where you cloned TEN-Agent project, follow below steps:
+如果您想从源代码运行 Playground，请启动一个新终端，切换到克隆 TEN-Agent 项目的文件夹，然后按照以下步骤操作：
 
 ```bash
-# Change to the playground directory
+# 切换到 Playground 目录
 cd playground
 
-# Install dependencies
+# 安装依赖项
 pnpm install
 
-# Start the playground
+# 启动 Playground
 pnpm dev
 ```
 
-Once the playground is started, you can access it by opening the browser and navigating to `http://localhost:3001`.
+Playground 启动后，您可以通过打开浏览器并导航到 `http://localhost:3001` 来访问它。
 
-> **Note:** The playground depends on the golang web server (located in `server` directory) and ten-dev-server (provided by ten framework cli). The ten-dev-server is by default provided when you start with `docker compose up -d` command. The web server will start when you run `task run` command in the container after you follow the steps in the [getting started guide](https://doc.theten.ai/ten-agent/getting_started).
+> **注意：** Playground 依赖于 golang Web 服务器（位于 `server` 目录中）和 ten-dev-server（由 ten framework cli 提供）。默认情况下，当您使用 `docker compose up -d` 命令启动时，会提供 ten-dev-server。在您按照[入门指南](https://doc.theten.ai/ten-agent/getting_started)中的步骤操作后，在容器中运行 `task run` 命令时，Web 服务器将启动。

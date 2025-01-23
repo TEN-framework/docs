@@ -1,48 +1,54 @@
-# FAQs
+# 常见问题解答
 
-## Why do I see `/app/agnets/bin/start: not found`?
+## 为什么我看到 `/app/agnets/bin/start: not found`？
 
-Windows users occasionally encounter line-ending issues, which may result in errors like `/app/agnets/bin/start: not found`.
+Windows 用户偶尔会遇到行尾问题，这可能会导致诸如 `/app/agnets/bin/start: not found` 之类的错误。
 
-For best practices, we recommend configuring Git to automatically convert line endings to LF on Windows.
+为了获得最佳实践，我们建议将 Git 配置为在 Windows 上自动将行尾转换为 LF。
 
-To fix this:
-1. Configure Git to automatically convert line endings to LF on Windows:
+要解决此问题：
 
-{% code title=">_ Terminal" %}
-```bash
-git config --global core.autocrlf false
-```
-{% endcode %}
+1. 配置 Git 以在 Windows 上自动将行尾转换为 LF：
 
-2. Re-clone the repository
+   {% code title=">_ 终端" %}
 
-Alternatively, you can download and extract the ZIP file directly from GitHub.
+   ```bash
+   git config --global core.autocrlf false
+   ```
 
-## How to verify my internet connection?
+   {% endcode %}
 
-Please make sure that both of you your **HTTPS** and **SSH** are connected to the internet.
+2. 重新克隆存储库
 
-Test **HTTPS** connection:
+或者，您可以直接从 GitHub 下载并解压缩 ZIP 文件。
 
-{% code title=">_ Terminal" %}
+## 如何验证我的互联网连接？
+
+请确保您的 **HTTPS** 和 **SSH** 都已连接到互联网。
+
+测试 **HTTPS** 连接：
+
+{% code title=">_ 终端" %}
+
 ```bash
 ping www.google.com
 
-# You should see the following output:
+# 您应该看到以下输出：
 PING google.com (198.18.1.94): 56 data bytes
 64 bytes from 198.18.1.94: icmp_seq=0 ttl=64 time=0.099 ms
 64 bytes from 198.18.1.94: icmp_seq=1 ttl=64 time=0.121 ms
 ```
+
 {% endcode %}
 
-Test **SSH** connection:
+测试 **SSH** 连接：
 
-{% code title=">_ Terminal" %}
+{% code title=">_ 终端" %}
+
 ```bash
 curl www.google.com
 
-# You should see the following output:
+# 您应该看到以下输出：
 <html>
 <head><title>301 Moved Permanently</title></head>
 <body>
@@ -50,29 +56,33 @@ curl www.google.com
 </body>
 </html>
 ```
+
 {% endcode %}
 
-## How to refresh env file?
+## 如何刷新 env 文件？
 
-To see updated changes during development, follow these steps:
+要在开发过程中查看更新的更改，请按照以下步骤操作：
 
-1. Stop the server
-2. Save changes to the `.env` file
-3. Run `source .env` to refresh the environment variables
+1. 停止服务器
+2. 保存对 `.env` 文件的更改
+3. 运行 `source .env` 以刷新环境变量
 
-## Line-ending Issues on Windows
+## Windows 上的行尾问题
 
-Windows users occasionally encounter line-ending issues, which may result in errors like "agent/bin/start is not a valid directory".
+Windows 用户偶尔会遇到行尾问题，这可能会导致诸如“agent/bin/start is not a valid directory”之类的错误。
 
-To fix this:
-1. Configure Git to automatically convert line endings to LF on Windows:
+要解决此问题：
 
-{% code title=">_ Terminal" %}
-```bash
-git config --global core.autocrlf false
-```
-{% endcode %}
+1. 配置 Git 以在 Windows 上自动将行尾转换为 LF：
 
-2. Re-clone the repository
+   {% code title=">_ 终端" %}
 
-Alternatively, you can download and extract the ZIP file directly from GitHub.
+   ```bash
+   git config --global core.autocrlf false
+   ```
+
+   {% endcode %}
+
+2. 重新克隆存储库
+
+或者，您可以直接从 GitHub 下载并解压缩 ZIP 文件。

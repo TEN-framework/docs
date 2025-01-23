@@ -12,33 +12,33 @@ layout:
     visible: true
 ---
 
-# Create a LLM Tool Extension
+# 创建 LLM 工具扩展
 
-## Creating AsyncLLMToolBaseExtension by using tman
+## 使用 tman 创建 AsyncLLMToolBaseExtension
 
-Run the following command,
+运行以下命令，
 
 ```bash
 tman install extension default_async_llm_tool_extension_python --template-mode --template-data package_name=llm_tool_extension --template-data class_name_prefix
 =LLMToolExtension
 ```
 
-## Abstract APIs to implement
+## 要实现的抽象 API
 
 ### get_tool_metadata(self, ten_env: TenEnv) -> list[LLMToolMetadata]
 
-This method is called when the LLM Extension is going to register itself to any connected LLM. It should return a list of LLMToolMetadata.
+当 LLM 扩展要向任何已连接的 LLM 注册自身时，会调用此方法。它应该返回一个 LLMToolMetadata 列表。
 
 ### run_tool(self, ten_env: AsyncTenEnv, name: str, args: dict) -> LLMToolResult
 
-This method is called when the LLM Extension receives a tool call request. It should execute the tool function and return the result.
+当 LLM 扩展接收到工具调用请求时，会调用此方法。它应该执行工具函数并返回结果。
 
-## APIs
+## API
 
 ### cmd_out: tool_register
 
-This API is used to send the tool registration request. An array of LLMToolMetadata returned from `get_tool_metadata` will be sent as output.
+此 API 用于发送工具注册请求。从 `get_tool_metadata` 返回的 LLMToolMetadata 数组将作为输出发送。
 
 ### cmd_in: tool_call
 
-This API is used to consume the tool call request. The `run_tool` will be executed when the cmd_in is received.
+此 API 用于接收工具调用请求。当收到 cmd_in 时，将执行 `run_tool`。
