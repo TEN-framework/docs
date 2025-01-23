@@ -1,28 +1,28 @@
-# Extension
+# 扩展
 
-## Life Cycle
+## 生命周期
 
-The life cycle of an extension is divided into the following stages:
+扩展的生命周期分为以下阶段：
 
-1. `on_configure`
-2. `on_init`
-3. `on_start`
-4. `on_stop`
-5. `on_deinit`
+1.  `on_configure`
+2.  `on_init`
+3.  `on_start`
+4.  `on_stop`
+5.  `on_deinit`
 
-At all these stages, the extension can send messages, and if the sent message is a command type, the extension can also receive the result of the command it sent. In other words, there is no stage where the extension *cannot* send messages or receive the results of its own sent commands. So, in all these stages, the extension can send messages to other extensions, which helps implement dependencies between extensions in all stages.
+在所有这些阶段，扩展都可以发送消息，如果发送的消息是命令类型，则扩展还可以接收其发送的命令的结果。换句话说，不存在扩展*不能*发送消息或接收其自身发送的命令结果的阶段。因此，在所有这些阶段，扩展都可以向其他扩展发送消息，这有助于在所有阶段实现扩展之间的依赖关系。
 
-Each life cycle stage corresponds to a callback function, and there is a corresponding `on_xxx_done()` function to mark the end of that life cycle stage.
+每个生命周期阶段都对应一个回调函数，并且有一个相应的 `on_xxx_done()` 函数来标记该生命周期阶段的结束。
 
-| Life Cycle Callback | End of Life Cycle Function   |
-|---------------------|------------------------------|
-| `on_configure`      | `on_configure_done`          |
-| `on_init`           | `on_init_done`               |
-| `on_start`          | `on_start_done`              |
-| `on_stop`           | `on_stop_done`               |
-| `on_deinit`         | `on_deinit_done`             |
+| 生命周期回调 | 生命周期结束函数  |
+| -------------- | ----------------- |
+| `on_configure` | `on_configure_done` |
+| `on_init`      | `on_init_done`      |
+| `on_start`     | `on_start_done`     |
+| `on_stop`      | `on_stop_done`      |
+| `on_deinit`    | `on_deinit_done`    |
 
-### Stage Transition Graph
+### 阶段转换图
 
 ```mermaid
 graph TD;
@@ -47,11 +47,11 @@ graph TD;
 
 ### on_configure
 
-Used to set the initial values of the extension's properties. This allows the `get_property` API from `ten_env` to be used in other lifecycle stages to retrieve properties set during the `on_configure()` stage. The `on_configure_done()` function is called to mark the end of the `on_configure` stage.
+用于设置扩展属性的初始值。这允许在其他生命周期阶段中使用 `ten_env` 的 `get_property` API 来检索在 `on_configure()` 阶段设置的属性。调用 `on_configure_done()` 函数以标记 `on_configure` 阶段的结束。
 
 ```c++
   void on_configure(ten::ten_env_t &ten_env) override {
-    // Set the initial values of the extension's properties.
+    // 设置扩展属性的初始值。
     ten_env.init_property_from_json(
       R"({
            "_ten": {
@@ -65,35 +65,35 @@ Used to set the initial values of the extension's properties. This allows the `g
 
 ### on_init
 
-Used to initialize the extension. Since the extension is not yet ready before `on_init_done()`, the TEN runtime will queue all messages sent to the extension until it's ready. Once ready, the queued messages are delivered to the extension. It's important to note that if the result is from a command sent by the extension itself, it is *not* subject to this restriction; the TEN runtime will directly pass the command's result back to the extension. This is because sending a command is a self-initiated action by the extension, so it must be prepared to receive and handle the result of its own commands.
+用于初始化扩展。由于在 `on_init_done()` 之前扩展尚未准备就绪，TEN 运行时会将发送到扩展的所有消息排队，直到它准备就绪。准备就绪后，会将排队的消息传递到扩展。重要的是要注意，如果结果来自扩展自身发送的命令，则*不受*此限制；TEN 运行时会将命令的结果直接传递回扩展。这是因为发送命令是扩展的自我启动操作，因此它必须准备好接收并处理其自身命令的结果。
 
 ### on_start
 
-This stage marks the runtime starting to send messages into the extension. The `on_start_done` function doesn't have a special purpose, but for consistency with other life cycle stages and to reduce learning complexity, the TEN framework includes it. Typically, `on_start_done` is invoked at the end of the `on_start` callback function. The TEN runtime will start delivering messages from other extensions to this extension after receiving its `on_start_done()`.
+此阶段标志着运行时开始向扩展发送消息。`on_start_done` 函数没有特殊用途，但为了与其他生命周期阶段保持一致并降低学习复杂性，TEN 框架包含了它。通常，`on_start_done` 在 `on_start` 回调函数的末尾调用。TEN 运行时将在收到其 `on_start_done()` 后开始将来自其他扩展的消息传递到此扩展。
 
 ```c++
   void on_start(ten::ten_env_t &ten_env) override {
-    // Some operations.
+    // 一些操作。
     ten_env.on_start_done();
   }
 ```
 
 ### on_stop
 
-There are many situations where the extension needs to stop, such as when the app or engine containing the extension is terminating. When the extension is about to stop, the TEN runtime uses this `on_stop` callback to notify the extension that it has entered the `on_stop` life cycle stage. The extension can then perform any necessary actions for termination.
+在许多情况下需要停止扩展，例如当包含扩展的应用程序或引擎终止时。当扩展即将停止时，TEN 运行时会使用此 `on_stop` 回调通知扩展它已进入 `on_stop` 生命周期阶段。然后，扩展可以执行任何必要的终止操作。
 
 ### on_deinit
 
-After the extension calls `on_stop_done()`, it enters the `on_deinit` stage. During this stage, because the resources within the extension may no longer be fully available, the TEN runtime will not pass any messages from other extensions to this one.
+在扩展调用 `on_stop_done()` 后，它将进入 `on_deinit` 阶段。在此阶段，由于扩展内的资源可能不再完全可用，因此 TEN 运行时不会将来自其他扩展的任何消息传递到此扩展。
 
-## Relationship Between Extensions at Different Life Cycle Stages
+## 不同生命周期阶段的扩展之间的关系
 
-Basically, there is no inherent relationship. Each extension operates independently, switching between its own life cycle stages. Extensions are independent of one another, and any dependencies between them must be explicitly implemented by the extensions themselves. The TEN runtime does not make any assumptions or guarantees. For example, if extension A needs to wait for extension B to complete its initialization before finishing its own, extension A can send a command to extension B during its `on_init`. Once extension B completes initialization and receives the command, it can reply with a result, and when extension A receives the result, it can call `on_init_done`.
+基本上，没有固有的关系。每个扩展都独立运行，在其自身的生命周期阶段之间切换。扩展是彼此独立的，它们之间的任何依赖关系都必须由扩展本身显式实现。TEN 运行时不进行任何假设或保证。例如，如果扩展 A 需要等待扩展 B 完成其初始化才能完成自身的初始化，则扩展 A 可以在其 `on_init` 期间向扩展 B 发送命令。一旦扩展 B 完成初始化并收到命令，它可以回复结果，当扩展 A 收到结果时，它可以调用 `on_init_done`。
 
 ```mermaid
 sequenceDiagram
-  participant A as Extension A
-  participant B as Extension B
+  participant A as 扩展 A
+  participant B as 扩展 B
 
   Note over A,B: on_init
   activate A
@@ -113,41 +113,41 @@ sequenceDiagram
   Note over A: on_init_done
 ```
 
-Basically, in all other life cycle stages, if you want to implement the order of different extensions, you can achieve it using the same method.
+基本上，在所有其他生命周期阶段，如果想要实现不同扩展的顺序，可以使用相同的方法来实现。
 
-## Interface with TEN Runtime
+## 与 TEN 运行时接口
 
-Extensions interact with the TEN runtime primarily through three interfaces:
+扩展主要通过三个接口与 TEN 运行时交互：
 
-1. **Lifecycle Callbacks**
-   - These include callbacks like `on_init`, `on_deinit`, `on_start`, and `on_stop`.
+1.  **生命周期回调**
+    -   这些包括像 `on_init`、`on_deinit`、`on_start` 和 `on_stop` 这样的回调。
 
-2. **Callbacks for Receiving Messages**
-   - These include callbacks such as `on_cmd`, `on_data`, `on_audio_frame`, and `on_video_frame`, which handle incoming messages to the extension.
+2.  **接收消息的回调**
+    -   这些包括诸如 `on_cmd`、`on_data`、`on_audio_frame` 和 `on_video_frame` 之类的回调，用于处理传入扩展的消息。
 
-3. **Functions for Sending Messages**
-   - These include functions like `send_cmd`, `send_data`, `send_audio_frame`, and `send_video_frame`, which send messages out of the extension.
+3.  **发送消息的函数**
+    -   这些包括诸如 `send_cmd`、`send_data`、`send_audio_frame` 和 `send_video_frame` 之类的函数，用于将消息发送出扩展。
 
-## Lifecycle Callbacks
+## 生命周期回调
 
-The different stages of the extension's lifecycle and their connection to message handling are as follows:
+扩展生命周期的不同阶段及其与消息处理的连接如下：
 
-- **on_init ~ on_init_done**: Handles the extension's own initialization. At this stage, the extension can send messages and receive the results of commands it sends, but cannot receive messages actively sent by other extensions.
+-   **on_init ~ on_init_done**：处理扩展自身的初始化。在此阶段，扩展可以发送消息并接收其发送的命令的结果，但不能接收其他扩展主动发送的消息。
 
-- **on_start ~ on_start_done**: At this stage, the extension can send messages and receive the results of commands it sends, but cannot receive messages actively sent by other extensions. Since properties are initialized during `on_configure`, you can perform actions that depend on these properties being set up. However, as this is still part of the initialization phase, the extension will not receive messages initiated by others, avoiding the need for various checks. Active message sending is allowed.
+-   **on_start ~ on_start_done**：在此阶段，扩展可以发送消息并接收其发送的命令的结果，但不能接收其他扩展主动发送的消息。由于属性在 `on_configure` 期间初始化，因此您可以执行依赖于这些属性已设置的操作。但是，由于这仍然是初始化阶段的一部分，因此扩展不会接收由其他人启动的消息，从而避免了各种检查的需要。允许主动发送消息。
 
-- **After on_start_done ~ on_stop_done**: During this phase, the extension can normally send and receive all types of messages and their results.
+-   **after on_start_done ~ on_stop_done**：在此阶段，扩展可以正常发送和接收所有类型的消息及其结果。
 
-- **on_deinit ~ on_deinit_done**: Handles the extension's de-initialization. Similar to the `on_init` stage, at this stage, the extension can send messages and receive the results of commands it sends, but cannot receive messages actively sent by other extensions.
+-   **on_deinit ~ on_deinit_done**：处理扩展的去初始化。与 `on_init` 阶段类似，在此阶段，扩展可以发送消息并接收其发送的命令的结果，但不能接收其他扩展主动发送的消息。
 
-## Implementing Extensions in Different Languages
+## 使用不同语言实现扩展
 
-Within the TEN framework, extensions can be implemented in various languages such as C++, Go, and Python. Developers can use the same conceptual approach to implement extensions in different languages. Learning how to develop an extension in one language makes it relatively easy to do so in other languages as well.
+在 TEN 框架中，可以使用各种语言（例如 C++、Go 和 Python）实现扩展。开发人员可以使用相同的概念方法来使用不同语言实现扩展。学习如何使用一种语言开发扩展使得使用其他语言也相对容易。
 
-## Asynchronous Message Processing in Extensions
+## 扩展中的异步消息处理
 
-<figure><img src="../../assets/png/asynchronous_message_processing.png" alt=""><figcaption><p>Asynchronous Message Processing</p></figcaption></figure>
+<figure><img src="../../assets/png/asynchronous_message_processing.png" alt=""><figcaption><p>异步消息处理</p></figcaption></figure>
 
-Extensions process messages asynchronously. When the TEN runtime delivers a message to an extension through callbacks like `on_cmd`, `on_data`, `on_audio_frame`, or `on_video_frame`, the extension is not required to process the message immediately within the callback. Instead, the extension can delegate the message to other threads, processes, or even machines for processing. This allows for full utilization of multi-core and distributed computing resources.
+扩展以异步方式处理消息。当 TEN 运行时通过诸如 `on_cmd`、`on_data`、`on_audio_frame` 或 `on_video_frame` 之类的回调将消息传递到扩展时，不要求扩展立即在回调中处理消息。相反，扩展可以将消息委托给其他线程、进程甚至机器进行处理。这允许充分利用多核和分布式计算资源。
 
-After processing is complete, the results can be sent back to the TEN runtime through callbacks such as `send_cmd`, `send_data`, `send_audio_frame`, or `send_video_frame`. The entire process is asynchronous, meaning the extension doesn't need to send the processed results back before the `on_cmd`, `on_data`, `on_audio_frame`, or `on_video_frame` callbacks return. The results can be transmitted only when they are actually ready, using the appropriate send functions.
+处理完成后，可以使用诸如 `send_cmd`、`send_data`、`send_audio_frame` 或 `send_video_frame` 之类的回调将结果发送回 TEN 运行时。整个过程是异步的，这意味着扩展不需要在 `on_cmd`、`on_data`、`on_audio_frame` 或 `on_video_frame` 回调返回之前发送已处理的结果。可以使用适当的发送函数仅在结果真正准备好时才传输结果。

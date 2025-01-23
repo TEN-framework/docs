@@ -1,118 +1,118 @@
-# Graph
+# 图
 
-In the TEN framework, there are two types of graphs:
+在 TEN 框架中，有两种类型的图：
 
-1. Flexible
-2. Predefined
+1.  灵活
+2.  预定义
 
-|  | Flexible | Predefined |
-|----|----|----|
-| Time to start the graph | When the TEN app receives the `start_graph` command. | When the TEN app starts, or when the TEN app receives the `start_graph` command. |
-| Graph content | Specified in the `start_graph` command. | Specified in the TEN app's properties. |
-| Graph ID | A random UUID. |A random UUID|
+|       | 灵活                                                       | 预定义                                                           |
+| ----- | ---------------------------------------------------------- | ---------------------------------------------------------------- |
+| 启动图的时间 | 当 TEN 应用程序收到 `start_graph` 命令时。                                   | 当 TEN 应用程序启动时，或当 TEN 应用程序收到 `start_graph` 命令时。                          |
+| 图的内容   | 在 `start_graph` 命令中指定。                                           | 在 TEN 应用程序的属性中指定。                                                       |
+| 图的 ID   | 随机 UUID。                                                    | 随机 UUID                                                        |
 
-<figure><img src="../assets/png/two_types_of_graph.png" alt=""><figcaption><p>Two Types of Graph</p></figcaption></figure>
+<figure><img src="../assets/png/two_types_of_graph.png" alt=""><figcaption><p>两种类型的图</p></figcaption></figure>
 
-For predefined graphs, there is an `auto_start` attribute that determines whether the predefined graph will start automatically when the TEN app starts.
+对于预定义的图，有一个 `auto_start` 属性，用于确定预定义的图是否在 TEN 应用程序启动时自动启动。
 
-There is also another `singleton` attribute used to indicate whether the predefined graph can only generate *one* corresponding engine instance within the TEN app.
+还有另一个 `singleton` 属性用于指示预定义的图是否只能在 TEN 应用程序中生成 *一个* 对应的引擎实例。
 
-## Graph ID and Graph Name
+## 图的 ID 和图的名称
 
-For each graph instance generated from a graph definition, that is, an engine instance, within the TEN app, there is a unique UUID4 string representing each graph instance. This UUID4 string is called the **graph ID** of that graph.
+对于从图定义生成的每个图实例，即 TEN 应用程序中的引擎实例，都有一个唯一的 UUID4 字符串表示每个图实例。此 UUID4 字符串称为该图的 **图 ID**。
 
-For each predefined graph, a meaningful or easy-to-remember name can be assigned, known as the **graph name** of the predefined graph. When specifying a particular predefined graph, the graph name can be used to represent it. If a predefined graph has the singleton attribute, it means that the graph instance generated from this predefined graph can only exist once within the TEN app. Therefore, the TEN runtime will use the graph name to uniquely identify the single graph instance generated from the singleton predefined graph.
+对于每个预定义的图，可以分配一个有意义或易于记忆的名称，称为预定义图的 **图名称**。在指定特定的预定义图时，可以使用图名称来表示它。如果预定义的图具有 singleton 属性，则意味着从此预定义图生成的图实例只能在 TEN 应用程序中存在一次。因此，TEN 运行时将使用图名称来唯一标识从 singleton 预定义图生成的单个图实例。
 
-## Flexible Graph
+## 灵活的图
 
-When the TEN app receives the `start_graph` command and creates this type of graph, it will assign a random UUID value as the ID of the newly started graph. If other clients obtain this graph's ID, they can also connect to this graph.
+当 TEN 应用程序收到 `start_graph` 命令并创建此类型的图时，它将分配一个随机 UUID 值作为新启动的图的 ID。如果其他客户端获取了此图的 ID，它们也可以连接到此图。
 
-Example of a flexible graph ID:
+灵活的图 ID 示例：
 
 `123e4567-e89b-12d3-a456-426614174000`
 
-## Predefined Graph
+## 预定义的图
 
-Predefined graphs are very similar to flexible graphs. The content of a flexible graph is included in the `start_graph` command, while the content of a predefined graph is defined by the TEN app. Clients only need to specify the name of the predefined graph they want to start in the `start_graph` command.
+预定义的图与灵活的图非常相似。灵活图的内容包含在 `start_graph` 命令中，而预定义图的内容由 TEN 应用程序定义。客户端只需在 `start_graph` 命令中指定它们想要启动的预定义图的名称。
 
-The main purpose of predefined graphs is for ease of use and information protection. Predefined graphs allow the client to avoid knowing the detailed content of the graph, which might be due to usability considerations or to prevent the client from accessing certain information that the graph contains.
+预定义图的主要目的是为了易于使用和信息保护。预定义图允许客户端避免了解图的详细内容，这可能是由于可用性考虑或为了防止客户端访问图包含的某些信息。
 
-Example of a predefined graph name:
+预定义的图名称示例：
 
 `http-server`
 
-When a TEN app starts, predefined graphs that are set to auto-start will also be initiated.
+当 TEN 应用程序启动时，设置为自动启动的预定义图也将被启动。
 
-## Graph Definition
+## 图的定义
 
-The definition of a graph, whether flexible or predefined, is the same. The following is the definition of a graph:
+图的定义（无论是灵活的还是预定义的）都是相同的。以下是图的定义：
 
 ```json
 {
   "nodes": [
-    // Definition of nodes
+    // 节点的定义
   ],
   "connections": [
-    // Definition of connections
+    // 连接的定义
   ]
 }
 ```
 
-Key points:
+要点：
 
-1. If there is only one app, the app field can be omitted. Otherwise, it must be specified. If there is only one app and the app field is not specified, the TEN runtime will default to using `localhost` as the app field.
+1.  如果只有一个应用程序，则可以省略 app 字段。否则，必须指定。如果只有一个应用程序且未指定 app 字段，则 TEN 运行时将默认使用 `localhost` 作为 app 字段。
 
-2. The nodes field specifies the nodes within the graph, such as extensions, extension groups, etc.
+2.  nodes 字段指定图中的节点，例如扩展、扩展组等。
 
-3. For each node within the graph, it can only appear once in the nodes field. If it appears multiple times, the TEN framework will throw an error, either during graph validation by the TEN manager or during graph validation by the TEN runtime.
+3.  对于图中的每个节点，它只能在 nodes 字段中出现一次。如果多次出现，TEN 框架将在 TEN 管理器进行的图验证期间或 TEN 运行时进行的图验证期间抛出错误。
 
-4. The way to specify an extension group within the nodes field is as follows.
+4.  在 nodes 字段中指定扩展组的方式如下。
 
-   The property field is optional.
+    property 字段是可选的。
 
-   ```json
-   {
-     "type": "extension_group",
-     "name": "default_extension_group",
-     "addon": "default_extension_group",
-     "app": "msgpack://127.0.0.1:8001/",
-     "property": {
-       "root_key": "player",
-       "extra_keys": [
-         "playerName"
-       ]
-     }
-   }
-   ```
+    ```json
+    {
+      "type": "extension_group",
+      "name": "default_extension_group",
+      "addon": "default_extension_group",
+      "app": "msgpack://127.0.0.1:8001/",
+      "property": {
+        "root_key": "player",
+        "extra_keys": [
+          "playerName"
+        ]
+      }
+    }
+    ```
 
-5. The way to specify an extension within the nodes field is as follows.
+5.  在 nodes 字段中指定扩展的方式如下。
 
-   The property field is optional. The addon field is also optional.
+    property 字段是可选的。addon 字段也是可选的。
 
-   - If the addon field is present, it indicates that the extension is an instance generated by that addon.
-   - If the addon field is not present, it indicates that the extension is not generated by an addon but is created by the corresponding extension group. In such cases, it generally does not need to be explicitly defined in the nodes field, but if you want to specify its property field, it must be explicitly defined in the nodes field.
+    *   如果存在 addon 字段，则表示该扩展是由该插件生成的实例。
+    *   如果不存在 addon 字段，则表示该扩展不是由插件生成的，而是由相应的扩展组创建的。在这种情况下，通常不需要在 nodes 字段中显式定义它，但如果您想指定其 property 字段，则必须在 nodes 字段中显式定义它。
 
-   ```json
-   {
-     "type": "extension",
-     "name": "simple_http_server_cpp",
-     "addon": "simple_http_server_cpp",
-     "extension_group": "default_extension_group",
-     "app": "msgpack://127.0.0.1:8001/",
-     "property": {
-       "root_key": "player",
-       "extra_keys": [
-         "playerName"
-       ]
-     }
-   }
-   ```
+    ```json
+    {
+      "type": "extension",
+      "name": "simple_http_server_cpp",
+      "addon": "simple_http_server_cpp",
+      "extension_group": "default_extension_group",
+      "app": "msgpack://127.0.0.1:8001/",
+      "property": {
+        "root_key": "player",
+        "extra_keys": [
+          "playerName"
+        ]
+      }
+    }
+    ```
 
-6. The connections field specifies the connections between nodes within the graph.
+6.  connections 字段指定图中节点之间的连接。
 
-   In each connection, the values for extension and extension group are strings representing the names of the corresponding nodes.
+    在每个连接中，extension 和 extension group 的值都是表示相应节点名称的字符串。
 
-A complete example is as follows:
+一个完整的示例是：
 
 ```json
 {
@@ -180,9 +180,9 @@ A complete example is as follows:
 }
 ```
 
-## Definition of Predefined Graph
+## 预定义图的定义
 
-Essentially, you place the complete graph definition above under the `predefined_graphs` field in the app's properties. The `predefined_graphs` field will also have its attributes, such as name, auto_start, etc.
+本质上，您将上面的完整图定义放置在应用程序属性中的 `predefined_graphs` 字段下。`predefined_graphs` 字段也将具有其属性，例如 name、auto_start 等。
 
 ```json
 "predefined_graphs": [
@@ -190,12 +190,12 @@ Essentially, you place the complete graph definition above under the `predefined
     "name": "default",
     "auto_start": true,
     "singleton": true,
-    // Place the complete graph definition here.
+    // 将完整的图定义放在此处。
   }
 ]
 ```
 
-So it looks like this:
+所以它看起来像这样：
 
 ```json
 "predefined_graphs": [
@@ -268,21 +268,21 @@ So it looks like this:
 ]
 ```
 
-## Definition of the `start_graph` Command
+## `start_graph` 命令的定义
 
-Essentially, you place the complete graph definition above under the `ten` field in the `start_graph` command. The `start_graph` command will also have its attributes, such as type, seq_id, etc.
+本质上，您将上面的完整图定义放置在 `start_graph` 命令的 `ten` 字段下。`start_graph` 命令也将具有其属性，例如 type、seq_id 等。
 
 ```json
 {
   "_ten": {
     "type": "start_graph",
     "seq_id": "55"
-    // Place the complete graph definition here.
+    // 将完整的图定义放在此处。
   }
 }
 ```
 
-The following is a complete definition of the `start_graph` command:
+以下是 `start_graph` 命令的完整定义：
 
 ```json
 {
@@ -352,197 +352,197 @@ The following is a complete definition of the `start_graph` command:
 }
 ```
 
-## Specification for Graph Definition
+## 图定义的规范
 
-- **Requirement for `nodes` Field**:
-  The `nodes` array is mandatory in a graph definition. Conversely, the `connections` array is optional but encouraged for defining inter-node communication.
+-   **`nodes` 字段的要求**：
+    在图定义中，`nodes` 数组是强制性的。相反，`connections` 数组是可选的，但鼓励用于定义节点间通信。
 
-- **Validation of Node `app` Field**:
-  The `app` field must never be set to `localhost` under any circumstances. In a single-app graph, the `app` URI should not be specified. In a multi-app graph, the value of the `app` field must match the `_ten::uri` value defined in each app's `property.json`.
+-   **节点 `app` 字段的验证**：
+    在任何情况下，`app` 字段都不能设置为 `localhost`。在单应用程序图中，不应指定 `app` URI。在多应用程序图中，`app` 字段的值必须与每个应用程序的 `property.json` 中定义的 `_ten::uri` 值匹配。
 
-- **Node Uniqueness and Identification**:
-  Each node in the `nodes` array represents a specific extension instance within a group of an app, created by a specified addon. Therefore, each extension instance should be uniquely represented by a single node. A node must be uniquely identified by the combination of `app`, `extension_group`, and `name`. Multiple entries for the same extension instance are not allowed. The following example is invalid because it defines multiple nodes for the same extension instance:
+-   **节点唯一性和标识**：
+    `nodes` 数组中的每个节点都表示应用程序组中的特定扩展实例，该实例由指定的插件创建。因此，每个扩展实例都应由单个节点唯一表示。节点必须通过 `app`、`extension_group` 和 `name` 的组合来唯一标识。不允许同一扩展实例的多个条目。以下示例无效，因为它为同一扩展实例定义了多个节点：
 
-  ```json
-  {
-    "nodes": [
-      {
-        "type": "extension",
-        "name": "some_ext",
-        "addon": "addon_1",
-        "extension_group": "test"
-      },
-      {
-        "type": "extension",
-        "name": "some_ext",
-        "addon": "addon_2",
-        "extension_group": "test"
-      }
-    ]
-  }
-  ```
+    ```json
+    {
+      "nodes": [
+        {
+          "type": "extension",
+          "name": "some_ext",
+          "addon": "addon_1",
+          "extension_group": "test"
+        },
+        {
+          "type": "extension",
+          "name": "some_ext",
+          "addon": "addon_2",
+          "extension_group": "test"
+        }
+      ]
+    }
+    ```
 
-- **Consistency of Extension Instance Definition in Connections**:
-  All extension instances referenced in the `connections` field, whether as a source or destination, must be explicitly defined in the `nodes` field. Any instance not defined in the `nodes` array will cause validation errors.
+-   **连接中扩展实例定义的一致性**：
+    在 `connections` 字段中引用的所有扩展实例（无论是作为源还是目标）都必须在 `nodes` 字段中显式定义。任何未在 `nodes` 数组中定义的实例都将导致验证错误。
 
-  For example, the following is invalid because the extension instance `ext_2` is used in the `connections` field but is not defined in the `nodes` field:
+    例如，以下示例无效，因为扩展实例 `ext_2` 在 `connections` 字段中使用，但未在 `nodes` 字段中定义：
 
-  ```json
-  {
-    "nodes": [
-      {
-        "type": "extension",
-        "name": "ext_1",
-        "addon": "addon_1",
-        "extension_group": "some_group"
-      }
-    ],
-    "connections": [
-      {
-        "extension": "ext_1",
-        "cmd": [
-          {
-            "name": "hello",
-            "dest": [
-              {
-                "extension": "ext_2"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-  ```
+    ```json
+    {
+      "nodes": [
+        {
+          "type": "extension",
+          "name": "ext_1",
+          "addon": "addon_1",
+          "extension_group": "some_group"
+        }
+      ],
+      "connections": [
+        {
+          "extension": "ext_1",
+          "cmd": [
+            {
+              "name": "hello",
+              "dest": [
+                {
+                  "extension": "ext_2"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    ```
 
-- **Consolidation of Connection Definitions**:
-  Within the `connections` array, all messages related to the same source extension instance must be grouped within a single section. Splitting the information across multiple sections for the same source extension instance leads to inconsistencies and errors.
+-   **连接定义的整合**：
+    在 `connections` 数组中，与同一源扩展实例相关的所有消息必须分组在单个部分中。将同一源扩展实例的信息拆分为多个部分会导致不一致和错误。
 
-  For example, the following is incorrect because the messages from `ext_1` are divided into separate sections:
+    例如，以下示例不正确，因为来自 `ext_1` 的消息被分为不同的部分：
 
-  ```json
-  {
-    "connections": [
-      {
-        "extension": "ext_1",
-        "cmd": [
-          {
-            "name": "hello",
-            "dest": [
-              {
-                "extension": "ext_2"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "extension": "ext_1",
-        "data": [
-          {
-            "name": "hello",
-            "dest": [
-              {
-                "extension": "ext_2"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-  ```
+    ```json
+    {
+      "connections": [
+        {
+          "extension": "ext_1",
+          "cmd": [
+            {
+              "name": "hello",
+              "dest": [
+                {
+                  "extension": "ext_2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "extension": "ext_1",
+          "data": [
+            {
+              "name": "hello",
+              "dest": [
+                {
+                  "extension": "ext_2"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    ```
 
-  The correct approach is to consolidate all messages for the same source extension instance into one section:
+    正确的方法是将同一源扩展实例的所有消息整合到一个部分中：
 
-  ```json
-  {
-    "connections": [
-      {
-        "extension": "ext_1",
-        "cmd": [
-          {
-            "name": "hello",
-            "dest": [
-              {
-                "extension": "ext_2"
-              }
-            ]
-          }
-        ],
-        "data": [
-          {
-            "name": "hello",
-            "dest": [
-              {
-                "extension": "ext_2"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-  ```
+    ```json
+    {
+      "connections": [
+        {
+          "extension": "ext_1",
+          "cmd": [
+            {
+              "name": "hello",
+              "dest": [
+                {
+                  "extension": "ext_2"
+                }
+              ]
+            }
+          ],
+          "data": [
+            {
+              "name": "hello",
+              "dest": [
+                {
+                  "extension": "ext_2"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    ```
 
-- **Consolidation of Destinations for Unique Messages**:
-  For each message within a specific type (e.g., `cmd` or `data`), the destination extension instances must be grouped under a single entry for that message. Repeating the same message name with separate destinations leads to inconsistency and validation errors.
+-   **唯一消息的目标整合**：
+    对于特定类型（例如，`cmd` 或 `data`）中的每条消息，目标扩展实例必须在该消息的单个条目下分组。重复具有单独目标的相同消息名称会导致不一致和验证错误。
 
-  For example, the following is incorrect due to separate entries for the message named `hello`:
+    例如，由于名为 `hello` 的消息的单独条目，以下示例不正确：
 
-  ```json
-  {
-    "connections": [
-      {
-        "extension": "ext_1",
-        "cmd": [
-          {
-            "name": "hello",
-            "dest": [
-              {
-                "extension": "ext_2"
-              }
-            ]
-          },
-          {
-            "name": "hello",
-            "dest": [
-              {
-                "extension": "ext_3"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-  ```
+    ```json
+    {
+      "connections": [
+        {
+          "extension": "ext_1",
+          "cmd": [
+            {
+              "name": "hello",
+              "dest": [
+                {
+                  "extension": "ext_2"
+                }
+              ]
+            },
+            {
+              "name": "hello",
+              "dest": [
+                {
+                  "extension": "ext_3"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    ```
 
-  The correct approach is to consolidate all destinations for the same message under a single entry:
+    正确的方法是将同一消息的所有目标整合到一个条目下：
 
-  ```json
-  {
-    "connections": [
-      {
-        "extension": "ext_1",
-        "cmd": [
-          {
-            "name": "hello",
-            "dest": [
-              {
-                "extension": "ext_2"
-              },
-              {
-                "extension": "ext_3"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-  ```
+    ```json
+    {
+      "connections": [
+        {
+          "extension": "ext_1",
+          "cmd": [
+            {
+              "name": "hello",
+              "dest": [
+                {
+                  "extension": "ext_2"
+                },
+                {
+                  "extension": "ext_3"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    ```
 
-  However, messages with the same name can exist across different types, such as `cmd` and `data`, without causing conflicts.
+    但是，具有相同名称的消息可以跨不同类型（例如，`cmd` 和 `data`）存在，而不会导致冲突。
 
-For further examples, refer to the `check graph` command documentation within the TEN framework's `tman`.
+有关更多示例，请参阅 TEN 框架 `tman` 中的 `check graph` 命令文档。

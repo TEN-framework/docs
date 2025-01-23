@@ -1,20 +1,20 @@
-# Development Process
+# 开发过程
 
-Basically, by using the TEN framework to complete the desired scenarios, there are two development approaches or perspectives:
+基本上，通过使用 TEN 框架来完成所需的场景，有两种开发方法或视角：
 
-1. From small extensions to large scenarios
-2. From large scenarios to small extensions
+1.  从小扩展到大场景
+2.  从大场景到小扩展
 
-**Note:** Regardless of which of these two development approaches you take, you can either write your own extensions from scratch or download pre-built extensions from the TEN cloud store.
+**注意：** 无论您采取这两种开发方法中的哪一种，您都可以从头开始编写自己的扩展，或者从 TEN 云商店下载预构建的扩展。
 
-In the first approach, **from small extensions to large scenarios**, the development process typically follows these steps:
+在第一种方法中，**从小扩展到大场景**，开发过程通常遵循以下步骤：
 
-1. Develop extensions.
-2. Assemble the extensions into a graph, and further create an agent, for example, [TEN-Agent](https://github.com/TEN-framework/TEN-Agent).
+1.  开发扩展。
+2.  将扩展组装成图，并进一步创建代理，例如 [TEN-Agent](https://github.com/TEN-framework/TEN-Agent)。
 
-In the second approach, **from large scenarios to small extensions**, the development process typically follows these steps:
+在第二种方法中，**从大场景到小扩展**，开发过程通常遵循以下步骤：
 
-1. Select the desired agent template, for example, [TEN-Agent](https://github.com/TEN-framework/TEN-Agent).
-2. Replace some of the extensions within the chosen agent template with your own.
+1.  选择所需的代理模板，例如 [TEN-Agent](https://github.com/TEN-framework/TEN-Agent)。
+2.  将所选代理模板中的某些扩展替换为您自己的扩展。
 
-In this second development approach, you can ensure that the behavior of the replaced extension matches the original one by using the framework for **standalone testing** of extensions. In this process, the developer only needs to understand concepts related to TEN extensions, including how to independently develop and test a TEN extension. All other TEN-related concepts outside of extension development and testing do not need to be understood, as these concepts are encapsulated within the selected TEN agent.
+在这种第二种开发方法中，您可以通过使用用于扩展的 **独立测试** 框架来确保替换扩展的行为与原始扩展的行为匹配。在此过程中，开发人员只需了解与 TEN 扩展相关的概念，包括如何独立开发和测试 TEN 扩展。所有其他 TEN 相关的概念（扩展开发和测试之外）都不需要理解，因为这些概念都封装在所选的 TEN 代理中。

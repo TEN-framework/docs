@@ -1,11 +1,11 @@
-# Log
+# 日志
 
-The TEN framework allows extensions developed in different languages to run within the same process. This creates a need to view logs from all these extensions in a unified log with a consistent format and information, making debugging easier.
+TEN 框架允许使用不同语言开发的扩展在同一进程中运行。这使得需要以统一的日志格式和信息在统一的日志中查看所有这些扩展的日志，从而简化调试。
 
-To address this, the `ten_env` provides a logging API. Within each callback of an extension, an instance of `ten_env` can be accessed. Using this instance, you can call the logging API to output logs from extensions developed in various languages to a unified log output.
+为了解决这个问题，`ten_env` 提供了一个日志 API。在扩展的每个回调中，都可以访问 `ten_env` 的实例。使用此实例，您可以调用日志 API，将使用各种语言开发的扩展的日志输出到统一的日志输出中。
 
-This logging API primarily has two parameters: one for the log level and another for the message itself. For ease of use, there are some convenient variations of the log API that require only a message parameter.
+此日志 API 主要有两个参数：一个用于日志级别，另一个用于消息本身。为了便于使用，日志 API 有一些方便的变体，只需要一个消息参数。
 
-The overall effect is shown in the image below:
+整体效果如下图所示：
 
-<figure><img src="../../assets/png/log.png" alt=""><figcaption><p>Unified log output for multi-language extensions</p></figcaption></figure>
+<figure><img src="../../assets/png/log.png" alt=""><figcaption><p>多语言扩展的统一日志输出</p></figcaption></figure>

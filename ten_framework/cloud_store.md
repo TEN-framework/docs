@@ -1,35 +1,35 @@
-# Cloud Store
+# 云商店
 
-The TEN Cloud Store, similar to Google Play on Android and the App Store on iOS, offers a variety of TEN packages. These packages can be downloaded into a TEN app to aid and enhance development.
+TEN 云商店类似于 Android 上的 Google Play 和 iOS 上的 App Store，提供各种 TEN 软件包。 可以将这些软件包下载到 TEN 应用程序中，以帮助和增强开发。
 
-<figure><img src="../assets/png/ten_cloud_store.png" alt=""><figcaption><p>TEN Cloud Store</p></figcaption></figure>
+<figure><img src="../assets/png/ten_cloud_store.png" alt=""><figcaption><p>TEN 云商店</p></figcaption></figure>
 
-## Information Stored in the Database for TEN Packages
+## 数据库中存储的 TEN 软件包的信息
 
-1. **Package Type**
+1.  **软件包类型**
 
-   A string representing the type of package, such as `extension`.
+    表示软件包类型的字符串，例如 `extension`。
 
-2. **Package Name**
+2.  **软件包名称**
 
-   A string representing the name of the package, such as `builtin_extension`.
+    表示软件包名称的字符串，例如 `builtin_extension`。
 
-3. **Package Version**
+3.  **软件包版本**
 
-   A string following semantic versioning (semver) that specifies the package version, such as `3.0.0`.
+    遵循语义版本控制 (semver) 的字符串，用于指定软件包版本，例如 `3.0.0`。
 
-4. **Dependencies**
+4.  **依赖项**
 
-   An array of objects, each containing the following fields:
+    对象数组，每个对象包含以下字段：
 
-   - **Package Type**
+    *   **软件包类型**
 
-     A string, matching the top-level `package type`.
+        字符串，与顶级的 `package type` 匹配。
 
-   - **Package Name**
+    *   **软件包名称**
 
-     A string, matching the top-level `package name`.
+        字符串，与顶级的 `package name` 匹配。
 
-   - **Version**
+    *   **版本**
 
-     A string following semver that specifies the version requirements for the package, such as `~3.0.0`.
+        遵循 semver 的字符串，用于指定软件包的版本要求，例如 `~3.0.0`。

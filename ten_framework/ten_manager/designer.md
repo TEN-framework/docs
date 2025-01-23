@@ -1,8 +1,8 @@
-# TEN Manager - Designer
+# TEN Manager - 设计器
 
-To start the `tman` development server, use the following command:
+要启动 `tman` 开发服务器，请使用以下命令：
 
-{% code title=">_ Terminal" %}
+{% code title=">_ 终端" %}
 
 ```shell
 tman designer
@@ -10,9 +10,9 @@ tman designer
 
 {% endcode %}
 
-If the `base-dir` is not specified, the current working directory will be used by default. Regardless, `base-dir` must be the base directory of a TEN app.
+如果未指定 `base-dir`，则默认使用当前工作目录。无论如何，`base-dir` 必须是 TEN 应用程序的基本目录。
 
-The server starts on port 49483 by default, and you can interact with the designer using the following URL:
+服务器默认在端口 49483 上启动，您可以使用以下 URL 与设计器交互：
 
 {% code title="https" %}
 
@@ -22,16 +22,16 @@ http://127.0.0.1:49483/api/designer/v1/
 
 {% endcode %}
 
-If the requested endpoint URL is not found, the client will receive a `404 Not Found` response, with the response body containing `Endpoint '\' not found` to prevent any confusion.
+如果找不到请求的端点 URL，客户端将收到 `404 Not Found` 响应，响应正文将包含 `Endpoint '\' not found` 以避免任何混淆。
 
-## Version
+## 版本
 
-Retrieve the version of the designer.
+检索设计器的版本。
 
-- **Endpoint:** `/api/designer/v1/version`
-- **Verb:** GET
+-   **端点：** `/api/designer/v1/version`
+-   **动词：** GET
 
-You will receive a `200 OK` response, with the body containing a JSON object like this:
+您将收到 `200 OK` 响应，正文包含如下 JSON 对象：
 
 {% code title=".json" %}
 
@@ -43,14 +43,14 @@ You will receive a `200 OK` response, with the body containing a JSON object lik
 
 {% endcode %}
 
-## Installed Extension Addons
+## 已安装的扩展插件
 
-Retrieve all installed extension addons recognized by the designer under the base directory.
+检索设计器在基本目录下识别的所有已安装的扩展插件。
 
-- **Endpoint:** `/api/designer/v1/addons/extensions`
-- **Verb:** GET
+-   **端点：** `/api/designer/v1/addons/extensions`
+-   **动词：** GET
 
-You will receive a `200 OK` response, with the body containing a JSON array like this:
+您将收到 `200 OK` 响应，正文包含如下 JSON 数组：
 
 {% code title=".json" %}
 
@@ -67,14 +67,14 @@ You will receive a `200 OK` response, with the body containing a JSON array like
 
 {% endcode %}
 
-## Available Graphs
+## 可用的图
 
-Retrieve a list of available graphs.
+检索可用图的列表。
 
-- **Endpoint:** `/api/designer/v1/graphs`
-- **Verb:** GET
+-   **端点：** `/api/designer/v1/graphs`
+-   **动词：** GET
 
-You will receive a `200 OK` response, with the body containing a JSON array like this:
+您将收到 `200 OK` 响应，正文包含如下 JSON 数组：
 
 {% code title=".json" %}
 
@@ -89,16 +89,16 @@ You will receive a `200 OK` response, with the body containing a JSON array like
 
 {% endcode %}
 
-If an error occurs, such as when the App package is not found, you will receive a `400 Bad Request` response with the body containing `Failed to find any app packages`.
+如果发生错误，例如找不到应用程序包时，您将收到 `400 Bad Request` 响应，正文包含 `Failed to find any app packages`。
 
-## Extensions in a Specified Graph
+## 指定图中的扩展
 
-Retrieve the list of extensions within a specified graph.
+检索指定图中的扩展列表。
 
-- **Endpoint:** `/api/designer/v1/graphs/{graph_id}/nodes`
-- **Verb:** GET
+-   **端点：** `/api/designer/v1/graphs/{graph_id}/nodes`
+-   **动词：** GET
 
-You will receive a `200 OK` response, with the body containing a JSON array. Ex:
+您将收到 `200 OK` 响应，正文包含 JSON 数组。例如：
 
 {% code title=".json" %}
 
@@ -172,63 +172,63 @@ You will receive a `200 OK` response, with the body containing a JSON array. Ex:
 
 {% endcode %}
 
-The element type of the `data` array is defined as follows.
+`data` 数组的元素类型定义如下。
 
-| key             | value type | required | description                                                           |
-| :-------------- | :--------: | :------: | :-------------------------------------------------------------------- |
-| app             |   string   |    N     | The uri of the app this extension belongs to, default is 'localhost'. |
-| extension_group |   string   |    Y     | The extension_group this extension running on.                        |
-| addon           |   string   |    Y     | The addon used to create this extension.                              |
-| name            |   string   |    Y     | The extension name.                                                   |
-| api             |   object   |    N     | The schema definitions of property and msgs of this extension.        |
-| property        |   object   |    N     | The property of this extension.                                       |
+| 键             | 值类型   | 必需 | 描述                                                               |
+| :------------- | :------: | :--: | :----------------------------------------------------------------- |
+| app            |  string  |  N   | 此扩展所属的应用程序的 URI，默认为“localhost”。                       |
+| extension_group |  string  |  Y   | 此扩展在其上运行的 extension_group。                              |
+| addon          |  string  |  Y   | 用于创建此扩展的插件。                                             |
+| name           |  string  |  Y   | 扩展名称。                                                         |
+| api            |  object  |  N   | 此扩展的属性和消息的架构定义。                                     |
+| property       |  object  |  N   | 此扩展的属性。                                                     |
 
-> Note that each element in the `data` array is uniquely identified by the combination of `app`, `extension_group`, and `name`.
+> 请注意，`data` 数组中的每个元素都由 `app`、`extension_group` 和 `name` 的组合唯一标识。
 
-Definition of the `api` object.
+`api` 对象的定义。
 
-| key             | value type | required | description                              |
-| :-------------- | :--------: | :------: | :--------------------------------------- |
-| property        |   object   |    N     | The schema of the property.              |
-| cmd_in          |   object   |    N     | The schema of all the `IN` cmd.          |
-| cmd_out         |   object   |    N     | The schema of all the `OUT` cmd.         |
-| data_in         |   object   |    N     | The schema of all the `IN` data.         |
-| data_out        |   object   |    N     | The schema of all the `OUT` data.        |
-| audio_frame_in  |   object   |    N     | The schema of all the `IN` audio_frame.  |
-| audio_frame_out |   object   |    N     | The schema of all the `OUT` audio_frame. |
-| video_frame_in  |   object   |    N     | The schema of all the `IN` video_frame.  |
-| video_frame_out |   object   |    N     | The schema of all the `OUT` video_frame. |
+| 键             | 值类型   | 必需 | 描述                                   |
+| :------------- | :------: | :--: | :------------------------------------- |
+| property       |  object  |  N   | 属性的架构。                           |
+| cmd_in         |  object  |  N   | 所有 `IN` cmd 的架构。                 |
+| cmd_out        |  object  |  N   | 所有 `OUT` cmd 的架构。                |
+| data_in        |  object  |  N   | 所有 `IN` data 的架构。                |
+| data_out       |  object  |  N   | 所有 `OUT` data 的架构。               |
+| audio_frame_in |  object  |  N   | 所有 `IN` audio_frame 的架构。         |
+| audio_frame_out|  object  |  N   | 所有 `OUT` audio_frame 的架构。        |
+| video_frame_in |  object  |  N   | 所有 `IN` video_frame 的架构。         |
+| video_frame_out|  object  |  N   | 所有 `OUT` video_frame 的架构。        |
 
-> Note that the `cmd`, `data`, `audio_frame`, `video_frame` are four types of TEN msgs.
+> 请注意，`cmd`、`data`、`audio_frame`、`video_frame` 是四种类型的 TEN msg。
 
-The format of the `property` is same as the schema definition. The format of `data_in` / `data_out` / `audio_frame_in` / `audio_frame_out` / `video_frame_in` / `video_frame_out` are same as follows.
+`property` 的格式与架构定义相同。`data_in` / `data_out` / `audio_frame_in` / `audio_frame_out` / `video_frame_in` / `video_frame_out` 的格式相同，如下所示。
 
-| key                   | value type | required | description                             |
-| :-------------------- | :--------: | :------: | :-------------------------------------- |
-| name                  |   string   |    Y     | The msg name.                           |
-| property              |   array    |    N     | The property belongs to this msg.       |
-| property[].name       |   string   |    Y     | The property name.                      |
-| property[].attributes |   object   |    Y     | The schema definition of this property. |
+| 键                   | 值类型   | 必需 | 描述                                   |
+| :------------------- | :------: | :--: | :------------------------------------- |
+| name                 |  string  |  Y   | 消息名称。                             |
+| property             |  array   |  N   | 属于此消息的属性。                     |
+| property[].name      |  string  |  Y   | 属性名称。                             |
+| property[].attributes|  object  |  Y   | 此属性的架构定义。                     |
 
-The format of the `cmd_in` and `cmd_out` are same, and compared with the above `data_in`, there is an additional `result` attribute.
+`cmd_in` 和 `cmd_out` 的格式相同，并且与上面的 `data_in` 相比，还有一个额外的 `result` 属性。
 
-| key                   | value type | required | description                                                                      |
-| :-------------------- | :--------: | :------: | :------------------------------------------------------------------------------- |
-| name                  |   string   |    Y     | The msg name.                                                                    |
-| property              |   array    |    N     | The property belongs to this msg.                                                |
-| property[].name       |   string   |    Y     | The property name.                                                               |
-| property[].attributes |   object   |    Y     | The schema definition of this property.                                          |
-| result                |   object   |    N     | The schema of the corresponding result of this cmd.                              |
-| result.property       |   array    |    Y     | The property belongs to this cmd result, the format is same with the `property`. |
+| 键                   | 值类型   | 必需 | 描述                                                           |
+| :------------------- | :------: | :--: | :------------------------------------------------------------- |
+| name                 |  string  |  Y   | 消息名称。                                                     |
+| property             |  array   |  N   | 属于此消息的属性。                                             |
+| property[].name      |  string  |  Y   | 属性名称。                                                     |
+| property[].attributes|  object  |  Y   | 此属性的架构定义。                                             |
+| result               |  object  |  N   | 此 cmd 的相应结果的架构。                                      |
+| result.property      |  array   |  Y   | 属于此 cmd 结果的属性，格式与 `property` 相同。                |
 
-## Connections in a Specified Graph
+## 指定图中的连接
 
-Retrieve the list of connections within a specified graph.
+检索指定图中的连接列表。
 
-- **Endpoint:** `/api/designer/v1/graphs/{graph_id}/connections`
-- **Verb:** GET
+-   **端点：** `/api/designer/v1/graphs/{graph_id}/connections`
+-   **动词：** GET
 
-You will receive a `200 OK` response. Ex:
+您将收到 `200 OK` 响应。例如：
 
 {% code title=".json" %}
 
@@ -269,46 +269,46 @@ You will receive a `200 OK` response. Ex:
 
 {% endcode %}
 
-The element type of the `data` array is defined as follows.
+`data` 数组的元素类型定义如下。
 
-| key             | value type | required | description                                                                                                                   |
-| :-------------- | :--------: | :------: | :---------------------------------------------------------------------------------------------------------------------------- |
-| app             |   string   |    N     | Same as the `app` field in the `nodes`.                                                                                       |
-| extension_group |   string   |    Y     | Same as the `extension_group` field in the `nodes`.                                                                           |
-| extension       |   string   |    Y     | Same as the **`name`** field in the `nodes`.                                                                                  |
-| cmd             |   array    |    N     | The msgs will be sent from this extension group by type. The possible values are `cmd`, `data`, `audio_frame`, `video_frame`. |
+| 键             | 值类型   | 必需 | 描述                                                                                                                      |
+| :------------- | :------: | :--: | :------------------------------------------------------------------------------------------------------------------------ |
+| app            |  string  |  N   | 与 `nodes` 中的 `app` 字段相同。                                                                                            |
+| extension_group|  string  |  Y   | 与 `nodes` 中的 `extension_group` 字段相同。                                                                               |
+| extension      |  string  |  Y   | 与 `nodes` 中的 **`name`** 字段相同。                                                                                      |
+| cmd            |  array   |  N   | 此扩展组将按类型发送的消息。可能的值为 `cmd`、`data`、`audio_frame`、`video_frame`。                                   |
 
-The element type of the `cmd` array is defined as follows.
+`cmd` 数组的元素类型定义如下。
 
-| key                    | value type | required | description                                                           |
-| :--------------------- | :--------: | :------: | :-------------------------------------------------------------------- |
-| name                   |   string   |    Y     | The msg name, must be unique in each msg group.                       |
-| dest                   |   array    |    Y     | The extensions this msg will be sent to.                              |
-| dest[].app             |   string   |    N     | Same as the `app` field in the `nodes`.                               |
-| dest[].extension_group |   string   |    Y     | Same as the `extension_group` field in the `nodes`.                   |
-| dest[].extension       |   string   |    Y     | Same as the `name` field in the `nodes`.                              |
-| dest[].msg_conversion  |   object   |    N     | The conversions used to transform the msg before sending to the dest. |
+| 键                    | 值类型   | 必需 | 描述                                                               |
+| :-------------------- | :------: | :--: | :----------------------------------------------------------------- |
+| name                  |  string  |  Y   | 消息名称，在每个消息组中必须是唯一的。                             |
+| dest                  |  array   |  Y   | 此消息将发送到的扩展。                                            |
+| dest[].app            |  string  |  N   | 与 `nodes` 中的 `app` 字段相同。                                   |
+| dest[].extension_group|  string  |  Y   | 与 `nodes` 中的 `extension_group` 字段相同。                       |
+| dest[].extension      |  string  |  Y   | 与 `nodes` 中的 `name` 字段相同。                                  |
+| dest[].msg_conversion |  object  |  N   | 用于在发送到目标之前转换消息的转换。                               |
 
-The definition of `msg_conversion` is as follows.
+`msg_conversion` 的定义如下。
 
-| key                    | value type | required | description                                                                |
-| :--------------------- | :--------: | :------: | :------------------------------------------------------------------------- |
-| type                   |   string   |    Y     | The possible value is `per_property`.                                      |
-| rules                  |   array    |    Y     | The conversion rules.                                                      |
-| rule[].path            |   string   |    Y     | The json path of the property this rule will be applied on.                |
-| rule[].conversion_mode |   string   |    Y     | The method of rule, possible values are `fixed_value` and `from_original`. |
-| rule[].value           |   string   |    N     | Required if the conversion_mode is `fixed_value`.                          |
-| rule[].original_path   |   string   |    N     | Required if the conversion_mode is `from_original`.                        |
-| keep_original          |  boolean   |    N     | Whether to clone the original property. Default is false.                  |
+| 键                    | 值类型   | 必需 | 描述                                                                         |
+| :-------------------- | :------: | :--: | :--------------------------------------------------------------------------- |
+| type                  |  string  |  Y   | 可能的值为 `per_property`。                                                  |
+| rules                 |  array   |  Y   | 转换规则。                                                                   |
+| rule[].path           |  string  |  Y   | 将应用此规则的属性的 JSON 路径。                                              |
+| rule[].conversion_mode|  string  |  Y   | 规则的方法，可能的值为 `fixed_value` 和 `from_original`。                    |
+| rule[].value          |  string  |  N   | 如果 conversion_mode 为 `fixed_value`，则为必需。                              |
+| rule[].original_path  |  string  |  N   | 如果 conversion_mode 为 `from_original`，则为必需。                           |
+| keep_original         |  boolean |  N   | 是否克隆原始属性。默认为 false。                                           |
 
-## Retrieve Compatible Messages for a Selected Extension
+## 检索所选扩展的兼容消息
 
-Select a message from an extension and retrieve all other messages from different extensions in the graph that are compatible with it.
+从扩展中选择一条消息，并检索图中与该消息兼容的不同扩展中的所有其他消息。
 
-- **Endpoint:** `/api/designer/v1/messages/compatible`
-- **Verb:** POST
+-   **端点：** `/api/designer/v1/messages/compatible`
+-   **动词：** POST
 
-The input body is a JSON object that represents a request to find compatible pins (connections) for an output command from a specific extension within a specified graph.
+输入正文是一个 JSON 对象，表示请求查找指定图中特定扩展的输出命令的兼容引脚（连接）。
 
 {% code title=".json" %}
 
@@ -326,7 +326,7 @@ The input body is a JSON object that represents a request to find compatible pin
 
 {% endcode %}
 
-You will receive a `200 OK` response, with the body containing a JSON array like this:
+您将收到 `200 OK` 响应，正文包含如下 JSON 数组：
 
 {% code title=".json" %}
 
@@ -353,14 +353,14 @@ You will receive a `200 OK` response, with the body containing a JSON array like
 
 {% endcode %}
 
-## Update a Graph
+## 更新图
 
-Update the specified graph.
+更新指定的图。
 
-- **Endpoint:** `/api/designer/v1/graphs/{graph_id}`
-- **Verb:** PUT
+-   **端点：** `/api/designer/v1/graphs/{graph_id}`
+-   **动词：** PUT
 
-Input data (body):
+输入数据（正文）：
 
 {% code title=".json" %}
 
@@ -406,50 +406,50 @@ Input data (body):
 
 {% endcode %}
 
-If successful, the client will receive a `200 OK` response; otherwise, a `40x` error code will be returned.
+如果成功，客户端将收到 `200 OK` 响应；否则，将返回 `40x` 错误代码。
 
-## Save `manifest.json`
+## 保存 `manifest.json`
 
-Save the `manifest.json` file.
+保存 `manifest.json` 文件。
 
-- **Endpoint:** `/api/designer/v1/manifest`
-- **Verb:** PUT
+-   **端点：** `/api/designer/v1/manifest`
+-   **动词：** PUT
 
-If successful, the client will receive a `200 OK` response; otherwise, a `40x` error code will be returned.
+如果成功，客户端将收到 `200 OK` 响应；否则，将返回 `40x` 错误代码。
 
-## Save `property.json`
+## 保存 `property.json`
 
-Save the `property.json` file, including predefined graphs and other content.
+保存 `property.json` 文件，包括预定义的图和其他内容。
 
-- **Endpoint:** `/api/designer/v1/property`
-- **Verb:** PUT
+-   **端点：** `/api/designer/v1/property`
+-   **动词：** PUT
 
-If successful, the client will receive a `200 OK` response; otherwise, a `40x` error code will be returned.
+如果成功，客户端将收到 `200 OK` 响应；否则，将返回 `40x` 错误代码。
 
-## How to develop designer
+## 如何开发设计器
 
-The **tman designer** includes both the frontend and backend. Although the frontend of tman designer is directly embedded into the tman executable during compilation, for development convenience, the frontend and backend of tman designer can be run and debugged separately.
+**tman 设计器**包括前端和后端。虽然 tman 设计器的前端在编译期间直接嵌入到 tman 可执行文件中，但为了方便开发，tman 设计器的前端和后端可以单独运行和调试。
 
-To start the tman designer backend, use the following command:
+要启动 tman 设计器后端，请使用以下命令：
 
 ```shell
 cargo run designer --base-dir <app-base-dir>
 ```
 
-To independently start the tman designer frontend, use the following commands:
+要独立启动 tman 设计器前端，请使用以下命令：
 
 ```shell
 $ cd core/src/ten_manager/designer_frontend/
 
-# Prefer to use bun, but npm works too.
-# Install bun if you don't have it.
+# 最好使用 bun，但也适用于 npm。
+# 如果您没有 bun，请安装它。
 # curl -fsSL https://bun.sh/install | bash
 bun install
 bun dev
 
-# OR using npm.
+# 或者使用 npm。
 npm install
 npm run dev
 ```
 
-Running `npm run start` will start a **webpack dev-server** to serve the tman designer frontend. Open your browser and navigate to `http://<ip>:3000` to view the tman designer frontend.
+运行 `npm run start` 将启动一个 **webpack 开发服务器**来服务 tman 设计器前端。打开浏览器并导航到 `http://<ip>:3000` 以查看 tman 设计器前端。

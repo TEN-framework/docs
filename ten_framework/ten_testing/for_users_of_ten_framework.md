@@ -1,130 +1,28 @@
-# For Users of the TEN Framework
+# 适用于 TEN 框架的用户
 
-## Standalone Testing of Extension
+## 扩展的独立测试
 
-The TEN framework provides an independent extension testing mechanism. This mechanism allows developers to test extensions without relying on other TEN concepts, such as other TEN extensions, TEN graphs, or TEN apps. When developers need to test the behavior of an extension without running the entire TEN app, this independent extension testing mechanism is especially useful.
+TEN 框架提供了一种独立的扩展测试机制。这种机制允许开发人员测试扩展，而无需依赖其他 TEN 概念，例如其他 TEN 扩展、TEN 图或 TEN 应用程序。当开发人员需要在不运行整个 TEN 应用程序的情况下测试扩展的行为时，这种独立的扩展测试机制尤其有用。
 
-The standalone testing framework for TEN extensions follows two key principles:
+TEN 扩展的独立测试框架遵循两个关键原则：
 
-1. Compatibility with any native testing framework of the used language.
+1.  与所用语言的任何本机测试框架兼容。
 
-   For example, if a TEN extension is developed using C++, the Google gtest/gmock testing framework can be used alongside the TEN extension standalone testing framework to achieve independent testing of the C++ TEN extension.
+    例如，如果使用 C++ 开发 TEN 扩展，则 Google gtest/gmock 测试框架可以与 TEN 扩展独立测试框架一起使用，以实现 C++ TEN 扩展的独立测试。
 
-2. Users don't need to modify any code in the extension under test.
+2.  用户无需修改被测扩展中的任何代码。
 
-   The exact same extension code used in runtime can be fully tested using this standalone testing framework.
+    可以使用此独立测试框架对运行时使用的完全相同的扩展代码进行全面测试。
 
-3. The standalone testing flow for extensions developed in different languages follows the same design principles and usage methods.
+3.  以不同语言开发的扩展的独立测试流程遵循相同的设计原则和使用方法。
 
-   This ensures that once you learn the standalone testing concepts and methods for one language, you can quickly grasp the standalone testing concepts and methods for TEN extensions in other languages.
+    这确保一旦您学习了一种语言的独立测试概念和方法，您就可以快速掌握其他语言的 TEN 扩展的独立测试概念和方法。
 
-For users, the TEN extension standalone testing framework introduces two main concepts:
+对于用户，TEN 扩展独立测试框架引入了两个主要概念：
 
-1. **extension_tester**
-2. **ten_env_tester**
+1.  **extension_tester**
+2.  **ten_env_tester**
 
-The role of **extension_tester** is similar to a testing driver, responsible for setting up and executing the entire testing process. **ten_env_tester**, on the other hand, behaves like a typical TEN extension's `ten_env` instance, enabling users to invoke functionalities within the standalone testing framework from the callback of `extension_tester`, such as sending messages to the extension under test and receiving messages from the extension.
+**extension_tester** 的作用类似于测试驱动程序，负责设置和执行整个测试过程。另一方面，**ten_env_tester** 的行为类似于典型 TEN 扩展的 `ten_env` 实例，使用户能够从 `extension_tester` 的回调中调用独立测试框架中的功能，例如向被测扩展发送消息和从被测扩展接收消息。
 
-From the API design of **extension_tester** and **ten_env_tester**, you can see that they are very similar to **TEN extension** and **ten_env**, and this is by design. The main purpose is to allow users familiar with extension development to quickly get accustomed to the standalone testing framework and then develop standalone test cases for the extension itself.
-
-However, for testing purposes, there are inevitably APIs and features dedicated specifically to testing. To prevent these test-specific functionalities and APIs, which are not needed during actual runtime, from polluting the runtime API set, the standalone testing framework is designed not to directly use or extend the API sets of **extension** and **ten_env**. Instead, it introduces types and API sets that are exclusive to standalone testing. This separation ensures that the types and API sets used in actual runtime and those used during testing do not interfere with each other, avoiding any negative side effects.
-
-## Standalone Testing Framework Internal
-
-Internally, the TEN extension standalone testing framework implicitly starts a test app, loads the extension addon to be tested (let’s call it extension A), and initializes a graph containing both the extension A to be tested and another extension (let’s call it extension B) dedicated to testing other extensions. All input and output messages of extension A are redirected to extension B, allowing users to customize inputs and outputs during the testing process and complete the actual testing work.
-
-```mermaid
-sequenceDiagram
-  participant tester as Extension Tester
-  participant testing as Extension Testing
-  participant tested as Extension Tested
-
-  tester->>testing: send messages
-  testing->>tested: send messages
-
-  tested-->>testing: send results
-  testing-->>tester: send results
-```
-
-Basically, you can think of this testing extension hidden within the testing framework as a proxy between the extension being tested and the tester. It acts as a proxy extension within the TEN graph, facilitating the exchange of messages between the tested extension and the tester using the language of the TEN environment.
-
-## Basic Testing Process
-
-The basic testing process and logic are as follows:
-
-1. Create an extension tester to manage the entire standalone testing process.
-2. Inform the standalone testing framework of the folder containing the extension to be tested.
-3. Set a testing mode, such as a mode for testing a single extension.
-4. Start the testing.
-
-## C++
-
-Here is an example of TEN extension standalone testing using Google gtest:
-
-```c++
-class extension_tester_basic : public ten::extension_tester_t {
- public:
-  void on_start(ten::ten_env_tester_t &ten_env) override {
-    auto new_cmd = ten::cmd_t::create("hello_world");
-    ten_env.send_cmd(std::move(new_cmd),
-                     [](ten::ten_env_tester_t &ten_env,
-                        std::unique_ptr<ten::cmd_result_t> result) {
-                       if (result->get_status_code() == TEN_STATUS_CODE_OK) {
-                         ten_env.stop_test();
-                       }
-                     });
-  }
-};
-
-TEST(Test, Basic) {
-  // 1. Create an extension tester to manage the entire standalone testing process.
-  auto *tester = new extension_tester_basic();
-
-  // 2. Set a testing mode, such as a mode for testing a single extension.
-  tester->set_test_mode_single("default_extension_cpp");
-
-  // 3. Start the testing.
-  tester->run();
-
-  delete tester;
-}
-```
-
-## Golang
-
-TODO: To be added.
-
-## Python
-
-```python
-class ExtensionTesterBasic(ExtensionTester):
-    def check_hello(self, ten_env: TenEnvTester, result: CmdResult):
-        statusCode = result.get_status_code()
-        print("receive hello_world, status:" + str(statusCode))
-
-        if statusCode == StatusCode.OK:
-            ten_env.stop_test()
-
-    def on_start(self, ten_env: TenEnvTester) -> None:
-        new_cmd = Cmd.create("hello_world")
-
-        print("send hello_world")
-        ten_env.send_cmd(
-            new_cmd,
-            lambda ten_env, result: self.check_hello(ten_env, result),
-        )
-
-        print("tester on_start_done")
-        ten_env.on_start_done()
-
-
-def test_basic():
-    # 1. Create an extension tester to manage the entire standalone testing process.
-    tester = ExtensionTesterBasic()
-
-    # 2. Set a testing mode, such as a mode for testing a single extension.
-    tester.set_test_mode_single("default_extension_python")
-
-    # 3. Start the testing.
-    tester.run()
-```
+从 **extension_tester** 和 **ten_env_tester** 的 API 设计中，您可以看到它们与 **TEN 扩展** 和 **ten_env** 非常相似，这是有意为之的。主要目的是让熟悉扩展开发的用

@@ -1,35 +1,35 @@
-# TEN Metadata System Overview
+# TEN 元数据系统概述
 
-The TEN framework utilizes a consistent metadata system across various types of packages, including:
+TEN 框架在各种类型的包（包括：
 
-- App
-- Extension Group
-- Extension
-- Protocol
-- System
+*   应用程序
+*   扩展组
+*   扩展
+*   协议
+*   系统
 
-## Types of Metadata
+## 元数据类型
 
-In the TEN metadata system, there are two primary types of metadata:
+在 TEN 元数据系统中，有两种主要类型的元数据：
 
-### 1. **Manifest**
+### 1. **清单 (Manifest)**
 
-- **Location**: Stored in the root directory of the associated TEN package with the file name `manifest.json`.
-- **Contents**:
-  - **Package Name**: The name of the TEN package.
-  - **Package Version**: The version of the TEN package, following semantic versioning.
-  - **TEN Schemas**: Defines schemas related to the package's properties and input/output messages.
-    - **Property Schema**: These schemas are often defined in a `property.json` file in the root directory. The manifest can specify the schema for these properties.
-    - **Message Schema**: Defines the schema for input/output messages handled by the package.
+*   **位置**：存储在关联的 TEN 包的根目录中，文件名为 `manifest.json`。
+*   **内容**：
+    *   **包名称**：TEN 包的名称。
+    *   **包版本**：TEN 包的版本，遵循语义版本控制。
+    *   **TEN 模式**：定义与包的属性和输入/输出消息相关的模式。
+        *   **属性模式**：这些模式通常在根目录的 `property.json` 文件中定义。清单可以指定这些属性的模式。
+        *   **消息模式**：定义包处理的输入/输出消息的模式。
 
-> ⚠️ **Note**: The TEN schema in `manifest.json` is *not* a JSON schema. Instead, it describes the metadata of TEN values, which are central to the TEN runtime, while JSON is merely a representation format.
+> ⚠️ **注意**：`manifest.json` 中的 TEN 模式 *不是* JSON 模式。相反，它描述了 TEN 值的元数据，这些值是 TEN 运行时的核心，而 JSON 仅仅是一种表示格式。
 
-### 2. **Property**
+### 2. **属性 (Property)**
 
-- **Location**: Typically stored in a `property.json` file in the root directory of the TEN package.
-- **Purpose**: The `property.json` file stores initial property values, which are read-write during runtime. This means that properties can be modified while the TEN runtime is executing.
+*   **位置**：通常存储在 TEN 包根目录的 `property.json` 文件中。
+*   **目的**：`property.json` 文件存储初始属性值，这些属性值在运行时是可读写的。这意味着可以在 TEN 运行时执行时修改属性。
 
-#### Example of `property.json`
+#### `property.json` 示例
 
 ```json
 {
@@ -37,11 +37,11 @@ In the TEN metadata system, there are two primary types of metadata:
 }
 ```
 
-## Manifest File
+## 清单文件 (Manifest File)
 
-The `manifest.json` file serves as the blueprint for the TEN package, defining its metadata, properties, and the input/output messages it handles.
+`manifest.json` 文件充当 TEN 包的蓝图，定义其元数据、属性以及它处理的输入/输出消息。
 
-### Example of `manifest.json`
+### `manifest.json` 示例
 
 ```json
 {
@@ -113,31 +113,31 @@ The `manifest.json` file serves as the blueprint for the TEN package, defining i
 }
 ```
 
-### Purpose of TEN Schema in Manifest
+### 清单中 TEN 模式的目的
 
-The TEN schema in `manifest.json` provides the TEN runtime with metadata about the extension's external API, including the type information for properties and messages. This helps the runtime correctly handle the extension's properties and messages during operation.
+`manifest.json` 中的 TEN 模式为 TEN 运行时提供了有关扩展的外部 API 的元数据，包括属性和类型的类型信息。这有助于运行时在操作期间正确处理扩展的属性和消息。
 
-### When TEN Schema is Used
+### 何时使用 TEN 模式
 
-1. **Property Validation**: When the TEN runtime gets/sets properties of a TEN package or message.
-2. **Data Conversion**: When converting a JSON document to a TEN package or message property using the `from_json` API.
-3. **Compatibility Check**: When the TEN manager checks if a message can be output from a source extension to a destination extension according to the TEN schema.
+1.  **属性验证**：当 TEN 运行时获取/设置 TEN 包或消息的属性时。
+2.  **数据转换**：使用 `from_json` API 将 JSON 文档转换为 TEN 包或消息属性时。
+3.  **兼容性检查**：当 TEN 管理器根据 TEN 模式检查消息是否可以从源扩展输出到目标扩展时。
 
-## Property Management
+## 属性管理
 
-In the TEN framework, there are two types of properties:
+在 TEN 框架中，有两种类型的属性：
 
-1. **Message Properties**: These properties are associated with the messages exchanged between extensions within the framework. Message properties define the specific data or parameters that are carried within a message, such as command parameters, data payloads, or metadata related to audio/video frames.
+1.  **消息属性**：这些属性与框架中扩展之间交换的消息相关联。消息属性定义消息中携带的特定数据或参数，例如命令参数、数据负载或与音频/视频帧相关的元数据。
 
-2. **TEN Package Properties**: These properties are associated with the TEN packages themselves, such as extensions. TEN package properties define the configuration or settings specific to a package. For example, an extension might have properties that configure its behavior, such as runtime settings, initialization parameters, or other configuration data.
+2.  **TEN 包属性**：这些属性与 TEN 包本身（例如扩展）相关联。TEN 包属性定义特定于包的配置或设置。例如，扩展可能具有配置其行为的属性，例如运行时设置、初始化参数或其他配置数据。
 
-Both types of properties are managed within the TEN framework but serve different purposes, one focuses on the communication between components (message properties), while the other pertains to the configuration and operation of the components themselves (TEN package properties).
+这两种类型的属性都在 TEN 框架中进行管理，但服务于不同的目的，一种侧重于组件之间的通信（消息属性），另一种侧重于组件本身的配置和操作（TEN 包属性）。
 
-<figure><img src="../assets/png/property_system.png" alt=""><figcaption><p>Property system</p></figcaption></figure>
+<figure><img src="../assets/png/property_system.png" alt=""><figcaption><p>属性系统</p></figcaption></figure>
 
-### Defining TEN Package Properties
+### 定义 TEN 包属性
 
-The `property.json` file defines the properties of a TEN package. Here’s an example:
+`property.json` 文件定义 TEN 包的属性。以下是一个示例：
 
 ```json
 {
@@ -154,26 +154,26 @@ The `property.json` file defines the properties of a TEN package. Here’s an ex
 }
 ```
 
-> ⚠️ **Note**: Each property name in the `property.json` file must be unique.
+> ⚠️ **注意**：`property.json` 文件中的每个属性名称必须是唯一的。
 
-### TEN Schema for Properties
+### 属性的 TEN 模式
 
-You can define a TEN schema for properties in the `manifest.json` file, enabling the TEN runtime to handle these properties more effectively. If a property does not have a corresponding TEN schema, the runtime will use the default JSON handling method (e.g., treating all JSON numbers as `float64`). If a TEN schema is provided, the runtime will use it to validate and process the property accordingly.
+您可以在 `manifest.json` 文件中为属性定义 TEN 模式，使 TEN 运行时能够更有效地处理这些属性。如果属性没有相应的 TEN 模式，则运行时将使用默认的 JSON 处理方法（例如，将所有 JSON 数字视为 `float64`）。如果提供了 TEN 模式，则运行时将使用它来验证和相应地处理属性。
 
-| Property | TEN Schema | Effect |
-|----------|------------|--------|
-| Yes      | Yes        | The TEN runtime validates the property value based on the TEN schema (e.g., checking the type). |
-| Yes      | No         | The TEN runtime uses default handling, treating all JSON numbers as `float64`. |
+| 属性 | TEN 模式 | 效果                                                                                                                                            |
+| ---- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| 是   | 是       | TEN 运行时根据 TEN 模式验证属性值（例如，检查类型）。                                                                                                  |
+| 是   | 否       | TEN 运行时使用默认处理，将所有 JSON 数字视为 `float64`。                                                                                              |
 
-### Accessing Properties from an Extension
+### 从扩展访问属性
 
-The TEN runtime provides APIs for extensions to access various properties.
+TEN 运行时为扩展提供了访问各种属性的 API。
 
-### Specifying Property Values in the `start_graph` Command
+### 在 `start_graph` 命令中指定属性值
 
-Property values related to the TEN package can be specified in the `start_graph` command. The TEN runtime processes these properties according to the TEN schema (if defined) and stores them within the corresponding TEN package instance.
+与 TEN 包相关的属性值可以在 `start_graph` 命令中指定。TEN 运行时根据 TEN 模式（如果已定义）处理这些属性，并将它们存储在相应的 TEN 包实例中。
 
-#### Example of Property Specification in `start_graph` Command
+#### `start_graph` 命令中属性规范的示例
 
 ```json
 {

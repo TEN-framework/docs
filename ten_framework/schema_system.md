@@ -1,10 +1,10 @@
-# TEN Framework Schema System
+# TEN 框架模式系统
 
-## Overview
+## 概述
 
-The TEN framework uses a schema system to define and validate data structures, known as TEN Values, within the TEN runtime. These schemas are used to describe the properties of extensions, as well as the messages exchanged between them. The schemas ensure data consistency, type safety, and proper data handling across different components of the TEN framework.
+TEN 框架使用模式系统来定义和验证 TEN 运行时内的数据结构（称为 TEN 值）。这些模式用于描述扩展的属性以及它们之间交换的消息。这些模式确保了 TEN 框架不同组件之间的数据一致性、类型安全和正确的数据处理。
 
-### Example of a TEN Framework Schema
+### TEN 框架模式的示例
 
 ```json
 {
@@ -51,69 +51,69 @@ The TEN framework uses a schema system to define and validate data structures, k
 }
 ```
 
-## Design Principles of the TEN Framework Schema System
+## TEN 框架模式系统的设计原则
 
-1. **Object Principle**
-   Every field’s schema in the TEN framework must be defined as an object. This ensures a structured and consistent format across all schema definitions.
+1.  **对象原则**
+    TEN 框架中每个字段的模式都必须定义为对象。这确保了所有模式定义中结构化且一致的格式。
 
-   ```json
-   {
-     "foo": {
-       "type": "int8"
-     }
-   }
-   ```
+    ```json
+    {
+      "foo": {
+        "type": "int8"
+      }
+    }
+    ```
 
-   Incorrect format:
+    不正确的格式：
 
-   ```json
-   {
-     "foo": "int8"
-   }
-   ```
+    ```json
+    {
+      "foo": "int8"
+    }
+    ```
 
-2. **Metadata-Only Principle**
-   The schema defines only metadata, not actual data values. This separation ensures that the schema remains a template for validation and does not mix with data content.
+2.  **仅元数据原则**
+    该模式仅定义元数据，不定义实际数据值。这种分离确保了该模式仍然是验证的模板，并且不会与数据内容混合。
 
-3. **Conflict Prevention Principle**
-   In any JSON level containing a TEN schema, all fields must be user-defined, except for reserved fields like `_ten`. This prevents conflicts between user-defined fields and system-defined fields.
+3.  **冲突预防原则**
+    在包含 TEN 模式的任何 JSON 级别中，除了保留字段（如 `_ten`）外，所有字段都必须是用户定义的。这可以防止用户定义的字段和系统定义的字段之间发生冲突。
 
-   Example with user-defined fields:
+    具有用户定义的字段的示例：
 
-   ```json
-   {
-     "foo": "int8",
-     "bar": "string"
-   }
-   ```
+    ```json
+    {
+      "foo": "int8",
+      "bar": "string"
+    }
+    ```
 
-   Example with reserved `_ten` field:
+    具有保留 `_ten` 字段的示例：
 
-   ```json
-   {
-     "_ten": {
-       "xxx": {}
-     },
-     "foo": "int8",
-     "bar": "string"
-   }
-   ```
+    ```json
+    {
+      "_ten": {
+        "xxx": {}
+      },
+      "foo": "int8",
+      "bar": "string"
+    }
+    ```
 
-## Defining Types in a TEN Schema
+## 在 TEN 模式中定义类型
 
-### Primitive Types
+### 原始类型
 
-The TEN framework supports the following primitive types:
+TEN 框架支持以下原始类型：
 
-- int8, int16, int32, int64
-- uint8, uint16, uint32, uint64
-- float32, float64
-- string
-- bool
-- buf
-- ptr
+*   int8、int16、int32、int64
+*   uint8、uint16、uint32、uint64
+*   float32、float64
+*   string
+*   bool
+*   buf
+*   ptr
 
-Example type definitions:
+类型定义的示例：
 
 ```json
 {
@@ -131,42 +131,42 @@ Example type definitions:
 }
 ```
 
-### Complex Types
+### 复杂类型
 
-- **Object**
+*   **对象**
 
-  ```json
-  {
-    "foo": {
-      "type": "object",
-      "properties": {
-        "foo": {
-          "type": "int8"
-        },
-        "bar": {
+    ```json
+    {
+      "foo": {
+        "type": "object",
+        "properties": {
+          "foo": {
+            "type": "int8"
+          },
+          "bar": {
+            "type": "string"
+          }
+        }
+      }
+    }
+    ```
+
+*   **数组**
+
+    ```json
+    {
+      "foo": {
+        "type": "array",
+        "items": {
           "type": "string"
         }
       }
     }
-  }
-  ```
+    ```
 
-- **Array**
+## 定义属性的 TEN 模式
 
-  ```json
-  {
-    "foo": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    }
-  }
-  ```
-
-## Defining the TEN Schema for Properties
-
-### Example Property Schema
+### 属性模式示例
 
 ```json
 {
@@ -180,7 +180,7 @@ Example type definitions:
 }
 ```
 
-### Corresponding TEN Schema
+### 相应的 TEN 模式
 
 ```json
 {
@@ -214,9 +214,9 @@ Example type definitions:
 }
 ```
 
-## Defining the TEN Schema for Commands
+## 定义命令的 TEN 模式
 
-### Input Command Example
+### 输入命令示例
 
 ```json
 {
@@ -235,7 +235,7 @@ Example type definitions:
 }
 ```
 
-### Corresponding TEN Schema
+### 相应的 TEN 模式
 
 ```json
 {
@@ -285,11 +285,11 @@ Example type definitions:
 }
 ```
 
-To avoid redundancy, the TEN framework allows you to exclude the `_ten` field from your schema definition, as it is reserved and defined by the runtime.
+为了避免冗余，TEN 框架允许您从模式定义中排除 `_ten` 字段，因为它是由运行时保留和定义的。
 
-### Defining Command Results
+### 定义命令结果
 
-Command results are defined similarly to commands, but are used to describe the expected response:
+命令结果的定义与命令类似，但用于描述预期的响应：
 
 ```json
 {
@@ -321,15 +321,15 @@ Command results are defined similarly to commands, but are used to describe the 
 }
 ```
 
-## Defining the TEN Schema for Data, Video Frames, and Audio Frames
+## 定义数据、视频帧和音频帧的 TEN 模式
 
-The process for defining schemas for data, video frames, and audio frames is similar to that for commands but without the result field.
+定义数据、视频帧和音频帧的模式的过程与命令类似，但没有 result 字段。
 
-## Manifest Schema Overview
+## 清单模式概述
 
-The `manifest.json` file contains the schema definitions for an extension’s properties and messages. These schemas ensure that the extension's configuration and communication follow the correct structure and type requirements.
+`manifest.json` 文件包含扩展的属性和消息的模式定义。这些模式确保扩展的配置和通信遵循正确的结构和类型要求。
 
-### Example `manifest.json`
+### `manifest.json` 示例
 
 ```json
 {
@@ -372,6 +372,6 @@ The `manifest.json` file contains the schema definitions for an extension’s pr
 }
 ```
 
-### Conclusion
+### 结论
 
-The TEN framework schema system provides a robust and structured way to define and validate data structures, ensuring consistency and safety across extensions and their interactions within the TEN runtime. By adhering to the principles of object structure, metadata focus, and conflict prevention, the system facilitates clear and effective communication between components.
+TEN 框架模式系统提供了一种健壮且结构化的方式来定义和验证数据结构，从而确保 TEN 运行时中扩展及其交互的一致性和安全性。通过遵守对象结构、元数据关注和冲突预防的原则，该系统有助于组件之间清晰有效的通信。

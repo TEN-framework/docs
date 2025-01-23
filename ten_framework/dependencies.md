@@ -1,58 +1,58 @@
-# Dependencies
+# 依赖项
 
-The TEN framework utilizes several third-party libraries. Some are used specifically for testing, while others are integrated into the TEN runtime. Below is a description of these libraries, along with any necessary modifications required for their use within the TEN framework.
+TEN 框架利用了多个第三方库。有些专门用于测试，而另一些则集成到 TEN 运行时中。以下是对这些库的描述，以及在 TEN 框架中使用它们所需的任何必要修改。
 
 ## Google gn
 
-Instance ID
+实例 ID
 
-| OS | Arch | Instance ID |
-|----|------|-------------|
-|Linux|x64|BzX0zkfwFeUn9MaDVqm6FugmTIy-hFpgNUx43O1fN00C|
-|Linux|arm64|rT_12w1Iv6ug8CJ4j0VQekA0qTDq6CwoAqGWasIKFcEC|
-|Mac|x64|B31qpTXmBZpBHIdUtEFogC24WDCQ9W7qAS0d1eSxoZgC|
-|Mac|arm64|5dcmC12_T9JLydmhjTjySyTC7FiYd75j-tyHVokWaFEC|
-|Win|x64|1QlqF0FPVt82ba5f48HxHpv5xPqOmyaThoR3TicuJ8QC|
+| 操作系统 | 架构 | 实例 ID                                   |
+| -------- | ---- | ---------------------------------------- |
+| Linux    | x64  | BzX0zkfwFeUn9MaDVqm6FugmTIy-hFpgNUx43O1fN00C |
+| Linux    | arm64 | rT_12w1Iv6ug8CJ4j0VQekA0qTDq6CwoAqGWasIKFcEC |
+| Mac      | x64  | B31qpTXmBZpBHIdUtEFogC24WDCQ9W7qAS0d1eSxoZgC |
+| Mac      | arm64 | 5dcmC12_T9JLydmhjTjySyTC7FiYd75j-tyHVokWaFEC |
+| Win      | x64  | 1QlqF0FPVt82ba5f48HxHpv5xPqOmyaThoR3TicuJ8QC |
 
-Download directly from [Google GN webpage](https://chrome-infra-packages.appspot.com/p/gn/gn/).
+直接从 [Google GN 网页](https://chrome-infra-packages.appspot.com/p/gn/gn/) 下载。
 
 ## Google ninja
 
-Version: 1.12.1
+版本：1.12.1
 
-Download directly from [Ninja release page](https://github.com/ninja-build/ninja/releases).
+直接从 [Ninja 发布页面](https://github.com/ninja-build/ninja/releases) 下载。
 
 ## Jansson
 
-Version: 2.14
+版本：2.14
 
-[MIT license](https://github.com/akheron/jansson/blob/master/LICENSE)
+[MIT 许可证](https://github.com/akheron/jansson/blob/master/LICENSE)
 
-This is used in the TEN framework core to parse and generate JSON data. Please refer to `third_party/jansson` for details.
+这在 TEN 框架核心中用于解析和生成 JSON 数据。有关详细信息，请参阅 `third_party/jansson`。
 
 ## libuv
 
-Version: 1.49.2
+版本：1.49.2
 
-[MIT license](https://github.com/libuv/libuv#licensing)
+[MIT 许可证](https://github.com/libuv/libuv#licensing)
 
-This is one of the event loop libraries used in the TEN runtime. Please refer to `third_party/libuv` for details.
+这是 TEN 运行时中使用的一个事件循环库。有关详细信息，请参阅 `third_party/libuv`。
 
 ## msgpack-c
 
-Version: 6.1.0
+版本：6.1.0
 
-[Boost Software License, Version 1.0](https://github.com/msgpack/msgpack-c#license)
+[Boost 软件许可证，版本 1.0](https://github.com/msgpack/msgpack-c#license)
 
-A MessagePack library for C. Please refer to `third_party/msgpack` for details.
+用于 C 的 MessagePack 库。有关详细信息，请参阅 `third_party/msgpack`。
 
 ## libwebsockets
 
-Version: 4.3.2
+版本：4.3.2
 
-[MIT license](https://github.com/warmcat/libwebsockets/blob/main/LICENSE)
+[MIT 许可证](https://github.com/warmcat/libwebsockets/blob/main/LICENSE)
 
-Canonical libwebsockets.org networking library. Please refer to `third_party/libwebsockets` for details.
+规范 libwebsockets.org 网络库。有关详细信息，请参阅 `third_party/libwebsockets`。
 
 ```diff
 --- /home/wei/MyData/Temp/libwebsockets-4.3.2/CMakeLists.txt
@@ -67,7 +67,7 @@ Canonical libwebsockets.org networking library. Please refer to `third_party/lib
    add_compile_options(/Zc:preprocessor /wd5105)
 ```
 
-Apply the following patch.
+应用以下补丁。
 
 ```diff
 diff --git a/third_party/libwebsockets/cmake/lws_config.h.in b/third_party/libwebsockets/cmake/lws_config.h.in
@@ -104,9 +104,9 @@ index e8a0cb2d4..84a164e90 100755
      mbedtls_ssl_conf_rng(&ssl_pm->conf, mbedtls_ctr_drbg_random, &ssl_pm->ctr_drbg);
 ```
 
-### Fix for linking mbedtls on Windows
+### 修复在 Windows 上链接 mbedtls
 
-Apply the following patch if the CMake version is higher than 3.24, as `find_package` supports the `GLOBAL` keyword since 3.24.
+如果 CMake 版本高于 3.24，请应用以下补丁，因为 `find_package` 自 3.24 起支持 `GLOBAL` 关键字。
 
 ```diff
 diff --git a/third_party/libwebsockets/lib/tls/mbedtls/CMakeLists.txt b/third_party/libwebsockets/lib/tls/mbedtls/CMakeLists.txt
@@ -151,21 +151,21 @@ index 4c89c2e2e..e6d641b9c 100644
 +
 ```
 
-And remove `#define USING_SHARED_MBEDTLS` in `third_party/libwebsockets/cmake/lws_config.h.in`.
+并删除 `third_party/libwebsockets/cmake/lws_config.h.in` 中的 `#define USING_SHARED_MBEDTLS`。
 
 ## curl
 
-Version: 8.1.2
+版本：8.1.2
 
-[MIT-like license](https://github.com/curl/curl/blob/master/COPYING)
+[类 MIT 许可证](https://github.com/curl/curl/blob/master/COPYING)
 
-A command-line tool and library for transferring data with URL syntax, supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT, POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, and TFTP. libcurl offers a myriad of powerful features.
+一种使用 URL 语法传输数据的命令行工具和库，支持 DICT、FILE、FTP、FTPS、GOPHER、GOPHERS、HTTP、HTTPS、IMAP、IMAPS、LDAP、LDAPS、MQTT、POP3、POP3S、RTMP、RTMPS、RTSP、SCP、SFTP、SMB、SMBS、SMTP、SMTPS、TELNET 和 TFTP。libcurl 提供了无数强大的功能。
 
-Please refer to `third_party/curl` for details.
+有关详细信息，请参阅 `third_party/curl`。
 
-### Patches for curl
+### curl 的补丁
 
-Patch `lib/CMakeLists.txt`, to change the shared library name from `_imp.lib` to `.lib`.
+修补 `lib/CMakeLists.txt`，将共享库名称从 `_imp.lib` 更改为 `.lib`。
 
 ```cmake
 if(WIN32)
@@ -180,7 +180,7 @@ if(WIN32)
 endif()
 ```
 
-Export `Curl_ws_done` in `lib/ws.h`, because this function needs to be called to prevent memory leaks.
+在 `lib/ws.h` 中导出 `Curl_ws_done`，因为需要调用此函数以防止内存泄漏。
 
 ```c
 CURL_EXTERN void Curl_ws_done(struct Curl_easy *data);
@@ -189,61 +189,61 @@ CURL_EXTERN void Curl_ws_done(struct Curl_easy *data);
 
 ## clingo
 
-Version: 5.6.2
+版本：5.6.2
 
-[MIT license](https://github.com/potassco/clingo/blob/master/LICENSE.md)
+[MIT 许可证](https://github.com/potassco/clingo/blob/master/LICENSE.md)
 
-A grounder and solver for logic programs.
+一种用于逻辑程序的接地器和求解器。
 
-Please refer to `third_party/clingo` for details.
+有关详细信息，请参阅 `third_party/clingo`。
 
 ## FFmpeg
 
-Version: 6.0
+版本：6.0
 
-[GPL or LGPL license](https://github.com/FFmpeg/FFmpeg/blob/master/LICENSE.md)
+[GPL 或 LGPL 许可证](https://github.com/FFmpeg/FFmpeg/blob/master/LICENSE.md)
 
-The FFmpeg codebase is mainly LGPL-licensed with optional components licensed under GPL. Please refer to the LICENSE file for detailed information.
+FFmpeg 代码库主要采用 LGPL 许可，可选组件采用 GPL 许可。有关详细信息，请参阅 LICENSE 文件。
 
-Used in ffmpeg extensions, primarily for testing purposes. Please refer to `third_party/ffmpeg` for details.
+用于 ffmpeg 扩展，主要用于测试目的。有关详细信息，请参阅 `third_party/ffmpeg`。
 
 ## libbacktrace
 
-Version: 1.0
+版本：1.0
 
-[BSD license](https://github.com/ianlancetaylor/libbacktrace/blob/master/LICENSE)
+[BSD 许可证](https://github.com/ianlancetaylor/libbacktrace/blob/master/LICENSE)
 
-A C library that may be linked into a C/C++ program to produce symbolic backtraces.
+一个可以链接到 C/C++ 程序中以生成符号回溯的 C 库。
 
-> ⚠️ **Note:**
-> We have significantly modified `libbacktrace` to conform to the naming conventions and folder structure of the TEN framework. Please refer to `core/src/ten_utils/backtrace` for details.
+> ⚠️ **注意：**
+> 我们已经对 `libbacktrace` 进行了重大修改，以符合 TEN 框架的命名约定和文件夹结构。有关详细信息，请参阅 `core/src/ten_utils/backtrace`。
 
 ## uthash
 
-Version: 2.3.0
+版本：2.3.0
 
-[BSD license](https://github.com/troydhanson/uthash/blob/master/LICENSE)
+[BSD 许可证](https://github.com/troydhanson/uthash/blob/master/LICENSE)
 
-C macros for hash tables and more.
+用于哈希表等的 C 宏。
 
-> ⚠️ **Note:**
-> We have significantly modified `uthash` to conform to the naming conventions and folder structure of the TEN framework. Please refer to the files under `core/include/ten_utils/container` that have `uthash` mentioned in the file headers.
+> ⚠️ **注意：**
+> 我们已经对 `uthash` 进行了重大修改，以符合 TEN 框架的命名约定和文件夹结构。有关详细信息，请参阅文件头中提到 `uthash` 的 `core/include/ten_utils/container` 下的文件。
 
 ## uuid4
 
-[MIT license](https://github.com/gpakosz/uuid4/blob/master/LICENSE.MIT)
-[WTFPLv2 license](<https://github.com/gpakosz/uuid4/blob/master/LICENSE.WTFPLv2>)
+[MIT 许可证](https://github.com/gpakosz/uuid4/blob/master/LICENSE.MIT)
+[WTFPLv2 许可证](https://github.com/gpakosz/uuid4/blob/master/LICENSE.WTFPLv2)
 
-UUID v4 generation in C.
+C 中的 UUID v4 生成。
 
-> ⚠️ **Note:**
-> We have significantly modified `uuid4` to conform to the naming conventions and folder structure of the TEN framework. Please refer to `core/src/ten_utils/lib/sys/general/uuid.c` for details.
+> ⚠️ **注意：**
+> 我们已经对 `uuid4` 进行了重大修改，以符合 TEN 框架的命名约定和文件夹结构。有关详细信息，请参阅 `core/src/ten_utils/lib/sys/general/uuid.c`。
 
 ## zf_log
 
-[MIT license](https://github.com/wonder-mice/zf_log/blob/master/LICENSE)
+[MIT 许可证](https://github.com/wonder-mice/zf_log/blob/master/LICENSE)
 
-Core logging library for C/ObjC/C++.
+用于 C/ObjC/C++ 的核心日志库。
 
-> ⚠️ **Note:**
-> We have significantly modified `zf_log` to conform to the naming conventions and folder structure of the TEN framework. Please refer to `core/src/ten_utils/log` for details.
+> ⚠️ **注意：**
+> 我们已经对 `zf_log` 进行了重大修改，以符合 TEN 框架的命名约定和文件夹结构。有关详细信息，请参阅 `core/src/ten_utils/log`。

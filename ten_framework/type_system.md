@@ -1,46 +1,46 @@
-# Type System
+# 类型系统
 
-## Type
+## 类型
 
-The TEN framework type system is the system used within the TEN framework to define the data types of values. Developers can declare the types of message or extension properties through the TEN schema.
+TEN 框架类型系统是 TEN 框架内用于定义值的数据类型的系统。开发者可以通过 TEN 模式声明消息或扩展属性的类型。
 
-The TEN framework type system includes basic types and composite types. The basic types include the following:
+TEN 框架类型系统包括基本类型和复合类型。基本类型包括以下内容：
 
-| Type    | Description                                               | C++ Type      | Go Type | Python Type        |
-|---------|-----------------------------------------------------------|---------------|---------|--------------------|
-| int8    | An 8-bit signed integer.                                   | int8_t        | int8    | int                |
-| int16   | A 16-bit signed integer.                                   | int16_t       | int16   | int                |
-| int32   | A 32-bit signed integer.                                   | int32_t       | int32   | int                |
-| int64   | A 64-bit signed integer.                                   | int64_t       | int64   | int                |
-| uint8   | An 8-bit unsigned integer.                                 | uint8_t       | uint8   | int                |
-| uint16  | A 16-bit unsigned integer.                                 | uint16_t      | uint16  | int                |
-| uint32  | A 32-bit unsigned integer.                                 | uint32_t      | uint32  | int                |
-| uint64  | A 64-bit unsigned integer.                                 | uint64_t      | uint64  | int                |
-| float32 | A single precision (32-bit) IEEE 754 floating-point number.| float         | float32 | float              |
-| float64 | A double-precision (64-bit) IEEE 754 floating-point number.| double        | float64 | float              |
-| string  | A Unicode character sequence.                              | std::string / char\* | string  | str        |
-| buf     | A sequence of 8-bit unsigned bytes.                        | uint8_t\*     | \[\]byte | bytearray / memoryview |
-| bool    | A binary value, either true or false.                      | bool          | bool    | bool               |
-| ptr     | A pointer to a memory address.                             | void\*        | unsafe.Pointer |                 |
+| 类型    | 描述                                                         | C++ 类型      | Go 类型 | Python 类型        |
+|---------|--------------------------------------------------------------|---------------|---------|--------------------|
+| int8    | 8 位有符号整数。                                                  | int8_t        | int8    | int                |
+| int16   | 16 位有符号整数。                                                 | int16_t       | int16   | int                |
+| int32   | 32 位有符号整数。                                                 | int32_t       | int32   | int                |
+| int64   | 64 位有符号整数。                                                 | int64_t       | int64   | int                |
+| uint8   | 8 位无符号整数。                                                  | uint8_t       | uint8   | int                |
+| uint16  | 16 位无符号整数。                                                 | uint16_t      | uint16  | int                |
+| uint32  | 32 位无符号整数。                                                 | uint32_t      | uint32  | int                |
+| uint64  | 64 位无符号整数。                                                 | uint64_t      | uint64  | int                |
+| float32 | 单精度（32 位）IEEE 754 浮点数。                                    | float         | float32 | float              |
+| float64 | 双精度（64 位）IEEE 754 浮点数。                                    | double        | float64 | float              |
+| string  | Unicode 字符序列。                                              | std::string / char\* | string  | str        |
+| buf     | 8 位无符号字节序列。                                               | uint8_t\*     | \[\]byte | bytearray / memoryview |
+| bool    | 二进制值，true 或 false。                                            | bool          | bool    | bool               |
+| ptr     | 指向内存地址的指针。                                                 | void\*        | unsafe.Pointer |                 |
 
-Composite types include the following:
+复合类型包括以下内容：
 
-| Type   | Description                                      | C++ Type | Go Type | Python Type |
-|--------|--------------------------------------------------|----------|---------|-------------|
-| array  | A collection of elements of the same type.       ||||
-| object | Represents a complex key/value pair. The key type is always a string. ||||
+| 类型   | 描述                                                           | C++ 类型 | Go 类型 | Python 类型 |
+|--------|----------------------------------------------------------------|----------|---------|-------------|
+| array  | 相同类型的元素集合。                                                       ||||
+| object | 表示复杂的键/值对。键类型始终为字符串。                                                        ||||
 
-For basic types, properties can be accessed or set using methods such as `get_property()` / `set_property()`. For example:
+对于基本类型，可以使用 `get_property()` / `set_property()` 等方法访问或设置属性。例如：
 
 ```cpp
-// Get property value
+// 获取属性值
 int32_t value = cmd.get_property_int32("property_name");
 
-// Set property value
+// 设置属性值
 cmd.set_property("property_name", 100);
 ```
 
-For composite types, it is typically necessary to use related serialization methods. For example:
+对于复合类型，通常需要使用相关的序列化方法。例如：
 
 ```Golang
 type MyProp struct {
@@ -52,25 +52,25 @@ bytes, _ := json.Marshal(&prop)
 cmd.SetPropertyFromJSONBytes("property_name", bytes)
 ```
 
-## Type and Schema
+## 类型和模式
 
-If a TEN schema is specified, the property type will be determined according to the corresponding TEN schema. If no TEN schema is specified, the property type will be determined based on the type of the initial value assignment. For example, if the initial assignment is `int32_t`, the property type will be `int32_t`; if the initial assignment is done using JSON, the type will be determined according to the JSON processing rules.
+如果指定了 TEN 模式，则将根据相应的 TEN 模式确定属性类型。如果未指定 TEN 模式，则将根据初始值赋值的类型确定属性类型。例如，如果初始赋值为 `int32_t`，则属性类型为 `int32_t`；如果使用 JSON 完成初始赋值，则将根据 JSON 处理规则确定类型。
 
-## Conversion Rules
+## 转换规则
 
-The TEN framework supports flexible automatic conversion between different types of values. As long as the conversion does not result in a loss of value, the TEN framework will automatically perform the type conversion. However, if the conversion leads to a loss of value, such as converting a type from `int32_t` to `int8_t` when the value exceeds the range that `int8_t` can represent, the TEN framework will report an error. For example, the TEN framework will return an error for a `send_<foo>` action.
+TEN 框架支持不同类型值之间的灵活自动转换。只要转换不会导致值丢失，TEN 框架将自动执行类型转换。但是，如果转换导致值丢失，例如将类型从 `int32_t` 转换为 `int8_t` 时，值超出了 `int8_t` 可以表示的范围，则 TEN 框架将报告错误。例如，对于 `send_<foo>` 操作，TEN 框架将返回一个错误。
 
-### Safe and Must-Succeed Conversion
+### 安全且必须成功的转换
 
-Converting a lower precision type to a higher precision type is always safe and guaranteed to succeed, as the higher precision type can fully accommodate the value of the lower precision type without data loss. This automatic conversion is called Safe Conversion. For example, when trying to retrieve an `int8` type property as `int32`, the TEN type system will automatically convert the property type to `int32`.
+将较低精度类型转换为较高精度类型始终是安全的，并且保证成功，因为较高精度类型可以完全容纳较低精度类型的值而不会丢失数据。此自动转换称为安全转换。例如，当尝试将 `int8` 类型属性作为 `int32` 检索时，TEN 类型系统会自动将属性类型转换为 `int32`。
 
-In the TEN Type System, the Safe Conversion rules are as follows:
+在 TEN 类型系统中，安全转换规则如下：
 
-1. Within the `int` types, from lower to higher precision.
-2. Within the `uint` types, from lower to higher precision.
-3. Within the `float` types, from lower to higher precision.
+1.  在 `int` 类型中，从较低精度到较高精度。
+2.  在 `uint` 类型中，从较低精度到较高精度。
+3.  在 `float` 类型中，从较低精度到较高精度。
 
-| From    | To (Allowed)             |
+| 从      | 到（允许）             |
 |---------|--------------------------|
 | int8    | int16 / int32 / int64    |
 | int16   | int32 / int64            |
@@ -80,33 +80,33 @@ In the TEN Type System, the Safe Conversion rules are as follows:
 | uint32  | uint64                   |
 | float32 | float64                  |
 
-For example:
+例如：
 
 ```cpp
-// Set property value. The type of `property_name` in TEN Runtime is `int32`.
+// 设置属性值。TEN 运行时中 `property_name` 的类型为 `int32`。
 cmd.set_property("property_name", 100);
 
-// Get property value. Correct.
+// 获取属性值。正确。
 int32_t value = cmd.get_property_int32("property_name");
 
-// Get property value. Correct. TEN Type System will automatically convert the type to `int64`.
+// 获取属性值。正确。TEN 类型系统会自动将类型转换为 `int64`。
 int64_t value2 = cmd.get_property_int64("property_name");
 
-// Get property value. Incorrect, an error will be thrown.
+// 获取属性值。不正确，会抛出一个错误。
 int16_t error_type = cmd.get_property_int16("property_name");
 ```
 
-### Unsafe and Might-Fail Conversion
+### 不安全且可能失败的转换
 
-Converting a higher precision type to a lower precision type is unsafe because the value of the higher precision type may exceed the range of the lower precision type, leading to data loss. This conversion is called Unsafe Conversion. When performing Unsafe Conversion, the TEN runtime checks for overflow. If an overflow occurs, the TEN Type System will throw an error.
+将较高精度类型转换为较低精度类型是不安全的，因为较高精度类型的值可能超出较低精度类型的范围，从而导致数据丢失。此转换称为不安全转换。执行不安全转换时，TEN 运行时会检查溢出。如果发生溢出，TEN 类型系统将抛出一个错误。
 
-In the TEN framework type system, the Unsafe Conversion rules are as follows:
+在 TEN 框架类型系统中，不安全转换规则如下：
 
-1. Converting `int64` to a lower precision `int`.
-2. Converting `int64` to any precision `uint`.
-3. Converting `float64` to `float32`.
+1.  将 `int64` 转换为较低精度的 `int`。
+2.  将 `int64` 转换为任何精度的 `uint`。
+3.  将 `float64` 转换为 `float32`。
 
-| From    | To      | Correct Value Range of From                              |
+| 从      | 到      | 从的正确值范围                                               |
 |---------|---------|----------------------------------------------------------|
 | int64   | int8    | \[-2^7, 2^7 - 1\]                                         |
 | int64   | int16   | \[-2^15, 2^15 - 1\]                                       |
@@ -117,12 +117,12 @@ In the TEN framework type system, the Unsafe Conversion rules are as follows:
 | int64   | uint64  | \[0, 2^63 - 1\]                                           |
 | float64 | float32 | \[-3.4028234663852886e+38, 3.4028234663852886e+38\]       |
 
-It is important to note that TEN runtime only performs Unsafe Conversion when deserializing a JSON document into a TEN property and the TEN property has a defined TEN schema. For example:
+重要的是要注意，TEN 运行时仅在将 JSON 文档反序列化为 TEN 属性且 TEN 属性具有定义的 TEN 模式时才执行不安全转换。例如：
 
-- When loading `property.json`.
+*   加载 `property.json` 时。
 
-  For integers, they will be parsed as `int64` by default; for floating-point numbers, they will be parsed as `float64` by default. The TEN framework type system will perform Unsafe Conversion according to the rules mentioned above.
+    对于整数，默认情况下它们将被解析为 `int64`；对于浮点数，默认情况下它们将被解析为 `float64`。TEN 框架类型系统将根据上面提到的规则执行不安全转换。
 
-- When calling methods such as `set_property_from_json()`.
+*   调用 `set_property_from_json()` 等方法时。
 
-  When passing a serialized JSON string, the TEN framework type system will also perform Unsafe Conversion according to the rules mentioned above.
+    当传递序列化的 JSON 字符串时，TEN 框架类型系统也将根据上面提到的规则执行不安全转换。

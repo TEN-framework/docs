@@ -1,47 +1,47 @@
-# Addon System
+# 插件系统
 
-The TEN framework is a software module system, where each software module is defined by the concept of an **addon**. Essentially, every software module in the TEN framework is an addon. For example, users can define the following types of TEN framework addons:
+TEN 框架是一个软件模块系统，其中每个软件模块都由 **插件** 的概念定义。本质上，TEN 框架中的每个软件模块都是一个插件。例如，用户可以定义以下类型的 TEN 框架插件：
 
-1. TEN **extension** addon
-2. TEN **extension group** addon
-3. TEN **protocol** addon
+1.  TEN **扩展** 插件
+2.  TEN **扩展组** 插件
+3.  TEN **协议** 插件
 
-## Information Required to Load Addon
+## 加载插件所需的信息
 
-To load an addon into the TEN runtime, three pieces of information are needed:
+要将插件加载到 TEN 运行时，需要三个信息：
 
-1. **Addon name**
+1.  **插件名称**
 
-   It must be globally unique within the entire TEN app. Loading multiple addons with the same name into the TEN runtime is undefined behavior, and it may result in the second instance of the addon not being properly loaded into the TEN runtime.
+    它必须在整个 TEN 应用程序中全局唯一。将多个具有相同名称的插件加载到 TEN 运行时是未定义的行为，并且可能导致插件的第二个实例无法正确加载到 TEN 运行时。
 
-2. **Addon folder location**
+2.  **插件文件夹位置**
 
-   In the TEN framework, when loading an addon, users must inform the TEN runtime where the addon's directory is located. This directory serves as the addon's `base_dir`. The TEN runtime will use this base directory to load other files related to the addon, such as the addon's `manifest.json` and `property.json` files.
+    在 TEN 框架中，加载插件时，用户必须告知 TEN 运行时插件目录的位置。此目录用作插件的 `base_dir`。TEN 运行时将使用此基本目录加载与插件相关的其他文件，例如插件的 `manifest.json` 和 `property.json` 文件。
 
-   Basically, when designing the TEN framework's addon register API, it aims to automatically detect the directory where the addon is located, so the user does not need to explicitly specify the `base_dir`. However, in some special cases where the TEN framework cannot automatically detect the `base_dir`, the user will need to explicitly specify the folder where the addon is located for the TEN runtime.
+    基本上，在设计 TEN 框架的插件注册 API 时，旨在自动检测插件所在的目录，因此用户无需显式指定 `base_dir`。但是，在某些 TEN 框架无法自动检测 `base_dir` 的特殊情况下，用户需要为 TEN 运行时显式指定插件所在的文件夹。
 
-3. **Addon instance itself**
+3.  **插件实例本身**
 
-## Timing for Registering Addon to TEN Runtime
+## 将插件注册到 TEN 运行时的时间
 
-There are two ways to register an addon into the TEN runtime:
+有两种方法可以将插件注册到 TEN 运行时：
 
-1. Explicitly call the API to register the addon's `base_dir` to the TEN runtime.
+1.  显式调用 API 以将插件的 `base_dir` 注册到 TEN 运行时。
 
-   **Note** Currently, only the standalone testing framework provides such an API.
+    **注意** 目前，只有独立测试框架提供此类 API。
 
-2. Place the addon in a designated location within the TEN app folder tree.
+2.  将插件放置在 TEN 应用程序文件夹树中的指定位置。
 
-By placing the addon in the specified location, the TEN app will automatically load these addons when it starts. Currently, this designated location is under the `ten_packages/` directory in the TEN app. If the addons are placed in this format, they will be automatically loaded when the TEN app starts.
+通过将插件放置在指定位置，TEN 应用程序将在启动时自动加载这些插件。目前，此指定位置位于 TEN 应用程序中的 `ten_packages/` 目录下。如果插件以此格式放置，它们将在 TEN 应用程序启动时自动加载。
 
 ```text
 .
 └── ten_packages/
     ├── extension/
-    │   ├── <extension_foo>/
-    │   └── <extension_bar>/
+    │    ├── <extension_foo>/
+    │    └── <extension_bar>/
     ├── extension_group/
-    │   └── <extension_group_x>/
+    │    └── <extension_group_x>/
     └── protocol/
-        └── <protocol_a>/
+         └── <protocol_a>/
 ```

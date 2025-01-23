@@ -1,6 +1,6 @@
-# Overview
+# 概述
 
-The directory structure of a basic TEN framework software package is shown below.
+基本的 TEN 框架软件包的目录结构如下所示。
 
 ```text
 .
@@ -22,37 +22,37 @@ The directory structure of a basic TEN framework software package is shown below
         └── <system_package_2>/
 ```
 
-Depending on the programming language, there may be additional required files. For example, in a C++ project, since the build system is `ten_gn`, a `BUILD.gn` file would be present. In a Go project, there would be files such as `go.mod` and `go.sum`. In a Python project, you might find a `requirements.txt` file.
+根据编程语言，可能还有其他必需的文件。例如，在 C++ 项目中，由于构建系统是 `ten_gn`，因此将存在一个 `BUILD.gn` 文件。在 Go 项目中，将存在诸如 `go.mod` 和 `go.sum` 之类的文件。在 Python 项目中，您可能会找到一个 `requirements.txt` 文件。
 
-## TEN Framework Software Package Types
+## TEN 框架软件包类型
 
-| Type            | Description                     |
-|-----------------|---------------------------------|
-| App             | Contains a TEN app.             |
-| Extension group | Contains a TEN extension group. |
-| Extension       | Contains a TEN extension.       |
-| Protocol        | Contains a TEN protocol.        |
-| System          | Contains a TEN system package.  |
+| 类型           | 描述                      |
+|---------------|---------------------------|
+| 应用程序        | 包含 TEN 应用程序。         |
+| 扩展组         | 包含 TEN 扩展组。         |
+| 扩展           | 包含 TEN 扩展。           |
+| 协议           | 包含 TEN 协议。           |
+| 系统           | 包含 TEN 系统软件包。     |
 
-## TEN Framework Software Package Kinds
+## TEN 框架软件包种类
 
-There are two types of software packages:
+软件包有两种类型：
 
-- Release package
-- Development package
+-   发布软件包
+-   开发软件包
 
-The relationship between these two package types is as follows:
+这两种软件包类型之间的关系如下：
 
-- A release package can be generated from a development package through a build process.
-- If we add source-related content to a release package, it becomes a development package.
-- If we remove source-related content from a development package, it becomes a release package.
+-   发布软件包可以通过构建过程从开发软件包生成。
+-   如果我们将与源代码相关的内容添加到发布软件包中，它将成为开发软件包。
+-   如果我们从开发软件包中删除与源代码相关的内容，它将成为发布软件包。
 
-In short, the directory structures of development and release packages are very similar, with the difference being that a development package includes source-related content, whereas a release package does not.
+简而言之，开发和发布软件包的目录结构非常相似，区别在于开发软件包包含与源代码相关的内容，而发布软件包不包含。
 
-### Development package
+### 开发软件包
 
-The primary purpose of a development package is to develop TEN software packages. For instance, if you want to create a new TEN extension, you can modify an existing development package to achieve this. This is because the development package contains all the source-related content, enabling the creation of new TEN software packages from it.
+开发软件包的主要目的是开发 TEN 软件包。例如，如果您想创建一个新的 TEN 扩展，您可以修改现有的开发软件包来实现此目的。这是因为开发软件包包含所有与源代码相关的内容，从而可以从中创建新的 TEN 软件包。
 
-### Release package
+### 发布软件包
 
-The primary purpose of a release package is to create and run graphs. Since no build tasks are required, a release package can be used to perform these actions. However, a development package can also be used for these tasks. Essentially, the application scope of a development package is broader than that of a release package.
+发布软件包的主要目的是创建和运行图。由于不需要构建任务，因此可以使用发布软件包来执行这些操作。但是，开发软件包也可以用于这些任务。基本上，开发软件包的应用范围比发布软件包更广。

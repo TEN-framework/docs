@@ -1,28 +1,28 @@
-# Interface
+# 接口
 
-The TEN framework’s message system provides a mechanism for interaction at the granularity of a single message. However, in practice, a complete feature typically involves multiple messages, such as several commands, data exchanges, etc. For example, a Speech-to-Text (STT) functionality may require several commands and data messages. These fixed combinations of messages form what is known as an **interface**. If an extension supports all the messages defined by an interface, it can be used in any context that requires that interface.
+TEN 框架的消息系统提供了一种在单个消息粒度上进行交互的机制。然而，在实践中，一个完整的功能通常涉及多个消息，例如多个命令、数据交换等。例如，语音转文本 (STT) 功能可能需要多个命令和数据消息。这些固定的消息组合形成了所谓的**接口**。如果一个扩展支持一个接口定义的所有消息，则可以在任何需要该接口的上下文中使用它。
 
-Instead of requiring extensions to explicitly declare support for every message in an interface in their manifest, which would be cumbersome, the TEN framework introduces a concept of **aggregating** these messages. This allows extensions to declare that they either provide or utilize a specific interface, simplifying the process.
+TEN 框架没有要求扩展在其清单中显式声明对接口中每个消息的支持（这将很麻烦），而是引入了**聚合**这些消息的概念。这允许扩展声明它们提供或使用特定的接口，从而简化了流程。
 
-The following APIs provided by the TEN framework are primitive:
+TEN 框架提供的以下 API 是原始的：
 
-- `cmd_in`
-- `cmd_out`
-- `data_in`
-- `data_out`
-- `audio_frame_in`
-- `audio_frame_out`
-- `video_frame_in`
-- `video_frame_out`
+-   `cmd_in`
+-   `cmd_out`
+-   `data_in`
+-   `data_out`
+-   `audio_frame_in`
+-   `audio_frame_out`
+-   `video_frame_in`
+-   `video_frame_out`
 
-In addition to these, the framework also supports composite API mechanisms:
+除此之外，该框架还支持复合 API 机制：
 
-- `interface_in`
-- `interface_out`
+-   `interface_in`
+-   `interface_out`
 
-## Interface Syntax
+## 接口语法
 
-The basic syntax for defining an interface includes a mandatory `name` field. This `name` serves the same purpose as the `name` field in `cmd_in` and `cmd_out`, representing the name of the interface. It is significant only within the extension’s context and must be unique within that scope.
+定义接口的基本语法包括一个强制性的 `name` 字段。此 `name` 的作用与 `cmd_in` 和 `cmd_out` 中的 `name` 字段相同，表示接口的名称。它仅在扩展的上下文中具有意义，并且在该范围内必须是唯一的。
 
 {% code title=".json" %}
 
@@ -45,9 +45,9 @@ The basic syntax for defining an interface includes a mandatory `name` field. Th
 
 {% endcode %}
 
-## Using Interfaces in Graphs
+## 在图中使用接口
 
-The `name` of an interface is primarily used in graphs to specify routing. In the example below, `src_extension` uses the `foo` interface provided by `dest_extension`. The `src_extension` recognizes the `foo` interface from its `interface_out` definition, while `dest_extension` recognizes the `foo` interface from its `interface_in` definition.
+接口的 `name` 主要在图中使用以指定路由。在下面的示例中，`src_extension` 使用 `dest_extension` 提供的 `foo` 接口。`src_extension` 从其 `interface_out` 定义中识别 `foo` 接口，而 `dest_extension` 从其 `interface_in` 定义中识别 `foo` 接口。
 
 {% code title=".json" %}
 
@@ -90,11 +90,11 @@ The `name` of an interface is primarily used in graphs to specify routing. In th
 
 {% endcode %}
 
-## Meaning of `interface_in` and `interface_out`
+## `interface_in` 和 `interface_out` 的含义
 
-1. **`interface_in`**
+1.  **`interface_in`**
 
-   Indicates that the extension supports the specified interface's functionality.
+    表示扩展支持指定的接口的功能。
 
 {% code title=".json" %}
 
@@ -104,7 +104,7 @@ The `name` of an interface is primarily used in graphs to specify routing. In th
        "interface_in": [
          {
            "name": "foo"
-           // Interface content
+           // 接口内容
          }
        ]
      }
@@ -113,9 +113,9 @@ The `name` of an interface is primarily used in graphs to specify routing. In th
 
 {% endcode %}
 
-2. **`interface_out`**
+2.  **`interface_out`**
 
-   Indicates that the extension requires another extension to provide the specified interface's functionality.
+    表示扩展需要另一个扩展来提供指定接口的功能。
 
 {% code title=".json" %}
 
@@ -125,7 +125,7 @@ The `name` of an interface is primarily used in graphs to specify routing. In th
        "interface_out": [
          {
            "name": "foo"
-           // Interface content
+           // 接口内容
          }
        ]
      }
@@ -134,24 +134,24 @@ The `name` of an interface is primarily used in graphs to specify routing. In th
 
 {% endcode %}
 
-## Interface and Message Declaration
+## 接口和消息声明
 
-When an extension declares an interface in its manifest, it implicitly declares all the messages defined within that interface. For instance, if an interface `foo` defines three commands, then:
+当扩展在其清单中声明一个接口时，它会隐式声明该接口中定义的所有消息。例如，如果一个接口 `foo` 定义了三个命令，则：
 
-- **`interface_in`**: The extension provides these three commands as part of the interface.
-- **`interface_out`**: The extension requires these three commands from another extension.
+-   **`interface_in`**：该扩展提供这三个命令作为接口的一部分。
+-   **`interface_out`**：该扩展需要从另一个扩展接收这三个命令。
 
-In this sense, the interface mechanism serves as **syntactic sugar**, allowing a predefined set of messages to be bundled and reused across multiple extensions.
+从这个意义上说，接口机制充当**语法糖**，允许预定义的一组消息被捆绑并在多个扩展之间重用。
 
-If an extension defines an interface in its manifest, it does not need to separately define the messages included in that interface. When the extension sends or receives a command like `foo`, the TEN runtime will look through the extension’s manifest for the relevant interface definition and use the command accordingly.
+如果扩展在其清单中定义了一个接口，则无需单独定义该接口中包含的消息。当扩展发送或接收像 `foo` 这样的命令时，TEN 运行时会在扩展的清单中查找相关的接口定义并相应地使用该命令。
 
-For example, if an interface defines three commands and one data message, an extension that declares this interface in `interface_in` implicitly includes these three commands in `cmd_in` and the data message in `data_in`. Similarly, if the interface is declared in `interface_out`, the commands are included in `cmd_out`, and the data message in `data_out`.
+例如，如果一个接口定义了三个命令和一个数据消息，则在 `interface_in` 中声明此接口的扩展将隐式地在 `cmd_in` 中包含这三个命令，并在 `data_in` 中包含数据消息。类似地，如果在 `interface_out` 中声明了该接口，则这些命令将包含在 `cmd_out` 中，并且数据消息将包含在 `data_out` 中。
 
-## Supporting Multiple Interfaces with the Same Message Name
+## 支持具有相同消息名称的多个接口
 
-In the current design, an extension cannot declare support for two interfaces with the same message name under a single API item. For example, if both `foo` and `bar` interfaces define a command named `xxx`, the following combinations are either allowed or not allowed:
+在当前设计中，扩展不能在单个 API 项下声明对具有相同消息名称的两个接口的支持。例如，如果 `foo` 和 `bar` 接口都定义了一个名为 `xxx` 的命令，则以下组合要么允许，要么不允许：
 
-- Not allowed
+-   不允许
 
 {% code title=".json" %}
 
@@ -161,11 +161,11 @@ In the current design, an extension cannot declare support for two interfaces wi
       "interface_in": [
         {
           "name": "foo"
-          // Interface foo content
+          // 接口 foo 内容
         },
         {
           "name": "bar"
-          // Interface bar content
+          // 接口 bar 内容
         }
       ]
     }
@@ -174,7 +174,7 @@ In the current design, an extension cannot declare support for two interfaces wi
 
 {% endcode %}
 
-- Allowed
+-   允许
 
 {% code title=".json" %}
 
@@ -184,18 +184,18 @@ In the current design, an extension cannot declare support for two interfaces wi
       "interface_out": [
         {
           "name": "foo"
-          // Interface foo content
+          // 接口 foo 内容
         },
         {
           "name": "bar"
-          // Interface bar content
+          // 接口 bar 内容
         }
       ]
     }
   }
   ```
 
-   {% endcode %}
+{% endcode %}
 
 {% tab title="Allowed" %}
 
@@ -207,13 +207,13 @@ In the current design, an extension cannot declare support for two interfaces wi
       "interface_in": [
         {
           "name": "foo"
-          // Interface foo content
+          // 接口 foo 内容
         }
       ],
       "interface_out": [
         {
           "name": "bar"
-          // Interface bar content
+          // 接口 bar 内容
         }
       ]
     }
@@ -223,9 +223,9 @@ In the current design, an extension cannot declare support for two interfaces wi
 {% endcode %}
 {% endtab %}
 
-## Interface Definition Content
+## 接口定义内容
 
-The definition of an `interface` is similar to the `api` field in a manifest. Below is an example of an `interface` definition:
+`interface` 的定义类似于清单中的 `api` 字段。以下是 `interface` 定义的示例：
 
 {% code title=".json" %}
 
@@ -272,18 +272,18 @@ The definition of an `interface` is similar to the `api` field in a manifest. Be
 }
 ```
 
-  {% endcode %}
+{% endcode %}
 
-The TEN framework processes this interface by integrating its definitions into the extension’s manifest under the `api` field. For instance, commands defined in `interface_in` are integrated into `cmd_in`, and those in `interface_out` are integrated into `cmd_out`.
+TEN 框架通过将此接口的定义集成到扩展的清单中，位于 `api` 字段下，来处理此接口。例如，`interface_in` 中定义的命令将集成到 `cmd_in` 中，而 `interface_out` 中定义的命令将集成到 `cmd_out` 中。
 
-## Specifying Interface Content
+## 指定接口内容
 
-There are two ways to specify the content of an interface:
+有两种方法可以指定接口的内容：
 
 {% tabs %}
-{% tab title="Directly Embed the Content" %}
+{% tab title="直接嵌入内容" %}
 
-Directly embed the interface definition in the manifest. Example:
+直接将接口定义嵌入到清单中。示例：
 {% code title=".json" %}
 
 ```json
@@ -305,9 +305,9 @@ Directly embed the interface definition in the manifest. Example:
 {% endcode %}
 {% endtab %}
 
-{% tab title="Reference the Content" %}
+{% tab title="引用内容" %}
 
-Use a reference to specify the interface definition, similar to the `$ref` syntax in JSON schema.
+使用引用来指定接口定义，类似于 JSON 架构中的 `$ref` 语法。
 
 {% code title=".json" %}
 
@@ -326,10 +326,11 @@ Use a reference to specify the interface definition, similar to the `$ref` synta
 
 {% endcode %}
 {% endtab %}
+{% endtabs %}
 
-## Determining Interface Compatibility
+## 确定接口兼容性
 
-Since an interface is essentially syntactic sugar, whether two interfaces can be connected depends on the compatibility of the underlying messages. When the source extension specifies an output interface `foo`, and the destination extension specifies an input interface `bar`, the TEN runtime checks whether the `foo` interface of the source can connect to the `bar` interface of the destination.
+由于接口本质上是语法糖，因此两个接口是否可以连接取决于底层消息的兼容性。当源扩展指定输出接口 `foo`，而目标扩展指定输入接口 `bar` 时，TEN 运行时会检查源的 `foo` 接口是否可以连接到目标的 `bar` 接口。
 
 {% code title=".json" %}
 
@@ -337,12 +338,12 @@ Since an interface is essentially syntactic sugar, whether two interfaces can be
 {
   "api": {
     "interface_out": "foo"
-    // Interface content
+    // 接口内容
   }
 }
 ```
 
-  {% endcode %}
+{% endcode %}
 
 {% code title=".json" %}
 
@@ -350,12 +351,12 @@ Since an interface is essentially syntactic sugar, whether two interfaces can be
 {
   "api": {
     "interface_in": "bar"
-    // Interface content
+    // 接口内容
   }
 }
 ```
 
-  {% endcode %}
+{% endcode %}
 
 {% code title=".json" %}
 
@@ -389,6 +390,6 @@ Since an interface is essentially syntactic sugar, whether two interfaces can be
 }
 ```
 
-  {% endcode %}
+{% endcode %}
 
-The TEN framework will look for the definition of `foo` in the `interface_out` section of the source extension's manifest. It then checks each message defined in this interface against the destination extension’s manifest, both in its message definitions and in any interfaces it declares in `interface_in`. If any message cannot be matched according to the TEN framework’s schema-checking rules, the graph configuration will be considered invalid.
+TEN 框架将在源扩展清单的 `interface_out` 部分中查找 `foo` 的定义。然后，它会根据 TEN 框架的架构检查规则，针对目标扩展的清单（包括其消息定义以及在 `interface_in` 中声明的任何接口）检查此接口中定义的每个消息。如果任何消息无法匹配，则图配置将被视为无效。
