@@ -25,7 +25,7 @@
     * [语音助手](ten_agent/playground/run_va.md)
       * [Dify Chat Bot](ten_agent/playground/run_dify.md)
       * [Coze Chat Bot](ten_agent/playground/run_coze.md)
-    * [故事讲述者](ten_agent/playground/run_story_telling.md)
+    * [故事大王](ten_agent/playground/run_story_telling.md)
   * [切换语言](ten_agent/playground/change_language.md)
 * [自定义 TEN Agent](ten_agent/customize_your_agent.md)
 * [创建 Hello World 扩展](ten_agent/create_a_hello_world_extension.md)

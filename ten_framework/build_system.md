@@ -1,57 +1,57 @@
-# 构建系统
+# Build System
 
-## 构建系统
+## Build System
 
 ### C++
 
-TEN 框架使用 `ten_gn` 构建系统来编译 C++ 应用程序和 C++ 扩展。 `ten_gn` 是一个基于 Google GN 的构建系统。
+The TEN framework uses the `ten_gn` build system to compile C++ apps and C++ extensions. `ten_gn` is a build system based on Google's GN.
 
 ### Golang
 
-TEN 框架使用标准的 go 命令来构建 TEN 框架 Golang 项目。
+The TEN framework uses the standard go command to build TEN framework Golang projects.
 
-## 构建
+## Building
 
-### C++ 应用程序
+### C++ App
 
-要构建 TEN 框架 C++ 应用程序，请在 TEN 框架 C++ 应用程序的根目录中运行以下命令。
+To build a TEN framework C++ app, run the following commands in the root directory of the TEN framework C++ app.
 
-`<os>` 可以是以下之一：
+`<os>` can be one of the following:
 
-*   linux
-*   mac
-*   win
+- linux
+- mac
+- win
 
-`<arch>` 可以是以下之一：
+`<arch>` can be one of the following:
 
-*   x86
-*   x64
-*   arm
-*   arm64
+- x86
+- x64
+- arm
+- arm64
 
-`<build_type>` 可以是以下之一：
+`<build_type>` can be one of the following:
 
-*   debug
-*   release
+- debug
+- release
 
 ```shell
 ten_gn gen <os> <arch> <build_type>
 ten_gn build <os> <arch> <build_type>
 ```
 
-### C++ 插件
+### C++ Addon
 
-此处的术语 `addon` 包括以下内容：
+The term `addon` here includes the following:
 
-*   扩展
-*   扩展组
-*   协议
+- extension
+- extension group
+- protocol
 
-构建 TEN 框架 C++ 插件的方法与构建 TEN 框架 C++ 应用程序的方法相同。
+The method to build TEN framework C++ addons is the same as for building TEN framework C++ apps.
 
-### Golang 应用程序
+### Golang App
 
-要构建 TEN Golang 项目，请在 TEN Golang 项目的根目录中运行以下命令：
+To build a TEN Golang project, run the following command in the root directory of the TEN Golang project:
 
 ```shell
 go run ten_packages/system/ten_runtime_go/tools/build/main.go

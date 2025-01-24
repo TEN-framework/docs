@@ -1,49 +1,49 @@
-# 准备工作
+# Preparation
 
-TEN 框架支持 Windows、Linux 和 Mac 作为开发环境，但建议使用 Linux 或 Mac。
+The TEN framework supports Windows, Linux, and Mac as development environments, but it is recommended to use Linux or Mac.
 
-## 开发环境
+## Development Environment
 
 ### Linux
 
-以 Ubuntu 为例，您必须首先安装以下软件包：
+Using Ubuntu as an example, you must first install the following packages:
 
-*   gcc：TEN 框架支持的 C/C++ 编译器之一。
-*   clang：TEN 框架支持的另一种 C/C++ 编译器。
-*   clang-format：TEN 框架在运行时使用的代码格式化工具。
-*   clang-tidy：静态代码分析器。
-*   cmake：构建系统。版本必须大于 3.13。
-*   Python3：TEN 框架 Python 绑定所需。
-*   pytest：用于 TEN 框架的集成测试。
+- gcc: One of the C/C++ compilers supported by the TEN framework.
+- clang: Another C/C++ compiler supported by the TEN framework.
+- clang-format: A code formatting tool used by the TEN framework during runtime.
+- clang-tidy: A static code analyzer.
+- cmake: The build system. The version must be greater than 3.13.
+- Python3: Required for the TEN framework Python binding.
+- pytest: Used for the TEN framework's integration testing.
 
 ### Mac
 
-要设置您的 Mac 开发环境，您需要以下内容：
+To set up your Mac development environment, you need the following:
 
-*   XCode
-*   CocoaPods
-*   个人账户
+- XCode
+- CocoaPods
+- Personal Account
 
-按照以下说明准备环境：
+Follow these instructions to prepare the environment:
 
 ```shell
 brew install llvm googletest doxygen ninja clang-format
 brew install include-what-you-use
 ```
 
-由于通过 `brew` 安装的 `cmake` 版本可能已过时，如果确实如此，您需要从官方网站安装 `cmake` 并设置符号链接。
+Since the version of `cmake` installed via `brew` might be outdated, if so, you need to install `cmake` from the official website and set up a symbolic link.
 
 ```shell
 ln -s /Applications/CMake.app/Contents/bin/cmake /usr/local/bin/cmake
 ```
 
-如果 `cmake` 找不到 `clang-tidy`，您可以使用以下命令解决此问题：
+If `cmake` cannot find `clang-tidy`, you can resolve the issue with the following command:
 
 ```shell
 ln -sf /usr/local/opt/llvm/bin/clang-tidy /usr/local/bin/clang-tidy
 ```
 
-要构建 TEN 框架的各种语言绑定，您可以使用以下命令安装所需的语言：
+To build various language bindings for the TEN framework, you can install the required languages using the following command:
 
 ```shell
 brew install python golang
@@ -51,29 +51,29 @@ brew install python golang
 
 ### Windows
 
-如果您需要在 Microsoft Windows 上开发 TEN 框架，您可以手动安装以下软件包：
+If you need to develop the TEN framework on Microsoft Windows, you can manually install the following packages:
 
-*   Visual Studio 社区版（最高至 2022）
+- Visual Studio Community Version (up to 2022)
 
-    请务必选择与 clang 相关的工具并将 clang 二进制文件路径添加到 `PATH` 环境变量。
+  Be sure to select the clang-related tools and add the clang binary path to the `PATH` environment variable.
 
-*   cmake
-*   python
+- cmake
+- python
 
-> ⚠️ **注意：**
-> 在 Windows 上安装 `cmake` / `python` 时，安装路径不应包含空格。
+> ⚠️ **Note:**
+> When installing `cmake`/`python` on Windows, the installation path should not contain spaces.
 
 ## ten_gn
 
-TEN 框架使用 `ten_gn` 作为其构建系统。`ten_gn` 是一个基于 Google GN 的构建系统。`ten_gn` 的源代码位于 TEN 框架存储库的 `core/ten_gn` 目录中。将 `ten_gn` 目录路径添加到开发环境中的系统 `PATH`。
+The TEN framework uses `ten_gn` as its build system. `ten_gn` is a build system based on Google GN. The source code for `ten_gn` is located in the `core/ten_gn` directory of the TEN framework repository. Add the `ten_gn` directory path to the system `PATH` in your development environment.
 
-## 使用 Docker 容器
+## Using Docker Containers
 
-我们提供预先编写的 Docker 文件，允许您创建一个容器，其中包含从源代码构建 TEN 框架所需的所有必要软件包。
+We provide pre-written Docker files that allow you to create a container with all the necessary packages required to build the TEN framework from source.
 
 ### Ubuntu 22.04
 
-导航到 `tools/docker_for_building/ubuntu/22.04` 并运行以下命令来创建并进入构建环境。
+Navigate to `tools/docker_for_building/ubuntu/22.04` and run the following commands to create and enter the build environment.
 
 ```shell
 docker-compose up -d

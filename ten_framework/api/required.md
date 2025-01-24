@@ -1,16 +1,16 @@
 # Required
 
-在 TEN 框架中，只允许消息架构具有 `required` 字段，并且目前不允许扩展的属性包含 `required` 字段。
+In the TEN framework, only message schemas are allowed to have `required` fields, and the properties of extensions are currently not permitted to include `required` fields.
 
-这意味着允许 `cmd_in`、`cmd_out`、`data_in`、`data_out`、`audio_frame_in`、`audio_frame_out`、`video_frame_in` 和 `video_frame_out` 的架构具有 `required` 字段。
+This means that the schemas for `cmd_in`, `cmd_out`, `data_in`, `data_out`, `audio_frame_in`, `audio_frame_out`, `video_frame_in`, and `video_frame_out` are allowed to have `required` fields.
 
-对于消息架构，`required` 字段只能出现在三个特定的位置：
+For message schemas, the `required` field can only appear in three specific places:
 
--   与 `<foo>_in` / `<foo>_out` 中的 `property` 处于同一级别。
--   在 `<foo>_in` / `<foo>_out` 中 `result` 的 `property` 内。
--   在类型为 `object` 的 `property` 内部（即，在嵌套的情况下）。
+- At the same level as the `property` in `<foo>_in`/`<foo>_out`.
+- Within the `property` of `result` in `<foo>_in`/`<foo>_out`.
+- Inside `property` with a type of `object` (i.e., in nested cases).
 
-下面显示了这三种情况的示例。
+Examples of these three scenarios are shown below.
 
 ```json
 {
@@ -70,45 +70,45 @@
 }
 ```
 
-## `required` 的使用
+## Use of `required`
 
-### 当消息从扩展发送时
+### When a Message is Sent from an Extension
 
-当扩展调用 `send_<foo>(msg_X)` 或 `return_result(result_Y)` 时，框架会根据扩展中各自的架构检查 `msg_X` 或 `result_Y`。如果 `msg_X` 或 `result_Y` 缺少架构中标记为 `required` 的任何字段，则架构检查将失败，指示出现错误。
+When extension calls `send_<foo>(msg_X)` or `return_result(result_Y)`, the framework checks `msg_X` or `result_Y` against their respective schemas in extension. If `msg_X` or `result_Y` is missing any of the fields marked as `required` in the schema, the schema check fails, indicating an error.
 
-这三种情况的处理方式是相同的，尽管会分别讨论：
+The handling of these three scenarios is identical, though they are discussed separately:
 
-1.  如果 `send_<foo>` 发送 TEN 命令并且架构检查失败：
+1. If `send_<foo>` is sending a TEN command and the schema check fails:
 
-    `send_<foo>` 将立即返回 false，并且如果提供了错误参数，它将包括架构检查失败错误消息。
+   `send_<foo>` will return false immediately, and if an error parameter is provided, it will include the schema check failure error message.
 
-2.  如果 `return_result` 未通过架构检查：
+2. If `return_result` fails the schema check:
 
-    `return_result` 将返回 false，并且如果提供了错误参数，它将包括架构检查失败错误消息。
+   `return_result` will return false, and if an error parameter is provided, it can include the schema check failure error message.
 
-3.  如果 `send_<foo>` 发送类似数据的一般 TEN 消息（例如数据、音频帧或视频帧）：
+3. If `send_<foo>` is sending a general data-like TEN message (such as data, audio frame, or video frame):
 
-    `send_<foo>` 将返回 false，并且如果提供了错误参数，它将包括架构检查失败错误消息。
+   `send_<foo>` will return false, and if an error parameter is provided, it can include the schema check failure error message.
 
-### 当消息被扩展接收时
+### When a Message is Received by an Extension
 
-在 ten\_runtime 将 `msg_X` 或 `result_Y` 传递给扩展的 `on_<foo>()` 或结果处理程序之前，它会检查 `msg_X` 或 `result_Y` 的架构中定义的所有 `required` 字段是否存在。如果缺少任何 `required` 字段，则架构检查将失败。
+Before ten_runtime passes `msg_X` or `result_Y` to an extension's `on_<foo>()` or result handler, it checks whether all `required` fields defined in the schema of `msg_X` or `result_Y` are present. If any `required` field is missing, the schema check fails.
 
-1.  如果传入的消息是 TEN 命令：
+1. If the incoming message is a TEN command:
 
-    ten\_runtime 将向之前的扩展返回一个错误 `status_code` 结果。
+   ten_runtime will return an error `status_code` result to the previous extension.
 
-2.  如果传入的消息是 TEN 命令结果：
+2. If the incoming message is a TEN command result:
 
-    ten\_runtime 会将结果的 `status_code` 更改为错误，添加缺少的 `required` 字段，并根据这些字段的类型将其值设置为其默认值。
+   ten_runtime will change the `status_code` of the result to error, add the missing `required` fields, and set the values of these fields to their default values based on their type.
 
-3.  如果传入的消息是 TEN 类似数据的消息：
+3. If the incoming message is a TEN data-like message:
 
-    ten\_runtime 将简单地删除类似数据的消息。
+   ten_runtime will simply drop the data-like message.
 
-## 图检查的行为
+## Behavior of Graph Check
 
-TEN Manager 具有一个名为图检查的功能，用于验证图的语义正确性。与 required 字段相关的检查如下：
+TEN Manager has a function called Graph Check, which is used to verify the semantic correctness of a graph. The checks related to required fields are as follows:
 
-1.  对于连接，源的 `required` 字段必须是目标的 `required` 字段的超集。
-2.  如果源和目标 `required` 字段中都出现相同的字段名称，则它们的类型必须兼容。
+1. For a connection, the `required` fields of the source must be a superset of the `required` fields of the destination.
+2. If the same field name appears in both the source and destination `required` fields, their types must be compatible.

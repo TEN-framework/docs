@@ -1,83 +1,84 @@
-# 调试
+# Debugging
 
-## 适用于 TEN 框架的开发人员
+## For Developers of the TEN Framework
 
-如果您使用 VS Code 开发 TEN 框架，则 TEN 框架源代码树中有一个 `launch.json` 文件，其中提供了默认的调试目标。
+If you're using VS Code to develop the TEN framework, there is a `launch.json` file in the TEN framework source tree that provides default debug targets.
 
-## 适用于 TEN 框架的用户
+## For Users of the TEN Framework
 
-如果您使用 VS Code 开发基于 TEN 框架的自己的应用程序，您可以将配置添加到您的 `.vscode/launch.json` 文件，以便您可以使用断点和变量检查来调试您的应用程序，无论您使用的是哪种编程语言（C++/Golang/Python）。
+If you're using VS Code to develop your own application based on the TEN framework, you can add configurations to your `.vscode/launch.json` file so that you can debug your application with breakpoints and variable inspection whichever programming language (C++/Golang/Python) you are using.
 
-### 在 C++ 应用程序中调试
+### Debugging in C++ Applications
 
-如果应用程序是用 C++ 编写的，这意味着扩展可以使用 C++ 或 Python 编写。
+If the application is written in C++, it means the extensions can be written
+in C++ or Python.
 
-#### 使用 lldb 或 gdb 调试 C++ 代码
+#### Debugging C++ code with lldb or gdb
 
-您可以使用以下配置来调试 C++ 代码：
+You can use the following configurations to debug C++ code:
 
-*   **使用 lldb 调试 C++ 代码**
+* **Debugging C++ code with lldb**
 
-    ```json
-    {
-        "name": "app (C++) (lldb, launch)",
-        "type": "lldb",
-        "request": "launch", // "launch" or "attach"
-        "program": "${workspaceFolder}/bin/worker", // 可执行文件的路径
-        "cwd": "${workspaceFolder}/",
-        "env": {
-            "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
-            "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib" // macOS
-        }
-    }
-    ```
+  ```json
+  {
+      "name": "app (C++) (lldb, launch)",
+      "type": "lldb",
+      "request": "launch", // "launch" or "attach"
+      "program": "${workspaceFolder}/bin/worker", // The executable path
+      "cwd": "${workspaceFolder}/",
+      "env": {
+          "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
+          "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib" // macOS
+      }
+  }
+  ```
 
-*   **使用 gdb 调试 C++ 代码**
+* **Debugging C++ code with gdb**
 
-    ```json
-    {
-        "name": "app (C++) (gdb, launch)",
-        "type": "cppdbg",
-        "request": "launch", // "launch" or "attach"
-        "program": "${workspaceFolder}/bin/worker", // 可执行文件的路径
-        "cwd": "${workspaceFolder}/",
-        "MIMode": "gdb",
-        "environment": [
-            {
-                // linux
-                "name": "LD_LIBRARY_PATH",
-                "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
-            },
-            {
-                // macOS
-                "name": "DYLD_LIBRARY_PATH",
-                "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
-            }
-        ]
-    }
-    ```
+  ```json
+  {
+      "name": "app (C++) (gdb, launch)",
+      "type": "cppdbg",
+      "request": "launch", // "launch" or "attach"
+      "program": "${workspaceFolder}/bin/worker", // The executable path
+      "cwd": "${workspaceFolder}/",
+      "MIMode": "gdb",
+      "environment": [
+          {
+              // linux
+              "name": "LD_LIBRARY_PATH",
+              "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
+          },
+          {
+              // macOS
+              "name": "DYLD_LIBRARY_PATH",
+              "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
+          }
+      ]
+  }
+  ```
 
-#### 使用 debugpy 调试 Python 代码
+#### Debugging Python code with debugpy
 
-您可以使用 `debugpy` 调试 Python 代码。 但是，由于程序不是直接通过 Python 解释器启动的，因此 Python 代码由嵌入式 Python 解释器执行。 因此，您只能将调试器附加到正在运行的进程。
+You can use `debugpy` to debug Python code. However, since the program is not started directly through the Python interpreter, the Python code is executed by the embedded Python interpreter. Therefore, you can only attach a debugger to a running process.
 
-首先，您需要在 Python 环境中安装 `debugpy`：
+First, you need to install `debugpy` in the Python environment:
 
 ```shell
 pip install debugpy
 ```
 
-然后，您需要使用设置的环境变量 `TEN_ENABLE_PYTHON_DEBUG` 和 `TEN_PYTHON_DEBUG_PORT` 启动应用程序。 例如：
+Then, you need to start the application with environment variable `TEN_ENABLE_PYTHON_DEBUG` and `TEN_PYTHON_DEBUG_PORT` set. For example:
 
 ```shell
 TEN_ENABLE_PYTHON_DEBUG=true TEN_PYTHON_DEBUG_PORT=5678 ./bin/worker
 ```
 
-如果环境变量 `TEN_ENABLE_PYTHON_DEBUG` 设置为 `true`，则应用程序将阻塞，直到附加调试器。 如果设置了环境变量 `TEN_PYTHON_DEBUG_PORT`，则调试器服务器将侦听指定端口上的传入连接。
+If the environment variable `TEN_ENABLE_PYTHON_DEBUG` is set to `true`, then the application will block until the debugger is attached. If the environment variable `TEN_PYTHON_DEBUG_PORT` is set, then the debugger server will listen on the specified port for incoming connections.
 
-然后，您可以将调试器附加到正在运行的进程。 以下是一个配置示例：
+Then, you can attach the debugger to the running process. Here is an example of the configuration:
 
-**使用 debugpy 调试 Python 代码**
+**Debugging Python code with debugpy**
 
 ```json
 {
@@ -92,73 +93,73 @@ TEN_ENABLE_PYTHON_DEBUG=true TEN_PYTHON_DEBUG_PORT=5678 ./bin/worker
 }
 ```
 
-#### 同时调试 C++ 和 Python 代码
+#### Debugging C++ and Python code at the same time
 
-如果您想在 VSCode 中一键启动同时调试 C++ 和 Python 代码，您可以执行以下操作：
+If you want to start debugging C++ and Python code at the same time with one click in VSCode, you can do the following:
 
-1.  定义一个任务，在附加调试器之前延迟几秒钟：
+1. Define a task for delaying several seconds before attaching the debugger:
 
-    ```json
-    {
-        "label": "delay 3 seconds",
-        "type": "shell",
-        "command": "sleep 3",
-        "windows": {
-          "command": "ping 127.0.0.1 -n 3 > nul"
+   ```json
+   {
+      "label": "delay 3 seconds",
+      "type": "shell",
+      "command": "sleep 3",
+      "windows": {
+        "command": "ping 127.0.0.1 -n 3 > nul"
+      },
+      "group": "none",
+   }
+   ```
+
+2. Add the following configurations to the `launch.json` file:
+
+   ```json
+   "configurations": [
+        {
+            "name": "app (C++) (lldb, launch with debugpy)",
+            "type": "lldb",
+            "request": "launch", // "launch" or "attach"
+            "program": "${workspaceFolder}/bin/worker", // The executable path
+            "cwd": "${workspaceFolder}/",
+            "env": {
+                "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
+                "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // macOS
+                "TEN_ENABLE_PYTHON_DEBUG": "true",
+                "TEN_PYTHON_DEBUG_PORT": "5678"
+            }
         },
-        "group": "none",
-    }
-    ```
+        {
+            "name": "app (C++) (debugpy, attach with delay)",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "justMyCode": false,
+            "preLaunchTask": "delay 3 seconds"
+        }
+   ],
+   "compounds": [
+        {
+            "name": "app (C++) (lldb, launch) and app (C++) (debugpy, attach)",
+            "configurations": [
+                "app (C++) (lldb, launch with debugpy)",
+                "app (C++) (debugpy, attach with delay)"
+            ]
+        }
+   ]
+   ```
 
-2.  将以下配置添加到 `launch.json` 文件：
+Then, you can start debugging C++ and Python code with the compound configuration `app (C++) (lldb, launch) and app (C++) (debugpy, attach)`.
 
-    ```json
-    "configurations": [
-         {
-             "name": "app (C++) (lldb, launch with debugpy)",
-             "type": "lldb",
-             "request": "launch", // "launch" or "attach"
-             "program": "${workspaceFolder}/bin/worker", // 可执行文件的路径
-             "cwd": "${workspaceFolder}/",
-             "env": {
-                 "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
-                 "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // macOS
-                 "TEN_ENABLE_PYTHON_DEBUG": "true",
-                 "TEN_PYTHON_DEBUG_PORT": "5678"
-             }
-         },
-         {
-             "name": "app (C++) (debugpy, attach with delay)",
-             "type": "debugpy",
-             "request": "attach",
-             "connect": {
-                 "host": "localhost",
-                 "port": 5678
-             },
-             "justMyCode": false,
-             "preLaunchTask": "delay 3 seconds"
-         }
-    ],
-    "compounds": [
-         {
-             "name": "app (C++) (lldb, launch) and app (C++) (debugpy, attach)",
-             "configurations": [
-                 "app (C++) (lldb, launch with debugpy)",
-                 "app (C++) (debugpy, attach with delay)"
-             ]
-         }
-    ]
-    ```
+### Debugging in Go applications
 
-然后，您可以使用复合配置 `app (C++) (lldb, launch) and app (C++) (debugpy, attach)` 启动调试 C++ 和 Python 代码。
+If the application is written in Go, it means the extensions can be written in Go or C++ or Python.
 
-### 在 Go 应用程序中调试
+#### Debugging Go code with delve
 
-如果应用程序是用 Go 编写的，这意味着扩展可以使用 Go 或 C++ 或 Python 编写。
-
-#### 使用 delve 调试 Go 代码
-
-您可以使用以下配置在您的 Go 扩展中进行调试：
+You can use the following configuration to debug in your Go extensions:
 
 ```json
 {
@@ -167,7 +168,7 @@ TEN_ENABLE_PYTHON_DEBUG=true TEN_PYTHON_DEBUG_PORT=5678 ./bin/worker
     "request": "launch",
     "mode": "exec",
     "cwd": "${workspaceFolder}/",
-    "program": "${workspaceFolder}/bin/worker", // 可执行文件的路径
+    "program": "${workspaceFolder}/bin/worker", // The executable path
     "env": {
         "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
         "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // macOS
@@ -176,63 +177,63 @@ TEN_ENABLE_PYTHON_DEBUG=true TEN_PYTHON_DEBUG_PORT=5678 ./bin/worker
 }
 ```
 
-#### 使用 lldb 或 gdb 调试 C++ 代码
+#### Debugging C++ code with lldb or gdb
 
-您可以使用以下配置来调试 C++ 代码：
+You can use the following configurations to debug C++ code:
 
-*   **使用 lldb 调试 C++ 代码**
+* **debugging C++ code with lldb**
 
-    ```json
-    {
-        "name": "app (Go) (lldb, launch)",
-        "type": "lldb",
-        "request": "launch", // "launch" or "attach"
-        "program": "${workspaceFolder}/bin/worker", // 可执行文件的路径
-        "cwd": "${workspaceFolder}/",
-        "env": {
-            "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
-            "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib" // macOS
-        },
-        "initCommands": [
-            "process handle SIGURG --stop false --pass true"
-        ]
-    }
-    ```
+  ```json
+  {
+      "name": "app (Go) (lldb, launch)",
+      "type": "lldb",
+      "request": "launch", // "launch" or "attach"
+      "program": "${workspaceFolder}/bin/worker", // The executable path
+      "cwd": "${workspaceFolder}/",
+      "env": {
+          "LD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib", // linux
+          "DYLD_LIBRARY_PATH": "${workspaceFolder}/ten_packages/system/xxx/lib" // macOS
+      },
+      "initCommands": [
+          "process handle SIGURG --stop false --pass true"
+      ]
+  }
+  ```
 
-*   **使用 gdb 调试 C++ 代码**
+* **debugging C++ code with gdb**
 
-    ```json
-    {
-        "name": "app (Go) (gdb, launch)",
-        "type": "cppdbg",
-        "request": "launch", // "launch" or "attach"
-        "program": "${workspaceFolder}/bin/worker", // 可执行文件的路径
-        "cwd": "${workspaceFolder}/",
-        "MIMode": "gdb",
-        "environment": [
-            {
-                // linux
-                "name": "LD_LIBRARY_PATH",
-                "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
-            },
-            {
-                // macOS
-                "name": "DYLD_LIBRARY_PATH",
-                "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
-            }
-        ]
-    }
-    ```
+  ```json
+  {
+      "name": "app (Go) (gdb, launch)",
+      "type": "cppdbg",
+      "request": "launch", // "launch" or "attach"
+      "program": "${workspaceFolder}/bin/worker", // The executable path
+      "cwd": "${workspaceFolder}/",
+      "MIMode": "gdb",
+      "environment": [
+          {
+              // linux
+              "name": "LD_LIBRARY_PATH",
+              "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
+          },
+          {
+              // macOS
+              "name": "DYLD_LIBRARY_PATH",
+              "value": "${workspaceFolder}/ten_packages/system/xxx/lib"
+          }
+      ]
+  }
+  ```
 
-#### 使用 debugpy 调试 Python 代码
+#### Debugging Python code with debugpy
 
-请参阅上面的部分，了解如何使用 debugpy 调试 Python 代码。 使用设置的环境变量 `TEN_ENABLE_PYTHON_DEBUG` 和 `TEN_PYTHON_DEBUG_PORT` 启动应用程序。
+Refer to the section above for debugging Python code with debugpy. Start the application with environment variable `TEN_ENABLE_PYTHON_DEBUG` and `TEN_PYTHON_DEBUG_PORT` set.
 
 ```shell
 TEN_ENABLE_PYTHON_DEBUG=true TEN_PYTHON_DEBUG_PORT=5678 ./bin/worker
 ```
 
-然后，您可以将调试器附加到正在运行的进程。 以下是一个配置示例：
+Then, you can attach the debugger to the running process. Here is an example of the configuration:
 
 ```json
 {
@@ -247,103 +248,103 @@ TEN_ENABLE_PYTHON_DEBUG=true TEN_PYTHON_DEBUG_PORT=5678 ./bin/worker
 }
 ```
 
-#### 同时调试 C++、Go 和 Python 代码
+#### Debugging C++, Go and Python code at the same time
 
-如果您想在 VSCode 中一键启动同时调试 C++、Go 和 Python 代码，您可以执行以下操作：
+If you want to start debugging C++, Go and Python code at the same time with one click in VSCode, you can do the following:
 
-1.  定义一个任务，在附加调试器之前延迟几秒钟：
+1. Define a task for delaying several seconds before attaching the debugger:
 
-    ```json
-    {
-       "label": "delay 3 seconds",
-       "type": "shell",
-       "command": "sleep 3",
-       "windows": {
-         "command": "ping 127.0.0.1 -n 3 > nul"
-       },
-       "group": "none",
-     }
-    ```
+   ```json
+   {
+      "label": "delay 3 seconds",
+      "type": "shell",
+      "command": "sleep 3",
+      "windows": {
+        "command": "ping 127.0.0.1 -n 3 > nul"
+      },
+      "group": "none",
+    }
+   ```
 
-2.  将以下配置添加到 `launch.json` 文件：
+2. Add the following configurations to the `launch.json` file:
 
-    ```json
-    "configurations": [
-         {
-             "name": "app (golang) (debugpy, remote attach with delay)",
-             "type": "debugpy",
-             "request": "attach",
-             "connect": {
-                 "host": "localhost",
-                 "port": 5678
-             },
-             "preLaunchTask": "delay 3 seconds",
-             "justMyCode": false
-         },
-         {
-             "name": "app (golang) (go, launch with debugpy)",
-             "type": "go",
-             "request": "launch",
-             "mode": "exec",
-             "cwd": "${workspaceFolder}/",
-             "program": "${workspaceFolder}/bin/worker",
-             "env": {
-                 "TEN_APP_BASE_DIR": "${workspaceFolder}",
-                 "TEN_ENABLE_PYTHON_DEBUG": "true",
-                 "TEN_PYTHON_DEBUG_PORT": "5678"
-             }
-         },
-         {
-             "name": "app (golang) (lldb, launch with debugpy)",
-             "type": "lldb",
-             "request": "launch",
-             "program": "${workspaceFolder}/bin/worker",
-             "cwd": "${workspaceFolder}/",
-             "env": {
-                 "TEN_ENABLE_PYTHON_DEBUG": "true",
-                 "TEN_PYTHON_DEBUG_PORT": "5678"
-             },
-             "initCommands": [
-                 "process handle SIGURG --stop false --pass true"
-             ]
-         },
-    ],
-    "compounds": [
-         {
-             "name": "Mixed Go/Python",
-             "configurations": [
-                 "app (golang) (go, launch with debugpy)",
-                 "app (golang) (debugpy, remote attach with delay)"
-             ],
-         },
-         {
-             "name": "Mixed Go/Python/C++ (lldb)",
-             "configurations": [
-                 "app (golang) (lldb, launch with debugpy)",
-                 "app (golang) (debugpy, remote attach with delay)"
-             ]
-         }
-    ]
-    ```
+   ```json
+   "configurations": [
+        {
+            "name": "app (golang) (debugpy, remote attach with delay)",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "preLaunchTask": "delay 3 seconds",
+            "justMyCode": false
+        },
+        {
+            "name": "app (golang) (go, launch with debugpy)",
+            "type": "go",
+            "request": "launch",
+            "mode": "exec",
+            "cwd": "${workspaceFolder}/",
+            "program": "${workspaceFolder}/bin/worker",
+            "env": {
+                "TEN_APP_BASE_DIR": "${workspaceFolder}",
+                "TEN_ENABLE_PYTHON_DEBUG": "true",
+                "TEN_PYTHON_DEBUG_PORT": "5678"
+            }
+        },
+        {
+            "name": "app (golang) (lldb, launch with debugpy)",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/worker",
+            "cwd": "${workspaceFolder}/",
+            "env": {
+                "TEN_ENABLE_PYTHON_DEBUG": "true",
+                "TEN_PYTHON_DEBUG_PORT": "5678"
+            },
+            "initCommands": [
+                "process handle SIGURG --stop false --pass true"
+            ]
+        },
+   ],
+   "compounds": [
+        {
+            "name": "Mixed Go/Python",
+            "configurations": [
+                "app (golang) (go, launch with debugpy)",
+                "app (golang) (debugpy, remote attach with delay)"
+            ],
+        },
+        {
+            "name": "Mixed Go/Python/C++ (lldb)",
+            "configurations": [
+                "app (golang) (lldb, launch with debugpy)",
+                "app (golang) (debugpy, remote attach with delay)"
+            ]
+        }
+   ]
+   ```
 
-如果您想同时调试 C++ 和 Python 代码，您可以使用复合配置 `Mixed Go/Python/C++ (lldb)`。 使用此配置，您可以同时对 C++、Go 和 Python 代码执行断点调试。 但是，变量检查仅支持 C++ 和 Python 代码，而不支持 Go 代码。
+If you want to debug C++ and Python code at the same time, you can use the compound configuration `Mixed Go/Python/C++ (lldb)`. With this configuration, you can perform breakpoint debugging for C++, Go and Python code simultaneously. However, the variable inspection is only supported for C++ and Python but not for Go code.
 
-如果您想同时调试 Go 和 Python 代码，您可以使用复合配置 `Mixed Go/Python`。 使用此配置，您可以同时对 Go 和 Python 代码执行断点调试，并检查 Go 和 Python 代码的变量。
+If you want to debug Go and Python code at the same time, you can use the compound configuration `Mixed Go/Python`. With this configuration, you can perform breakpoint debugging for Go and Python code simultaneously and inspect variables for both Go and Python code.
 
-### 在 Python 应用程序中调试
+### Debugging in Python applications
 
-如果应用程序是用 Python 编写的，这意味着扩展可以使用 Python 或 C++ 编写。
+If the application is written in Python, it means the extensions can be written in Python or C++.
 
-#### 使用 lldb 或 gdb 调试 C++ 代码
+#### Debugging C++ code with lldb or gdb
 
-您可以使用以下配置来调试 C++ 代码：
+You can use the following configurations to debug C++ code:
 
 ```json
 {
     "name": "app (Python) (cpp, launch)",
     "type": "cppdbg", //
     "request": "launch", // "launch" or "attach"
-    "program": "/usr/bin/python3", // Python 解释器路径
+    "program": "/usr/bin/python3", // The Python interpreter path
     "args": [
         "main.py"
     ],
@@ -358,13 +359,14 @@ TEN_ENABLE_PYTHON_DEBUG=true TEN_PYTHON_DEBUG_PORT=5678 ./bin/worker
           "value": "${workspaceFolder}/"
         },
     ],
-    "MIMode": "gdb", // "gdb" 或 "lldb"
+    "MIMode": "gdb", // "gdb" or "lldb"
 }
 ```
 
-#### 使用 debugpy 调试 Python 代码
+#### Debugging Python code with debugpy
 
-请参阅上面的部分，了解如何使用 debugpy 调试 Python 代码。 您可以使用以下配置来调试 Python 代码：
+Refer to the section above for debugging Python code with debugpy. You can use
+the following configurations to debug Python code:
 
 ```json
 {
@@ -383,16 +385,16 @@ TEN_ENABLE_PYTHON_DEBUG=true TEN_PYTHON_DEBUG_PORT=5678 ./bin/worker
 }
 ```
 
-#### 同时调试 C++ 和 Python 代码
+#### Debugging C++ and Python code at the same time
 
-如果您想同时启动 C++ 和 Python 代码的调试，您可以使用配置 `app (Python) (debugpy, launch)` 启动应用程序，并使用以下配置将调试器附加到正在运行的进程：
+If you want to start debugging C++ and Python code at the same time, you can launch the application with the configuration `app (Python) (debugpy, launch)` and attach the debugger to the running process with the following configuration:
 
 ```json
 {
     "name": "app (Python) (cpp, attach)",
     "type": "cppdbg",
-    "request": "attach", // "launch" 或 "attach"
-    "program": "${workspaceFolder}/bin/worker", // 可执行文件的路径
+    "request": "attach", // "launch" or "attach"
+    "program": "${workspaceFolder}/bin/worker", // The executable path
     "cwd": "${workspaceFolder}/",
     "MIMode": "gdb",
     "environment": [

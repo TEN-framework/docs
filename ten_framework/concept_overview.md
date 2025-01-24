@@ -1,64 +1,64 @@
-# TEN 框架概念概述
+# TEN Framework Concepts Overview
 
-<figure><img src="../assets/png/ten_framework.png" alt=""><figcaption><p>TEN 框架</p></figcaption></figure>
+<figure><img src="../assets/png/ten_framework.png" alt=""><figcaption><p>TEN Framework</p></figcaption></figure>
 
-## TEN 运行时
+## TEN Runtime
 
-TEN 运行时是一种执行环境，旨在运行 TEN 框架内的应用程序。 它提供了一个灵活的架构，支持以多种编程语言开发的扩展，并处理各种类型的数据流。 通过管理扩展、数据流和线程的生命周期，TEN 运行时为开发人员提供了一个强大的工具，用于构建各种应用程序和服务。
+The TEN runtime is an execution environment designed for running applications within the TEN framework. It provides a flexible architecture that supports extensions developed in multiple programming languages and handles various types of data streams. By managing the lifecycle of extensions, data flows, and threads, the TEN runtime offers developers a powerful tool for building a wide range of applications and services.
 
-## 应用（App）
+## App
 
-TEN 框架中的应用可以作为独立的进程运行，也可以作为现有进程中的线程运行。 这种灵活性允许根据应用程序的需求选择不同的部署选项。
+An App in the TEN framework can operate as a standalone process or as a thread within an existing process. This flexibility allows for versatile deployment options depending on the needs of the application.
 
-## 扩展组（Extension Group）
+## Extension Group
 
-扩展组是一种为执行指定特定线程的机制。 给定组中的所有扩展都在同一线程上执行，从而确保一致和同步的处理。
+An Extension Group is a mechanism that designates a specific thread for execution. All extensions within a given group are executed on the same thread, ensuring consistent and synchronized processing.
 
-## 扩展（Extension）
+## Extension
 
-扩展是 TEN 框架的基本构建块。 开发人员可以使用各种编程语言创建扩展，并将它们组合起来以构建不同的应用程序和场景。 该框架的设计支持跨语言协作，使以不同语言编写的扩展能够在同一应用程序或服务中无缝地协同工作。
+An extension is the fundamental building block of the TEN framework. Developers can create extensions in various programming languages and combine them to build different applications and scenarios. The framework's design supports cross-language collaboration, enabling extensions written in different languages to work together seamlessly within the same application or service.
 
-例如，由于 C++ 在处理音频和视频数据方面具有性能优势，因此开发人员可能会使用 C++ 创建用于实时通信 (RTC) 的扩展，同时使用 Python 开发 AI 扩展，以利用其强大的库进行数据分析和机器学习。 然后，可以将这些扩展集成到单个应用程序中，从而利用每种语言的优势。
+For example, a developer might use C++ to create an extension for real-time communication (RTC) due to its performance benefits in handling audio and video data, while developing an AI extension in Python to take advantage of its robust libraries for data analysis and machine learning. These extensions can then be integrated into a single application, leveraging the strengths of each language.
 
-## 图（Graph）
+## Graph
 
-TEN 框架中的图描述了扩展之间的数据流。 它协调数据如何从一个扩展移动到另一个扩展，定义参与者以及它们之间的数据流。 例如，您可以将语音转文本 (STT) 扩展的输出路由到大型语言模型 (LLM) 扩展以进行进一步处理。
+A Graph in the TEN framework describes the data flow between extensions. It orchestrates how data moves from one extension to another, defining the participants and the flow of data between them. For example, you can route the output of a Speech-to-Text (STT) extension to a Large Language Model (LLM) extension for further processing.
 
-TEN 框架支持扩展之间的四种主要类型的数据流：
+The TEN framework supports four main types of data flows between extensions:
 
-*   命令
-*   数据
-*   视频帧
-*   音频帧
+- Command
+- Data
+- Video Frame
+- Audio Frame
 
-通过在图中定义这些数据流，开发人员可以创建扩展间通信和单向数据流，这对于处理音频和视频数据尤其有用。
+By defining these data flows within a graph, developers can create inter-extension communication and unidirectional data streams, particularly useful for handling audio and video data.
 
-## 应用、组和扩展之间的关系
+## Relationship Among App, Group, and Extension
 
-*   **应用**：
+- **App**:
 
-    一个应用可以执行多个图，这些图可以是静态预定义的，也可以是动态组装的。
+  An app can execute multiple graphs, which can be either statically predefined or dynamically assembled.
 
-*   **图**：
+- **Graph**:
 
-    一个图由多个协同工作的扩展形成，以创建一个有意义的场景。 每个图实例都作为应用中的一个会话运行。
+  A graph is formed by multiple extensions working together to create a meaningful scenario. Each graph instance operates as a session within the app.
 
-*   **扩展组**：
+- **Extension Group**:
 
-    扩展组的概念类似于线程。 以相同语言编写且位于同一扩展组中的扩展在运行时在同一线程上运行。 开发人员不需要直接管理线程； 他们只需“声明”每个扩展所属的组即可。
+  The concept of an extension group is analogous to a thread. Extensions written in the same language and within the same extension group run on the same thread during runtime. Developers do not need to manage threads directly; they simply "declare" the group to which each extension belongs.
 
-*   **扩展**：
+- **Extension**:
 
-    框架中的每个扩展都分配有一个唯一的 ID，其结构为：`app-uri/graph-name/group-name/extension-name`
+  Each extension within the framework is assigned a unique ID, structured as: `app-uri/graph-name/group-name/extension-name`
 
-<figure><img src="../assets/png/hierarchical_relationship_of_concepts.png" alt=""><figcaption><p>概念的层次关系</p></figcaption></figure>
+<figure><img src="../assets/png/hierarchical_relationship_of_concepts.png" alt=""><figcaption><p>Hierarchical Relationship of Concepts</p></figcaption></figure>
 
-## TEN 云商店
+## TEN Cloud Store
 
-<figure><img src="../assets/png/ten_cloud_store.png" alt=""><figcaption><p>TEN 云商店</p></figcaption></figure>
+<figure><img src="../assets/png/ten_cloud_store.png" alt=""><figcaption><p>TEN Cloud Store</p></figcaption></figure>
 
-TEN 云商店的功能类似于 Google Play 商店或 Apple 的 App Store，为扩展提供了一个市场。 开发人员可以共享他们的扩展或下载其他人创建的扩展。 这些扩展可以集成到 TEN 应用程序中，从而促进开发并扩展功能。
+The TEN Cloud Store functions similarly to Google Play Store or Apple’s App Store, providing a marketplace for extensions. Developers can share their extensions or download those created by others. These extensions can be integrated into TEN apps, facilitating development and expanding functionality.
 
-## TEN 管理器
+## TEN Manager
 
-TEN 管理器是一种简化扩展管理的工具。 它处理诸如上传、共享和安装扩展之类的任务，自动管理它们及其环境之间的依赖关系。 这使得扩展的安装和发布方便高效，从而简化了 TEN 框架内的开发过程。
+The TEN Manager is a tool that simplifies the management of extensions. It handles tasks such as uploading, sharing, and installing extensions, automatically managing dependencies between them and their environment. This makes the installation and publication of extensions convenient and efficient, streamlining the development process within the TEN framework.
