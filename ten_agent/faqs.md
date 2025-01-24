@@ -1,8 +1,8 @@
 # FAQs
 
-## Why do I see `/app/agnets/bin/start: not found`?
+## Why do I see `/app/agent/bin/start: not found`?
 
-Windows users occasionally encounter line-ending issues, which may result in errors like `/app/agnets/bin/start: not found`.
+Windows users occasionally encounter line-ending issues, which may result in errors like `/app/agent/bin/start: not found`.
 
 For best practices, we recommend configuring Git to automatically convert line endings to LF on Windows.
 
