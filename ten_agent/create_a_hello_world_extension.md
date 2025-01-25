@@ -78,7 +78,7 @@ By running the following commands, an extension called `hello_world` will be cre
 <pre class="language-bash" data-title=">_ Bash" data-overflow="wrap"><code class="lang-bash">
 <strong>
 cd /app/agents/ten_packages/extension
-tman create extension hello_world --template=default_async_extension_python --template-data class_name_prefix=HelloWorld
+tman create extension hello_world --template=default_async_extension_python@0.6 --template-data class_name_prefix=HelloWorld
 </strong>
 </code></pre>
 {% endtab %}
@@ -87,7 +87,7 @@ tman create extension hello_world --template=default_async_extension_python --te
 <pre class="language-bash" data-title=">_ Bash" data-overflow="wrap"><code class="lang-bash">
 <strong>
 cd /app/agents/ten_packages/extension
-tman create extension hello_world --template=default_extension_go --template-data class_name_prefix=HelloWorld
+tman create extension hello_world --template=default_extension_go@0.6 --template-data class_name_prefix=HelloWorld
 </strong>
 </code></pre>
 {% endtab %}
@@ -96,7 +96,7 @@ tman create extension hello_world --template=default_extension_go --template-dat
 <pre class="language-bash" data-title=">_ Bash" data-overflow="wrap"><code class="lang-bash">
 <strong>
 cd /app/agents/ten_packages/extension
-tman create extension hello_world --template=default_extension_cpp --template-data class_name_prefix=HelloWorld
+tman create extension hello_world --template=default_extension_cpp@0.6 --template-data class_name_prefix=HelloWorld
 </strong>
 </code></pre>
 {% endtab %}
