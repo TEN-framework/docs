@@ -26,10 +26,3 @@ TEN framework offers the following advantages:
 
    TEN has the ability to manage real-time agent states, enabling dynamic responsiveness and adjustment of agent behavior in real time.
 
----
-
-Ready to see TEN in action? Experience a real-world AI Agent powered by the TEN framework at **[agent.theten.ai](https://agent.theten.ai)**.
-
-To kickstart your AI agent development journey, explore our dedicated [**TEN Agent**](https://github.com/ten-framework/TEN-Agent) repository. It's packed with resources to help you get started quickly and efficiently.
-
-We'd be thrilled if you could show your support by starring the TEN Agent repository. Your star helps us grow and improve! 🌟
