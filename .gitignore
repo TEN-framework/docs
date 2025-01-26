@@ -1,2 +1,18 @@
+# Node
+node_modules/
 
-assets/.DS_Store
+# IDE
+.idea/
+.ideaDataSources/
+.vscode/
+
+# Environments
+.env
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Mac
+.DS_Store
