@@ -180,7 +180,7 @@ task use
 
 当您第一次构建智能体时，无需重启服务器。但是，在进行细微更新后，如果刷新页面没有应用更改，您将需要在 Docker 中重启服务器以确保更新生效。
 
-<figure><img src="../assets/gif/docker_restart_server.gif" alt=""><figcaption><p>重启 ten_agent_dev 的服务器</p></figcaption></figure>
+<figure><img src="../../assets/gif/docker_restart_server.gif" alt=""><figcaption><p>重启 ten_agent_dev 的服务器</p></figcaption></figure>
 
 ## 7. 验证扩展
 
