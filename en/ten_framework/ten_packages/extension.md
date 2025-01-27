@@ -14,13 +14,13 @@ At all these stages, the extension can send messages, and if the sent message is
 
 Each life cycle stage corresponds to a callback function, and there is a corresponding `on_xxx_done()` function to mark the end of that life cycle stage.
 
-| Life Cycle Callback | End of Life Cycle Function   |
-|---------------------|------------------------------|
-| `on_configure`      | `on_configure_done`          |
-| `on_init`           | `on_init_done`               |
-| `on_start`          | `on_start_done`              |
-| `on_stop`           | `on_stop_done`               |
-| `on_deinit`         | `on_deinit_done`             |
+| Life Cycle Callback | End of Life Cycle Function |
+| ------------------- | -------------------------- |
+| `on_configure`    | `on_configure_done`      |
+| `on_init`         | `on_init_done`           |
+| `on_start`        | `on_start_done`          |
+| `on_stop`         | `on_stop_done`           |
+| `on_deinit`       | `on_deinit_done`         |
 
 ### Stage Transition Graph
 
@@ -120,12 +120,13 @@ Basically, in all other life cycle stages, if you want to implement the order of
 Extensions interact with the TEN runtime primarily through three interfaces:
 
 1. **Lifecycle Callbacks**
+
    - These include callbacks like `on_init`, `on_deinit`, `on_start`, and `on_stop`.
-
 2. **Callbacks for Receiving Messages**
-   - These include callbacks such as `on_cmd`, `on_data`, `on_audio_frame`, and `on_video_frame`, which handle incoming messages to the extension.
 
+   - These include callbacks such as `on_cmd`, `on_data`, `on_audio_frame`, and `on_video_frame`, which handle incoming messages to the extension.
 3. **Functions for Sending Messages**
+
    - These include functions like `send_cmd`, `send_data`, `send_audio_frame`, and `send_video_frame`, which send messages out of the extension.
 
 ## Lifecycle Callbacks
@@ -133,11 +134,8 @@ Extensions interact with the TEN runtime primarily through three interfaces:
 The different stages of the extension's lifecycle and their connection to message handling are as follows:
 
 - **on_init ~ on_init_done**: Handles the extension's own initialization. At this stage, the extension can send messages and receive the results of commands it sends, but cannot receive messages actively sent by other extensions.
-
 - **on_start ~ on_start_done**: At this stage, the extension can send messages and receive the results of commands it sends, but cannot receive messages actively sent by other extensions. Since properties are initialized during `on_configure`, you can perform actions that depend on these properties being set up. However, as this is still part of the initialization phase, the extension will not receive messages initiated by others, avoiding the need for various checks. Active message sending is allowed.
-
 - **After on_start_done ~ on_stop_done**: During this phase, the extension can normally send and receive all types of messages and their results.
-
 - **on_deinit ~ on_deinit_done**: Handles the extension's de-initialization. Similar to the `on_init` stage, at this stage, the extension can send messages and receive the results of commands it sends, but cannot receive messages actively sent by other extensions.
 
 ## Implementing Extensions in Different Languages
@@ -146,7 +144,7 @@ Within the TEN framework, extensions can be implemented in various languages suc
 
 ## Asynchronous Message Processing in Extensions
 
-<figure><img src="../../assets/png/asynchronous_message_processing.png" alt=""><figcaption><p>Asynchronous Message Processing</p></figcaption></figure>
+<figure><img src="../../../assets/png/asynchronous_message_processing.png" alt=""><figcaption><p>Asynchronous Message Processing</p></figcaption></figure>
 
 Extensions process messages asynchronously. When the TEN runtime delivers a message to an extension through callbacks like `on_cmd`, `on_data`, `on_audio_frame`, or `on_video_frame`, the extension is not required to process the message immediately within the callback. Instead, the extension can delegate the message to other threads, processes, or even machines for processing. This allows for full utilization of multi-core and distributed computing resources.
 
