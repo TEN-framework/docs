@@ -8,4 +8,4 @@ This logging API primarily has two parameters: one for the log level and another
 
 The overall effect is shown in the image below:
 
-<figure><img src="../../assets/png/log.png" alt=""><figcaption><p>Unified log output for multi-language extensions</p></figcaption></figure>
+<figure><img src="../../../assets/png/log.png" alt=""><figcaption><p>Unified log output for multi-language extensions</p></figcaption></figure>

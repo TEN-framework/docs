@@ -11,7 +11,6 @@ layout:
   pagination:
     visible: true
 ---
-
 # Create a hello world extension
 
 In this chapter, we are going to create a `Hello World` extension step by step, available in Python, Go, and C++. Feel free to choose whichever language you prefer. So buckle up.
@@ -75,30 +74,36 @@ By running the following commands, an extension called `hello_world` will be cre
 
 {% tabs %}
 {% tab title="Python" %}
+
 <pre class="language-bash" data-title=">_ Bash" data-overflow="wrap"><code class="lang-bash">
 <strong>
 cd /app/agents/ten_packages/extension
 tman create extension hello_world --template=default_async_extension_python@0.6 --template-data class_name_prefix=HelloWorld
 </strong>
 </code></pre>
+
 {% endtab %}
 
 {% tab title="Go" %}
+
 <pre class="language-bash" data-title=">_ Bash" data-overflow="wrap"><code class="lang-bash">
 <strong>
 cd /app/agents/ten_packages/extension
 tman create extension hello_world --template=default_extension_go@0.6 --template-data class_name_prefix=HelloWorld
 </strong>
 </code></pre>
+
 {% endtab %}
 
 {% tab title="C++" %}
+
 <pre class="language-bash" data-title=">_ Bash" data-overflow="wrap"><code class="lang-bash">
 <strong>
 cd /app/agents/ten_packages/extension
 tman create extension hello_world --template=default_extension_cpp@0.6 --template-data class_name_prefix=HelloWorld
 </strong>
 </code></pre>
+
 {% endtab %}
 {% endtabs %}
 
@@ -175,7 +180,7 @@ task use
 
 You don’t need to restart the server when you first build the agent. However, after making minor updates, if refreshing the page doesn’t apply the changes, you’ll need to restart the server in Docker to ensure the updates take effect.
 
-<figure><img src="../assets/gif/docker_restart_server.gif" alt=""><figcaption><p>Restart the server for ten_agent_dev</p></figcaption></figure>
+<figure><img src="../../assets/gif/docker_restart_server.gif" alt=""><figcaption><p>Restart the server for ten_agent_dev</p></figcaption></figure>
 
 ## 7. Verify the extension
 
