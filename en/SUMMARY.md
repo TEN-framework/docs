@@ -28,6 +28,7 @@
     * [Story Teller](ten_agent/playground/run_story_telling.md)
   * [Change Language](ten_agent/playground/change_language.md)
 * [Customize TEN Agent](ten_agent/customize_your_agent.md)
+* [Deploy TEN Agent Service](ten_agent/deploy_agent_service.md)
 * [Create a Hello World Extension](ten_agent/create_a_hello_world_extension.md)
 * [How does interrupt work in TEN-Agent](ten_agent/how_does_interrupt_work.md)
 * [Create an Extension with Predefined Type](ten_agent/create_an_extension_with_predefined_type/overview.md)
