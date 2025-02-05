@@ -39,8 +39,8 @@ The service exposes a list of apis that you can use to interact with the agent. 
 You can also test the agent service by running the following command in playground client:
 
 ```shell
-EDIT_GRAPH_MODE=false AGENT_SERVER_URL=http://localhost:8083 pnpm dev
+NEXT_PUBLIC_EDIT_GRAPH_MODE=false AGENT_SERVER_URL=http://localhost:8083 pnpm dev
 ```
 
 > Note: The `AGENT_SERVER_URL` should be the url where your agent service is running. If you are running the agent service on your server, replace `localhost` with your server ip.
-> Note: The `EDIT_GRAPH_MODE` should be set to `false` to use the agent service, as the released docker image has no dev server packaged.
+> Note: The `NEXT_PUBLIC_EDIT_GRAPH_MODE` should be set to `false` to use the agent service, as the released docker image has no dev server packaged.
