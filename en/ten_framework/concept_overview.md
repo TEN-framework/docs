@@ -1,6 +1,6 @@
 # TEN Framework Concepts Overview
 
-<figure><img src="../assets/png/ten_framework.png" alt=""><figcaption><p>TEN Framework</p></figcaption></figure>
+<figure><img src="../../assets/png/ten_framework.png" alt=""><figcaption><p>TEN Framework</p></figcaption></figure>
 
 ## TEN Runtime
 
