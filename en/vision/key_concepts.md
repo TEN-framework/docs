@@ -18,7 +18,7 @@
 
 2. **Cross-Process and Thread Orchestration**: Allows coordination of module instances across different processes and threads to form complete service scenarios.
 
-   <figure><img src="../assets/png/cross_process_and_thread_orchestration.png" alt=""><figcaption><p>Cross-Process and Thread Orchestration</p></figcaption></figure>
+   <figure><img src="../../assets/png/cross_process_and_thread_orchestration.png" alt=""><figcaption><p>Cross-Process and Thread Orchestration</p></figcaption></figure>
 
 3. **Dynamic Orchestration Configuration**: Orchestration can be configured dynamically at runtime or pre-configured before service execution.
 
