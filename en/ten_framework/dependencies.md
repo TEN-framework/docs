@@ -117,10 +117,10 @@ index 92638143a..746f9b6a6 100644
 -# architectures, notably Mac OS X, need this.
 -SET(CMAKE_INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/${LWS_INSTALL_LIB_DIR}${LIB_SUFFIX}")
 +# Commented out to avoid using absolute paths in the install_name on macOS.
-+# When CMAKE_INSTALL_NAME_DIR is set to an absolute path, binaries that link against
-+# libwebsockets will hardcode this absolute path, making the library difficult to relocate
-+# and potentially causing "library not found" errors at runtime if the library is installed
-+# in a different location.
++# When CMAKE_INSTALL_NAME_DIR is set to an absolute path, binaries that link
++# against libwebsockets will hardcode this absolute path, making the library
++# difficult to relocate and potentially causing "library not found" errors at
++# runtime if the library is installed in a different location.
 +# SET(CMAKE_INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/${LWS_INSTALL_LIB_DIR}${LIB_SUFFIX}")
 ```
 
