@@ -22,17 +22,17 @@ TEN 框架利用了多个第三方库。有些专门用于测试，而另一些�
 
 直接从 [Ninja 发布页面](https://github.com/ninja-build/ninja/releases) 下载。
 
-## Jansson
+## yyjson
 
-版本：2.14
+版本：0.10.0
 
-[MIT 许可证](https://github.com/akheron/jansson/blob/master/LICENSE)
+[MIT 许可证](https://github.com/ibireme/yyjson/blob/master/LICENSE)
 
-这在 TEN 框架核心中用于解析和生成 JSON 数据。有关详细信息，请参阅 `third_party/jansson`。
+这在 TEN 框架核心中用于解析和生成 JSON 数据。有关详细信息，请参阅 `third_party/yyjson`。
 
 ## libuv
 
-版本：1.49.2
+版本：1.50.0
 
 [MIT 许可证](https://github.com/libuv/libuv#licensing)
 

@@ -22,17 +22,17 @@ Version: 1.12.1
 
 Download directly from [Ninja release page](https://github.com/ninja-build/ninja/releases).
 
-## Jansson
+## yyjson
 
-Version: 2.14
+Version: 0.10.0
 
-[MIT license](https://github.com/akheron/jansson/blob/master/LICENSE)
+[MIT license](https://github.com/ibireme/yyjson/blob/master/LICENSE)
 
-This is used in the TEN framework core to parse and generate JSON data. Please refer to `third_party/jansson` for details.
+This is used in the TEN framework core to parse and generate JSON data. Please refer to `third_party/yyjson` for details.
 
 ## libuv
 
-Version: 1.49.2
+Version: 1.50.0
 
 [MIT license](https://github.com/libuv/libuv#licensing)
 
