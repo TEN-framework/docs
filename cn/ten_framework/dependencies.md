@@ -10,11 +10,18 @@ TEN 框架利用了多个第三方库。有些专门用于测试，而另一些�
 | -------- | ----- | -------------------------------------------- |
 | Linux    | x64   | BzX0zkfwFeUn9MaDVqm6FugmTIy-hFpgNUx43O1fN00C |
 | Linux    | arm64 | rT_12w1Iv6ug8CJ4j0VQekA0qTDq6CwoAqGWasIKFcEC |
-| Mac      | x64   | B31qpTXmBZpBHIdUtEFogC24WDCQ9W7qAS0d1eSxoZgC |
-| Mac      | arm64 | 5dcmC12_T9JLydmhjTjySyTC7FiYd75j-tyHVokWaFEC |
 | Win      | x64   | 1QlqF0FPVt82ba5f48HxHpv5xPqOmyaThoR3TicuJ8QC |
 
 直接从 [Google GN 网页](https://chrome-infra-packages.appspot.com/p/gn/gn/) 下载。
+
+Commit ID
+
+| 操作系统 | 架构      | Commit ID                                |
+| -------- | --------- | ---------------------------------------- |
+| Mac      | universal | 18602f6cf1168cf78302024043edc02e8bad2ffb |
+
+从[Gn仓库](https://gn.googlesource.com/gn)clone编译。
+
 
 ## Google ninja
 
