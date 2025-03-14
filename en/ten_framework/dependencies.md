@@ -22,7 +22,6 @@ Commit ID
 
 Clone and build from the [Gn repository](https://gn.googlesource.com/gn).
 
-
 ## Google ninja
 
 Version: 1.12.1
