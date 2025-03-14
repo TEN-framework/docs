@@ -22,7 +22,6 @@ Commit ID
 
 从[Gn仓库](https://gn.googlesource.com/gn)clone编译。
 
-
 ## Google ninja
 
 版本：1.12.1
