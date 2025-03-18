@@ -10,6 +10,12 @@ The Dockerfile has been prepared in project root folder. You can build the docke
 docker build -t ten-agent-server .
 ```
 
+For Apple Silicon, use the following command:
+
+```shell
+docker build -t ten-agent-server . --platform linux/amd64
+```
+
 In case you are using `demo` or `experimental` folder, you can build the docker image by running the following command:
 
 ```shell
