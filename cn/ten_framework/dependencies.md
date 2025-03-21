@@ -10,11 +10,17 @@ TEN 框架利用了多个第三方库。有些专门用于测试，而另一些�
 | -------- | ----- | -------------------------------------------- |
 | Linux    | x64   | BzX0zkfwFeUn9MaDVqm6FugmTIy-hFpgNUx43O1fN00C |
 | Linux    | arm64 | rT_12w1Iv6ug8CJ4j0VQekA0qTDq6CwoAqGWasIKFcEC |
-| Mac      | x64   | B31qpTXmBZpBHIdUtEFogC24WDCQ9W7qAS0d1eSxoZgC |
-| Mac      | arm64 | 5dcmC12_T9JLydmhjTjySyTC7FiYd75j-tyHVokWaFEC |
 | Win      | x64   | 1QlqF0FPVt82ba5f48HxHpv5xPqOmyaThoR3TicuJ8QC |
 
 直接从 [Google GN 网页](https://chrome-infra-packages.appspot.com/p/gn/gn/) 下载。
+
+Commit ID
+
+| 操作系统 | 架构      | Commit ID                                |
+| -------- | --------- | ---------------------------------------- |
+| Mac      | universal | 18602f6cf1168cf78302024043edc02e8bad2ffb |
+
+从[Gn仓库](https://gn.googlesource.com/gn)clone编译。
 
 ## Google ninja
 
@@ -22,17 +28,17 @@ TEN 框架利用了多个第三方库。有些专门用于测试，而另一些�
 
 直接从 [Ninja 发布页面](https://github.com/ninja-build/ninja/releases) 下载。
 
-## Jansson
+## yyjson
 
-版本：2.14
+版本：0.10.0
 
-[MIT 许可证](https://github.com/akheron/jansson/blob/master/LICENSE)
+[MIT 许可证](https://github.com/ibireme/yyjson/blob/master/LICENSE)
 
-这在 TEN 框架核心中用于解析和生成 JSON 数据。有关详细信息，请参阅 `third_party/jansson`。
+这在 TEN 框架核心中用于解析和生成 JSON 数据。有关详细信息，请参阅 `third_party/yyjson`。
 
 ## libuv
 
-版本：1.49.2
+版本：1.50.0
 
 [MIT 许可证](https://github.com/libuv/libuv#licensing)
 
@@ -102,6 +108,26 @@ index e8a0cb2d4..84a164e90 100755
      }
 
      mbedtls_ssl_conf_rng(&ssl_pm->conf, mbedtls_ctr_drbg_random, &ssl_pm->ctr_drbg);
+```
+
+```diff
+diff --git a/third_party/libwebsockets/CMakeLists.txt b/third_party/libwebsockets/CMakeLists.txt
+index 92638143a..746f9b6a6 100644
+--- a/third_party/libwebsockets/CMakeLists.txt
++++ b/third_party/libwebsockets/CMakeLists.txt
+@@ -547,9 +547,12 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
+
+ SET(LWS_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}")
+
+-# Put absolute path of dynamic libraries into the object code. Some
+-# architectures, notably Mac OS X, need this.
+-SET(CMAKE_INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/${LWS_INSTALL_LIB_DIR}${LIB_SUFFIX}")
++# Commented out to avoid using absolute paths in the install_name on macOS.
++# When CMAKE_INSTALL_NAME_DIR is set to an absolute path, binaries that link
++# against libwebsockets will hardcode this absolute path, making the library
++# difficult to relocate and potentially causing "library not found" errors at
++# runtime if the library is installed in a different location.
++# SET(CMAKE_INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/${LWS_INSTALL_LIB_DIR}${LIB_SUFFIX}")
 ```
 
 ### 修复在 Windows 上链接 mbedtls

@@ -1,6 +1,6 @@
 # TEN Framework Concepts Overview
 
-<figure><img src="../assets/png/ten_framework.png" alt=""><figcaption><p>TEN Framework</p></figcaption></figure>
+<figure><img src="../../assets/png/ten_framework.png" alt=""><figcaption><p>TEN Framework</p></figcaption></figure>
 
 ## TEN Runtime
 
@@ -51,11 +51,11 @@ By defining these data flows within a graph, developers can create inter-extensi
 
   Each extension within the framework is assigned a unique ID, structured as: `app-uri/graph-name/group-name/extension-name`
 
-<figure><img src="../assets/png/hierarchical_relationship_of_concepts.png" alt=""><figcaption><p>Hierarchical Relationship of Concepts</p></figcaption></figure>
+<figure><img src="../../assets/png/hierarchical_relationship_of_concepts.png" alt=""><figcaption><p>Hierarchical Relationship of Concepts</p></figcaption></figure>
 
 ## TEN Cloud Store
 
-<figure><img src="../assets/png/ten_cloud_store.png" alt=""><figcaption><p>TEN Cloud Store</p></figcaption></figure>
+<figure><img src="../../assets/png/ten_cloud_store.png" alt=""><figcaption><p>TEN Cloud Store</p></figcaption></figure>
 
 The TEN Cloud Store functions similarly to Google Play Store or Apple’s App Store, providing a marketplace for extensions. Developers can share their extensions or download those created by others. These extensions can be integrated into TEN apps, facilitating development and expanding functionality.
 
