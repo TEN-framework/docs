@@ -1,4 +1,4 @@
-# 🌟 Welcome to TEN
+# 🌟 Welcome to TEN Framework
 
 Welcome to TEN! TEN stands for Transformative Extensions Network, is a voice agent framework to create conversational AI.
 
