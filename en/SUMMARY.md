@@ -35,6 +35,7 @@
 * [Create an Extension with Predefined Type](ten_agent/create_an_extension_with_predefined_type/overview.md)
   * [LLM Extension](ten_agent/create_an_extension_with_predefined_type/type_llm_extension.md)
   * [LLM Tool Extension](ten_agent/create_an_extension_with_predefined_type/type_llm_tool_extension.md)
+* [How to Use a Local LLM with Ollama in TEN Agent](tutorials/how_to_run_local_model_in_ollama.md)
 * [FAQs](ten_agent/faqs.md)
 
 ## TEN framework
@@ -87,4 +88,3 @@
 
 <!-- * [How to debug with logs](tutorials/how_to_debug_with_logs.md) -->
 * [How to run local AI model in Python extension](tutorials/how_to_run_local_model_in_python_extensions.md)
-* [How to Use a Local LLM with Ollama in TEN Agent](tutorials/how_to_run_local_model_in_ollama.md)
