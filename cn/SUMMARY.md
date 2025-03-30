@@ -78,8 +78,11 @@
 ### TEN 管理器
 
 * [概述](ten_framework/ten_manager/overview.md)
-* [设计器](ten_framework/ten_manager/designer.md)
 * [图检查](ten_framework/ten_manager/check_graph.md)
+
+### TEN 设计器
+
+* [概述](ten_framework/ten_designer/overview.md)
 
 ## 教程
 
