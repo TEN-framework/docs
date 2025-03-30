@@ -1,14 +1,16 @@
 # TEN Designer
 
-TEN framework 极具弹性, 提供了很多功能, 包括 TEN 云商店, 多语言支持, 多平台支持等等. 但这些功能可能需要较多的学习时间及较高的学习门槛才能较好的操作 TEN framework 来完成想要的 AI agent 开发及客制化. 因此为了方便开发者, TEN framework 提供了一个基于 web 的可视化开发工具, 名叫 TEN designer, 提供了丰富的功能来帮助开发者开发和调试 TEN apps 及 TEN extension.
+TEN Framework 具有高度灵活性，提供了丰富的功能，包括 TEN 云商店、软件包管理、多语言支持和多平台支持等。然而，这些功能可能需要较长的学习时间和较高的技术门槛，才能熟练操作 TEN Framework 完成 AI Agent 的开发和定制化。为便于开发者使用，TEN Framework 提供了一个名为 TEN Manager 的命令行工具，使开发者能够简便地修改和定制基于 TEN Framework 构建的 AI Agent。
 
-可以在底下的网址取得 TEN designer:
+由于命令行工具不如图形用户界面友好，因此 TEN Manager 除了命令行界面外，还内置了基于 Web UI 的可视化开发界面 — TEN Designer，提供丰富的功能帮助开发者开发和调试 TEN Apps 及 TEN Extension。这意味着开发者只需获取 TEN Manager 这一个工具，就能同时拥有命令行和图形用户界面的完整 TEN Framework 开发环境。
+
+您可以通过以下链接获取 TEN Designer：
 
 ```text
 https://github.com/TEN-framework/TEN-Designer/releases
 ```
 
-TEN designer 支援底下的操作系统及架构, 根据你的平台取得对应的版本.
+TEN Designer 支持以下操作系统及架构，请根据您的平台获取对应版本：
 
 - Windows
   - x86_64
@@ -18,135 +20,201 @@ TEN designer 支援底下的操作系统及架构, 根据你的平台取得对�
   - x86_64
   - arm64
 
-下载后解压, 要启动 TEN designer, 请使用以下命令:
+下载并解压后，使用以下命令启动 TEN Designer：
 
 ```shell
 tman designer
 ```
 
-你可以在一个 TEN app 的根目录下执行上列命令, 也可以在任何地方执行. 如果在一个 TEN app 的根目录下执行, 则 TEN designer 会默认将该 TEN app 载入到 TEN designer 中. 或者也可以在 TEN designer 中手动的载入任何的 TEN app. 因此这个在某一个 TEN app 的根目录下启动 TEN designer 并不是一个必须的动作, 不过可以利用这个功能来简化 TEN designer 一开始的手动载入 TEN app 的动作.
+您可以在任何 TEN App 的根目录下执行此命令，也可以在任意位置执行。如果在 TEN App 的根目录下执行，TEN Designer 会默认将该 TEN App 载入。您也可以在 TEN Designer 中手动载入任何 TEN App。因此，在特定 TEN App 根目录下启动 TEN Designer 并非必要操作，但可以简化初始手动载入 TEN App 的步骤。
 
-启动后可以看到如下的讯息, 代表 TEN designer 默认在端口 49483 上启动:
+启动后将看到如下信息，表示 TEN Designer 默认在端口 49483 上启动：
 
 ```text
 🏆  Starting server at http://0.0.0.0:49483
 ```
 
-您可以使用以下 URL 与 TEN designer 交互:
+您可以使用以下 URL 与 TEN Designer 交互：
 
 ```text
 http://127.0.0.1:49483/
 ```
 
-> Note: 如果您的 TEN designer 是运行在远程机器上, 请使用远程机器的 IP 地址来访问 TEN designer.
+> 注意：如果您的 TEN Designer 运行在远程机器上，请使用远程机器的 IP 地址访问 TEN Designer。
 
-## 概观
+## 概览
 
-使用浏览器打开 TEN designer 的页面后, 会看到如下的画面:
+使用浏览器打开 TEN Designer 页面后，会看到如下界面：
 
 ![TEN designer 概观](../../../assets/png/ten_designer_overview.png)
 
-在 TEN designer 中的右上方可以看到几个按钮:
+在 TEN Designer 右上方可以看到几个功能按钮：
 
-- 最右边的按钮会显示当前的 TEN designer 的版本号, 并且会自动侦测有没有新的版本发布, 如果有的化, 会显示一个向上的箭头, 点击后会开启新版本的下载页面.
-- 左边一点的按钮是 [TEN Agent](https://agent.theten.ai/) 按钮, 点击后会开启 TEN Agent 的页面. TEN Agent 是使用 TEN framework 的一个完整的 AI agent 的实现, TEN designer 的目标之一是可以让开发者轻松的透过 TEN designer 来开发和调试及客制化 TEN Agent.
-- 再左边一点的按钮是 [TEN framework](https://github.com/TEN-framework/ten_framework) 的 github 页面, 点击后会开启 TEN framework 的 github 页面. 如果想要了解更多关于 TEN framework 的讯息及源代码, 或者是提 issue, 可以到这个页面.
-- 再左边一点有两个按钮, 分别可以切换亮暗模式, 以及选择语言.
+- 最右侧按钮显示当前 TEN Designer 的版本号，并自动检测是否有新版本发布。如有更新，会显示一个向上的箭头，点击后将打开新版本的下载页面。
+- 左侧第一个按钮是 [TEN Agent](https://agent.theten.ai/) 按钮，点击后将打开 TEN Agent 页面。TEN Agent 是使用 TEN Framework 构建的完整 AI Agent 实现，TEN Designer 的主要目标之一是让开发者能够轻松地通过 TEN Designer 开发、调试和定制 TEN Agent。
+- 左侧第二个按钮是 [TEN Framework](https://github.com/TEN-framework/ten_framework) 的 GitHub 页面，点击后将打开 TEN Framework 的 GitHub 仓库。如需了解更多关于 TEN Framework 的信息、源代码或提交问题，可以访问此页面。
+- 最左侧有两个按钮，分别用于切换明暗模式和选择语言。
 
-在 TEN designer 的左上方有几个下拉选单, 开发者可以透过这边来使用 TEN designer 的各项功能.
+在 TEN Designer 的左上方有几个下拉菜单，开发者可以通过这些菜单使用 TEN Designer 的各项功能。
 
 ## 处理 TEN App
 
-### 载入已有的 TEN app
+### 载入已有的 TEN App
 
-透过 App 选单的 Load App 按钮, 可以载入已有的 TEN app. 按下按钮后, 会看到如下的画面:
+通过 App 菜单的 Load App 按钮，可以载入已有的 TEN App。点击按钮后，会看到如下界面：
 
 ![载入已有的 TEN app](../../../assets/png/ten_designer_load_app.png)
 
-透过这个 file explorer dialog, 开发者可以指定已有的 TEN app 的根目录来载入已有的 TEN app.
+通过此文件浏览对话框，开发者可以指定已有 TEN App 的根目录来载入应用。
 
-### 管理已经载入的 TEN app
+### 管理已载入的 TEN App
 
-透过 App 选单的 Manage Loaded App(s) 按钮, 可以管理已经载入的 TEN app. 按下按钮后, 会看到如下的 Apps Manager 画面:
+通过 App 菜单的 Manage Loaded App(s) 按钮，可以管理已载入的 TEN App。点击按钮后，会看到如下 Apps Manager 界面：
 
 ![管理已经载入的 TEN app](../../../assets/png/ten_designer_manage_loaded_apps.png)
 
-开发者可以借由这个 dialog 来:
+开发者可以通过此对话框：
 
-- 卸载已经载入的 TEN app
-- 重新载入指定的 TEN app
-- 重新载入所有已经载入的 TEN app
+- 卸载已载入的 TEN App
+- 重新载入指定的 TEN App
+- 重新载入所有已载入的 TEN App
 - 安装指定 App 的所有依赖
 - 运行指定 App 的功能
 
 ### 安装指定 App 的所有依赖
 
-在 Apps Manager 中, 可以对指定的 App 进行 Install All 的动作, 这个动作用来安装指定的 App 的所有依赖. 按下按钮后, 会看到如下的画面, 会显示安装所有依赖的过程.
+开发者可以在 TEN App 中安装各种 TEN 软件包，一个 TEN App 所依赖的所有 TEN 软件包都会记录在 `manifest.json` 文件中。以下是一个 `manifest.json` 文件的示例：
+
+```json
+{
+  "type": "app",
+  "name": "aaa",
+  "version": "0.8.18",
+  "dependencies": [
+    {
+      "type": "system",
+      "name": "ten_runtime",
+      "version": "0.8.18"
+    },
+    {
+      "type": "extension",
+      "name": "ffmpeg_muxer",
+      "version": "^0.1.0"
+    },
+    {
+      "type": "extension",
+      "name": "ffmpeg_demuxer",
+      "version": "^0.1.0"
+    },
+    {
+      "type": "extension",
+      "name": "ffmpeg_client",
+      "version": "^0.1.0"
+    },
+    {
+      "type": "protocol",
+      "name": "msgpack",
+      "version": "^0.8.18"
+    }
+  ],
+  "scripts": {
+    "start": "python3 tools/run_script.py start",
+    "build": "python3 tools/run_script.py build"
+  }
+}
+```
+
+从上述配置可以看出，该 TEN App 依赖以下几个 TEN 软件包：
+
+- `ten_runtime`：TEN Framework 的系统软件包
+- `ffmpeg_demuxer`：用于解码音频和视频的 TEN Extension 软件包
+- `ffmpeg_muxer`：用于编码音频和视频的 TEN Extension 软件包
+- `ffmpeg_client`：用于使用另外两个 ffmpeg extension 软件包处理音频和视频的 TEN Extension 软件包
+- `msgpack`：用于使用 MessagePack 协议进行消息序列化和反序列化的 TEN Protocol 软件包
+
+实际上，在完成 TEN App 所有依赖的安装后，系统中的 TEN 软件包文件结构如下：
+
+```text
+├── ten_packages
+│   ├── extension
+│   │   ├── ffmpeg_client
+│   │   ├── ffmpeg_demuxer
+│   │   └── ffmpeg_muxer
+│   ├── protocol
+│   │   └── msgpack
+│   └── system
+│       ├── ffmpeg
+│       └── ten_runtime
+```
+
+值得注意的是，尽管没有在 `manifest.json` 中显式声明，系统中还多了一个 `ffmpeg` 系统软件包。这是因为 `ffmpeg_demuxer` 和 `ffmpeg_muxer` 依赖了 `ffmpeg` 这个系统软件包，TEN Manager 会自动识别并安装这些传递依赖。
+
+通过 TEN Designer 的 Apps Manager 界面，开发者可以对指定的 App 执行 Install All 操作，轻松完成上述所有依赖的安装过程。点击按钮后，会看到如下界面，显示安装进度：
 
 ![安装指定 App 的所有依赖](../../../assets/png/ten_designer_app_install_all.png)
 
-### 从云商店安装 TEN extension
+### 从云商店安装 TEN Extension
 
-透过 Graph 选单的 Open Extension Store 按钮, 可以打开 TEN 云商店, 并从 TEN 云商店安装 TEN extension 到当前的 TEN app. 按下按钮后, 会看到如下的画面:
+通过 Graph 菜单的 Open Extension Store 按钮，可以打开 TEN 云商店，并从云商店安装 TEN Extension 到当前的 TEN App。点击按钮后，会看到如下界面：
 
 ![TEN 云商店](../../../assets/png/ten_designer_extension_store.png)
 
-在 TEN 云商店中, 开发者可以搜寻想要的 TEN extension, 并且按下 Install 按钮来安装到当前的 TEN app. 安装完成后, 可以在当前的 TEN app 中看到安装的 TEN extension.
+在 TEN 云商店中，开发者可以搜索所需的 TEN Extension，并点击 Install 按钮安装到当前的 TEN App。安装完成后，可以在当前 TEN App 中查看已安装的 TEN Extension。
 
-### 运行 TEN app
+### 运行 TEN App
 
-在 Apps Manager 中, 可以对指定的 App 进行该 App 预先设定好的运行动作, 在 Apps Manager 中点击 Run 按钮后, 会看到如下的画面:
+在 Apps Manager 中，可以对指定的 App 执行预设的运行操作。在 Apps Manager 中点击 Run 按钮后，会看到如下界面：
 
 ![运行 TEN app](../../../assets/png/ten_designer_app_run.png)
 
-在 Dialog 中, 开发者可以从下拉选单中选择想要进行 App 预先设定好的哪个动作. 通常会有几种动作:
+在对话框中，开发者可以从下拉菜单中选择要执行的预设操作。通常包括以下几种操作：
 
-- 运行 App : 把 App 运行起来, 并且把 App 的输出讯息显示在 TEN designer 的讯息视窗中.
-- 编译 App : 对 App 进行编译. 由于 TEN framework 支持很多语言, 有些语言需要编译, 有些语言不需要编译, 例如以 C++ 开发的 TEN app 就需要编译, 而以 Python 开发的 TEN app 则不需要编译.
+- 运行 App：启动 App 并在 TEN Designer 的消息窗口中显示 App 的输出信息。
+- 编译 App：对 App 进行编译。由于 TEN Framework 支持多种编程语言，有些语言需要编译，有些则无需编译。例如，基于 C++ 开发的 TEN App 需要编译，而基于 Python 开发的 TEN App 则无需编译。
 
-底下是一个以 C++ 开发的 TEN app 的编译画面:
+以下是一个基于 C++ 开发的 TEN App 的编译界面：
 
 ![编译 TEN app](../../../assets/png/ten_designer_app_build.png)
 
-编译完成后, 可以继续进行 TEN app 的启动动作:
+编译完成后，可以继续执行 TEN App 的启动操作，系统会弹出一个窗口，实时显示 TEN App 的运行日志：
 
 ![启动 TEN app](../../../assets/png/ten_designer_app_start.png)
 
 ## 处理 TEN Graph
 
-### 载入已有的 TEN graph
+### 载入已有的 TEN Graph
 
-透过 Graph 选单的 Open Existing Graph 按钮, 可以载入已有的 TEN graph. 载入 Graph 成功后, 会看到类似如下的画面:
+通过 Graph 菜单的 Open Existing Graph 按钮，可以载入已有的 TEN Graph。载入成功后，会看到类似如下界面：
 
 ![TEN Graph](../../../assets/png/ten_designer_graph_overview.png)
 
-以这个 graph 来说, 它具有 3 个 TEN extensions, 分别是:
+以这个 Graph 为例，它包含 3 个 TEN Extensions，分别是：
 
 - `ffmpeg_demuxer`
 - `ffmpeg_muxer`
 - `ffmpeg_client`
 
-每个 TEN extension 都有其对应的输入及输出, 以 `ffmpeg_demuxer` 来说, 它具有底下的输入与输出:
+每个 TEN Extension 都有其对应的输入和输出。以 `ffmpeg_demuxer` 为例，它具有以下输入与输出：
 
 - 2 个 cmd 输入
 - 1 个 cmd 输出
 - 1 个 audio_frame 输出
 - 1 个 video_frame 输出
 
-点击输入输出的数字按钮, 可以打开如下的 dialog, 来管理输入输出的连接:
+点击输入输出的数字按钮，可以打开如下对话框，用于管理输入输出的连接：
 
 ![TEN Message Input/Output Dialog](../../../assets/png/ten_designer_msg_info_dialog.png)
 
 ### 自动排布 Graph
 
-当开发者手动调整 TEN graph 中的 TEN extension 的位置后, 可以点击 Graph 选单内的 Auto Layout 按钮, 来自动排布 TEN graph 中的 TEN extension.
+当开发者手动调整 TEN Graph 中的 TEN Extension 位置后，可以点击 Graph 菜单中的 Auto Layout 按钮，自动排布 TEN Graph 中的 TEN Extension。
 
-### 开启 TEN extension 的 context menu
+### 打开 TEN Extension 的上下文菜单
 
-在 Graph 内, 对每一个 TEN extension 都可以按滑鼠右键, 开启 TEN extension 的 context menu.
+在 Graph 中，对每个 TEN Extension 右键点击，可以打开 TEN Extension 的上下文菜单：
 
 ![TEN extension context menu](../../../assets/png/ten_designer_extension_context_menu.png)
 
-在 context menu 中, 可以开启 TEN extension 的 manifest.json 文件, 也可以开启 TEN extension 的 property.json 文件, 也可以直接在 TEN extension 的根目录下启动一个 terminal 方便开发者对那个 TEN extension 进行修改以及客制化:
+在上下文菜单中，可以打开 TEN Extension 的 `manifest.json` 文件、`property.json` 文件，也可以直接在 TEN Extension 的根目录下启动终端，方便开发者对该 TEN Extension 进行修改和定制：
 
 ![Open Manifest](../../../assets/png/ten_designer_context_menu_effect.png)
